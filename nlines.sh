@@ -11,13 +11,14 @@ CONFIG_DIR="$HOME/.config/bash"
 # formatting
 source "$CONFIG_DIR/colors.sh"
 bd=$(echo -e ${bold})
+bdwt=$(echo -e ${bold}${a_brightwhite})
 bgf=$(echo -e ${greenbold_frame})
-bg=$(echo -e ${brightgreen})
-obf=$(echo -e ${bold}${orange})
+bg=$(echo -e ${a_brightgreen})
+obf=$(echo -e ${bold}${a_orange})
 bbf=$(echo -e ${pv_bluebold})
 bcy=$(echo -e ${cyan})
 wbf=$(echo -e ${whitebold_frame})
-wgc=$(echo -e ${wgray})                  # white gray
+wgc=$(echo -e ${wa_gray})                  # white gray
 datec=$(echo -e ${blue})
 rst=${reset}
 
@@ -30,12 +31,13 @@ function nlines(){
     local pwd=$PWD
 
     function help_menu(){
-        printf -- '\n\t%s\n\n\t\t%s  %s\n' "${bd}Number Lines File Length Counter${rst} (total # of lines):" \
-                "${bd}\$${rst} ${cyan}nlines${rst} ${bd}<${rst}filename${bd}>${rst}" "${bd}<${rst}directory${bd}>${rst}"
-        printf -- '\n\t%s\n' "${rst}If directory given, sums lines in files contained within${rst}"
-        printf -- '\n\t%s\n\n' "Invoke with --help to print this help menu"
-        return 0
-    }
+        function help_menu(){
+            printf -- '\n\t%s\n\n\t\t%s  %s\n' "${bdwt}Count the Number Lines of Code${rst} (total lines of text):" \
+                    "${bd}\$${rst} ${cyan}nlines${rst} ${bd}<${rst}filename${bd}>${rst}" "${bd}<${rst}directory${bd}>${rst}"
+            printf -- '\n\t\t\t%s\n' "[ --help ]"
+            printf -- '\n\t%s\n\n' "${rst}If directory given, sums lines in files contained within${rst}"
+            return 0
+        }
 
     function print_object(){
         local object="$1"
