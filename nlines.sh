@@ -31,13 +31,12 @@ function nlines(){
     local pwd=$PWD
 
     function help_menu(){
-        function help_menu(){
-            printf -- '\n\t%s\n\n\t\t%s  %s\n' "${bdwt}Count the Number Lines of Code${rst} (total lines of text):" \
-                    "${bd}\$${rst} ${cyan}nlines${rst} ${bd}<${rst}filename${bd}>${rst}" "${bd}<${rst}directory${bd}>${rst}"
-            printf -- '\n\t\t\t%s\n' "[ --help ]"
-            printf -- '\n\t%s\n\n' "${rst}If directory given, sums lines in files contained within${rst}"
-            return 0
-        }
+        printf -- '\n\t%s\n\n\t\t%s  %s\n' "${bdwt}Count the Number Lines of Code${rst} (total lines of text):" \
+                "${bd}\$${rst} ${cyan}nlines${rst} ${bd}<${rst}filename${bd}>${rst}" "${bd}<${rst}directory${bd}>${rst}"
+        printf -- '\n\t\t\t%s\n' "[ --help ]"
+        printf -- '\n\t%s\n\n' "${rst}If directory given, sums lines in files contained within${rst}"
+        return 0
+    }
 
     function print_object(){
         local object="$1"
@@ -112,3 +111,7 @@ function nlines(){
         printf -- "\t%s %${sp}s\n" "${bd}Total${rst}:" "${bbf}$sum${rst}"
     fi
 }
+
+nlines "$@"
+
+exit 0
