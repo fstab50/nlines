@@ -23,6 +23,15 @@ datec=$(echo -e ${blue})
 rst=${reset}
 
 
+function human_readable(){
+    ##
+    ##  Adds commas
+    ##
+    local number="$1"
+    printf -- "%'d\n" $number
+}
+
+
 function nlines(){
     ##
     ## length in lines of file provided as parameter
@@ -106,9 +115,11 @@ function nlines(){
                     ;;
             esac
         done
+        # format large numbers
+        hsum=$(human_readable "$sum")
         sp='56'
         printf -- '\t%s\n' "-------------------------------------------"
-        printf -- "\t%s %${sp}s\n" "${bd}Total${rst}:" "${bbf}$sum${rst}"
+        printf -- "\t%s %${sp}s\n" "${bd}Total${rst}:" "${bbf}$hsum${rst}"
     fi
 }
 
