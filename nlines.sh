@@ -32,8 +32,8 @@ function human_readable(){
 }
 
 function print_header(){
-    local sp='48'
-    printf -- "\t%s %${sp}s\n" "${bd}file${rst}" "${bd}lines${rst}"
+    local sp='42'
+    printf -- "\t%s %${sp}s\n" "object${rst}" "lines${rst}"
     printf -- '\t%s\n' "-------------------------------------------"
 }
 
@@ -87,6 +87,8 @@ function nlines(){
         help_menu
 
     else
+        print_header
+
         while [ $# -gt 0 ]; do
             case "$1" in
 
