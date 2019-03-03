@@ -31,6 +31,11 @@ function human_readable(){
     printf -- "%'d\n" $number
 }
 
+function print_header(){
+    local sp='48'
+    printf -- "\t%s %${sp}s\n" "${bd}file${rst}" "${bd}lines${rst}"
+    printf -- '\t%s\n' "-------------------------------------------"
+}
 
 function nlines(){
     ##
@@ -60,8 +65,8 @@ function nlines(){
         fi
 
         sp=$(( $twidth - ${#printname} ))
-
-        printf -- "\t%s %${sp}s\n" "$printname" "$(cat $object | wc -l)"
+        hsum=$(human_readable "$(cat $object | wc -l)")    # format large numbers
+        printf -- "\t%s %${sp}s\n" "$printname" "$hsum"
         return 0
     }
 
