@@ -31,6 +31,15 @@ declare -a exclusions=(
 )
 
 
+function help_menu(){
+    printf -- '\n\t%s\n\n\t\t%s  %s\n' "${bdwt}Count the Number Lines of Code${rst} (total lines of text):" \
+            "${bd}\$${rst} ${cyan}nlines${rst} ${bd}<${rst}filename${bd}>${rst}" "${bd}<${rst}directory${bd}>${rst}"
+    printf -- '\n\t\t\t%s\n' "[ --help ]"
+    printf -- '\n\t%s\n\n' "${rst}If directory given, sums lines in files contained within${rst}"
+    return 0
+}
+
+
 function included(){
     ##
     ##  skips object types on exclusion list
@@ -60,38 +69,32 @@ function print_header(){
     printf -- '\t%s\n' "-------------------------------------------"
 }
 
+
+function print_object(){
+    local object="$1"
+    local twidth='42'
+    local owidth=${#object}
+    local sp
+
+    if [ $owidth -ge 34 ]; then
+        printname=${object::34}
+    else
+        printname=$object
+    fi
+
+    sp=$(( $twidth - ${#printname} ))
+    hsum=$(human_readable "$(cat $object | wc -l)")    # format large numbers
+    printf -- "\t%s %${sp}s\n" "$printname" "$hsum"
+    return 0
+}
+
+
 function nlines(){
     ##
     ## length in lines of file provided as parameter
     ##
     local sum='0'
     local pwd=$PWD
-
-    function help_menu(){
-        printf -- '\n\t%s\n\n\t\t%s  %s\n' "${bdwt}Count the Number Lines of Code${rst} (total lines of text):" \
-                "${bd}\$${rst} ${cyan}nlines${rst} ${bd}<${rst}filename${bd}>${rst}" "${bd}<${rst}directory${bd}>${rst}"
-        printf -- '\n\t\t\t%s\n' "[ --help ]"
-        printf -- '\n\t%s\n\n' "${rst}If directory given, sums lines in files contained within${rst}"
-        return 0
-    }
-
-    function print_object(){
-        local object="$1"
-        local twidth='42'
-        local owidth=${#object}
-        local sp
-
-        if [ $owidth -ge 34 ]; then
-            printname=${object::34}
-        else
-            printname=$object
-        fi
-
-        sp=$(( $twidth - ${#printname} ))
-        hsum=$(human_readable "$(cat $object | wc -l)")    # format large numbers
-        printf -- "\t%s %${sp}s\n" "$printname" "$hsum"
-        return 0
-    }
 
     function sum_directory(){
         local dir="$1"
