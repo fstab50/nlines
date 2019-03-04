@@ -23,6 +23,29 @@ datec=$(echo -e ${blue})
 rst=${reset}
 
 
+declare -a exclusions=(
+    .png
+    .jpg
+    .tiff
+    .pyc
+)
+
+
+function included(){
+    ##
+    ##  skips object types on exclusion list
+    ##
+    local object="$1"
+
+    for pattern in "${exclusions[@]}"; do
+        if [[ $(echo $object | grep "$pattern" 2>/dev/null) ]]; then
+            return 1
+        fi
+    done
+    return 0
+}
+
+
 function human_readable(){
     ##
     ##  Adds commas
@@ -75,7 +98,7 @@ function nlines(){
 
         cd $dir || exit 1
         for i in *; do
-            if [ -f $i ]; then
+            if [ -f $i ] &&  included "$i"; then
                 sum=$(( $sum + $(cat $i | wc -l) ))
                 print_object "$i"
             fi
@@ -98,7 +121,7 @@ function nlines(){
                     ;;
 
                 *)
-                    if [ -f "$1" ]; then
+                    if [ -f "$1" ] &&  included "$1"; then
                         # is file object
                         sum=$(( $sum + $(cat $1 | wc -l) ))
                         print_object "$1"
@@ -109,7 +132,7 @@ function nlines(){
                         pwd=$PWD
                         cd $1 || exit 1
                         for i in *; do
-                            if [ -f $i ]; then
+                            if [ -f $i ] &&  included "$i"; then
                                 sum=$(( $sum + $(cat $i | wc -l) ))
                                 print_object "$i"
                             elif [ -d $i ]; then
