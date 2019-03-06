@@ -1,5 +1,38 @@
 #!/usr/bin/env bash
 
+# GPL v3 License
+#
+# Copyright (c) 2018-2019 Blake Huber
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the 'Software'), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+
+# option strings
+declare -a exceptions
+exceptions=(
+    'p3_env'
+    'p3_venv'
+    'venv'
+    '.git'
+    '__pycache__'
+)
+
 
 function current_branch(){
     ##
@@ -106,46 +139,36 @@ function _nlines_completions(){
     ##
     ##  Completion structures for nlines exectuable
     ##
-    local numargs numoptions cur prev prevcmd
+    local options numargs numoptions cur prev initcmd
 
     cur="${COMP_WORDS[COMP_CWORD]}"
     prev="${COMP_WORDS[COMP_CWORD-1]}"
     initcmd="${COMP_WORDS[COMP_CWORD-2]}"
-    #echxo "cur: $cur, prev: $prev"
 
     # initialize vars
     COMPREPLY=()
     numargs=0
     numoptions=0
 
-    # option strings
-    declare -a exceptions
-    exceptions=(
-        'p3_env'
-        'p3_venv'
-        'venv'
-        '.git'
-    )
-
+    options='--help --sum'
     objects=$(_filter_objects)
-
 
     case "${prev}" in
 
-        "nlines")
-            if [ "$cur" = "" ] || [ "$cur" = "-" ] || [ "$cur" = "--" ]; then
-                # relative path given by user
-                _complete_nlines_commands "${objects}"
-
-            elif [ "$(echo "$cur" | cut -c 1)" = "/" ]; then
-                # absolute path given by user
-                _pathopt
-
-            else
-                _pathopt
-            fi
+        '--help')
             return 0
             ;;
+
+        'nlines')
+            COMPREPLY=( $(compgen -W "${options}" -- ${cur}) )
+            return 0
+            ;;
+
+        '--sum')
+            _pathopt
+            return 0
+            ;;
+
     esac
 
     COMPREPLY=( $(compgen -W "${objects}" -- ${cur}) )
