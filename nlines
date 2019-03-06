@@ -89,6 +89,53 @@ function print_object(){
 }
 
 
+function process_objects(){
+    ##
+    ## iterate thru $@, counting lines
+    ##
+    #declare -a options=("${!1}")
+
+    print_header
+
+    while [ $# -gt 0 ]; do
+        case "$1" in
+
+            '--sum')
+                shift 1
+                ;;
+
+            *)
+                if [ -f "$1" ] &&  included "$1"; then
+                    # is file object
+                    sum=$(( $sum + $(cat $1 | wc -l) ))
+                    print_object "$1"
+                    shift 1
+
+                elif [ -d "$1" ]; then
+                    # is directory
+                    pwd=$PWD
+                    cd $1 || exit 1
+                    for i in *; do
+                        if [ -f $i ] &&  included "$i"; then
+                            sum=$(( $sum + $(cat $i | wc -l) ))
+                            print_object "$i"
+                        elif [ -d $i ]; then
+                            sum_directory "$i"
+                        fi
+                    done
+                    cd $pwd || exit 1
+                    shift 1
+                fi
+                ;;
+        esac
+    done
+    # format large numbers
+    hsum=$(human_readable "$sum")
+    sp='56'
+    printf -- '\t%s\n' "-------------------------------------------"
+    printf -- "\t%s %${sp}s\n" "${bd}Total${rst}:" "${bbf}$hsum${rst}"
+}
+
 function nlines(){
     ##
     ## length in lines of file provided as parameter
@@ -112,47 +159,14 @@ function nlines(){
     if [[ ! "$@" ]]; then
         help_menu
 
+    elif [[ $(echo "$@" | grep "\-\-help") ]]; then
+        help_menu
+
+    elif [[ $(echo "$@" | grep "\-\-sum") ]]; then
+        process_objects "$@"
+
     else
-        print_header
-
-        while [ $# -gt 0 ]; do
-            case "$1" in
-
-                -h | --help)
-                    help_menu
-                    shift 1
-                    ;;
-
-                *)
-                    if [ -f "$1" ] &&  included "$1"; then
-                        # is file object
-                        sum=$(( $sum + $(cat $1 | wc -l) ))
-                        print_object "$1"
-                        shift 1
-
-                    elif [ -d "$1" ]; then
-                        # is directory
-                        pwd=$PWD
-                        cd $1 || exit 1
-                        for i in *; do
-                            if [ -f $i ] &&  included "$i"; then
-                                sum=$(( $sum + $(cat $i | wc -l) ))
-                                print_object "$i"
-                            elif [ -d $i ]; then
-                                sum_directory "$i"
-                            fi
-                        done
-                        cd $pwd || exit 1
-                        shift 1
-                    fi
-                    ;;
-            esac
-        done
-        # format large numbers
-        hsum=$(human_readable "$sum")
-        sp='56'
-        printf -- '\t%s\n' "-------------------------------------------"
-        printf -- "\t%s %${sp}s\n" "${bd}Total${rst}:" "${bbf}$hsum${rst}"
+        process_objects "$@"
     fi
 }
 
