@@ -90,14 +90,14 @@ function help_menu(){
 
   ${title}EXAMPLES${btext}
             ${title}Full path access to file object targets${btext}
-                $  $pkg --sum  /usr/bin/<tab><tab>
+                    $  $pkg  --sum  /usr/bin/ <tab><tab>
 
             ${title}Relative Path access to text file objects${btext}
-                $ cd <target directory>
-                $  $pkg  --sum  <tab><tab>
+                    $  cd  <target directory>
+                    $  $pkg  --sum  <tab><tab>
 
             ${title}Add file extension to the exclusion list${btext}
-                $  $pkg  --configuration  exclusions
+                    $  $pkg  --configuration  exclusions
   _________________________________________________________________________
 
             ${btext}README:  ${url}https://github.com/fstab50/${pkg}${btext}
