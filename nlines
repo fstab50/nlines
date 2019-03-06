@@ -35,6 +35,7 @@ function help_menu(){
     printf -- '\n\t%s\n\n\t\t%s  %s\n' "${bdwt}Count the Number Lines of Code${rst} (total lines of text):" \
             "${bd}\$${rst} ${cyan}nlines${rst} ${bd}<${rst}filename${bd}>${rst}" "${bd}<${rst}directory${bd}>${rst}"
     printf -- '\n\t\t\t%s\n' "[ --help ]"
+    printf -- '\n\t\t\t%s\n' "[ --sum  ]"
     printf -- '\n\t%s\n\n' "${rst}If directory given, sums lines in files contained within${rst}"
     return 0
 }
