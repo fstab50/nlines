@@ -226,10 +226,10 @@ function nlines(){
     }
 
     if [[ ! "$@" ]]; then
-        help_menu
+        help_menu | indent04
 
     elif [[ $(echo "$@" | grep "\-\-help") ]]; then
-        help_menu
+        help_menu | indent04
 
     elif [[ $(echo "$@" | grep "\-\-sum") ]]; then
         process_objects "$@"
