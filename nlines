@@ -7,9 +7,19 @@
 ##
 
 CONFIG_DIR="$HOME/.config/bash"
+pkg=$(basename $0)                                  # pkg (script) full name
+pkg_root=$(echo $pkg | awk -F '.' '{print $1}')     # pkg without file extention
+pkg_path=$(cd $(dirname $0); pwd -P)                # location of pkg
+pkg_lib="$pkg_path/core"
+twidth=$(( $(tput cols) - 10 ))
+
+# source colors, exitcodes, version file, and  std_function defs | NOTE: source order dependent
+source $pkg_lib/colors.sh
+source $pkg_lib/exitcodes.sh
+source $pkg_lib/version.py
+source $pkg_lib/std_functions.sh
 
 # formatting
-source "$CONFIG_DIR/colors.sh"
 bd=$(echo -e ${bold})
 bdwt=$(echo -e ${bold}${a_brightwhite})
 bgf=$(echo -e ${greenbold_frame})
@@ -18,8 +28,18 @@ obf=$(echo -e ${bold}${a_orange})
 bbf=$(echo -e ${pv_bluebold})
 bcy=$(echo -e ${cyan})
 wbf=$(echo -e ${whitebold_frame})
-wgc=$(echo -e ${wa_gray})                  # white gray
+wgc=$(echo -e ${a_gray})                              # white gray
 datec=$(echo -e ${blue})
+bbc=$(echo -e ${bold}${a_brightcyan})
+title=$(echo -e ${bold}${a_brightwhite})              # title color, white + bold
+hic=$(echo -e ${bold}${a_brightyellowgreen})          # help menu accent 1
+bin=$(echo -e ${bold}${a_orange})                     # help menu binary accent
+ul=$(echo -e ${underline})                            # std underline
+bd=$(echo -e ${bold})                                 # std bold
+wt=$(echo -e ${a_brightwhite})                        # help menu accent 2
+fs=$(echo -e ${yellow})                               # file path color
+btext=${reset}                                        # clear accents; rtn to native term colors
+frame=${btext}
 rst=${reset}
 
 
@@ -31,13 +51,60 @@ declare -a exclusions=(
 )
 
 
+
+# --- declarations ---------------------------------------------------------------------------------
+
+
 function help_menu(){
-    printf -- '\n\t%s\n\n\t\t%s  %s\n' "${bdwt}Count the Number Lines of Code${rst} (total lines of text):" \
-            "${bd}\$${rst} ${cyan}nlines${rst} ${bd}<${rst}filename${bd}>${rst}" "${bd}<${rst}directory${bd}>${rst}"
-    printf -- '\n\t\t\t%s\n' "[ --help ]"
-    printf -- '\n\t\t\t%s\n' "[ --sum  ]"
-    printf -- '\n\t%s\n\n' "${rst}If directory given, sums lines in files contained within${rst}"
-    return 0
+    cat <<EOM
+
+                       ${title}nlines${btext} command help
+
+  ${title}DESCRIPTION${btext}
+
+        Recursively sum the total number of lines of text in code projects
+
+  ${title}SYNOPSIS${btext}
+
+        $ ${bin}$pkg${reset}  --sum <value1> <value2>...  ${bbc}[${btext} --help ${bbc}|${btext} --configuration ${bbc}]${btext}
+
+                        -s | --sum  <value>...
+                       [-c | --configuration ]
+                       [-h | --help  ]
+                       [-V | --version ]
+
+  ${title}OPTIONS${btext}
+
+        ${title}-s${btext}, ${title}--sum${btext}  <value> :  When provided, parameter uses branch
+            name provided for  <value> as the baseline code reference
+            instead of the master branch  (DEFAULT branch reference).
+
+        ${title}-c${btext}, ${title}--configuration${btext}:  Update runtime options via cli menu.
+            Options such as display format, output color, etc. Toggle
+            off human formatted numbers for programmatic consumption.
+
+        ${title}-h${btext}, ${title}--help${btext}:  Display this help menu.
+
+        ${title}-V${btext}, ${title}--version${btext}:  Show $pkg version & license information.
+
+  ${title}EXAMPLES${btext}
+            ${title}Full path access to file object targets${btext}
+                    $  $pkg --sum  /usr/local/lib/<tab><tab>
+
+            ${title}Relative Path access to text file objects${btext}
+                    $ cd <target directory>
+                    $  $pkg  --sum  <tab><tab>
+
+            ${title}Add file extension to the exclusion list${btext}
+                    $  $pkg  --configuration  exclusions
+  _________________________________________________________________________
+
+            ${btext}README:  ${url}https://github.com/fstab50/${pkg}${btext}
+  _________________________________________________________________________
+${reset}
+EOM
+    #
+    # <-- end function help_menu -->
 }
 
 
