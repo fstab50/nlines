@@ -62,7 +62,7 @@ function help_menu(){
 
   ${title}DESCRIPTION${btext}
 
-        Recursively sum the total number of lines of text in code projects
+        Count the total number of lines of text in code projects
 
   ${title}SYNOPSIS${btext}
 
