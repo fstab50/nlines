@@ -66,7 +66,7 @@ function help_menu(){
 
   ${title}SYNOPSIS${btext}
 
-        $ ${bin}$pkg${reset}  ${bbc}[${btext} --sum <value>... ${bbc}|${btext} --help ${bbc}|${btext} --configuration ${bbc}]${btext}   
+        $ ${bin}$pkg${reset}  ${bbc}[${btext} --sum <value>... ${bbc}|${btext} --help ${bbc}|${btext} --configuration ${bbc}]${btext}
 
                         -s | --sum  <value>...
                        [-c | --configuration ]
@@ -84,9 +84,9 @@ function help_menu(){
                   programmatic consuption of output tables.
                 ${bbc}-${btext} Add file extensions to the exclusion list.
 
-        ${title}-h${btext}, ${title}--help${btext}: Display this help menu.
+        ${title}-h${btext}, ${title}--help${btext}:  Display this help menu.
 
-        ${title}-V${btext}, ${title}--version${btext}: Show ${pkg} version & license information.
+        ${title}-V${btext}, ${title}--version${btext}:  Show ${pkg} version & license information.
 
   ${title}EXAMPLES${btext}
             ${title}Full path access to file object targets${btext}
