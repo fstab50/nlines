@@ -155,7 +155,7 @@ function _nlines_completions(){
 
     case "${prev}" in
 
-        '--help')
+        '--help' | '--exclusions' | '--configuration')
             return 0
             ;;
 
