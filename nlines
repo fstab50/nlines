@@ -148,7 +148,7 @@ function print_exclusions(){
     ##
     local count='1'
 
-    printf -- '\n\t%s\n\n' "List of File Objects Excluded from line count:"
+    printf -- '\n\t%s\n\n' "${gbl}List of File patterns excluded from line count${rst}:"
 
     for i in "${exclusions[@]}"; do
         printf -- '\t\t%s   %s\n' "$count)" "$i"
