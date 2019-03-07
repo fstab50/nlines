@@ -146,7 +146,7 @@ function print_exclusions(){
     printf -- '\n\t%s\n\n' "List of File Objects Excluded from line count:"
 
     for i in "${exclusions[@]}"; do
-        printf -- '\t\t%s  %s\n' "$count)" "$i"
+        printf -- '\t\t%s   %s\n' "$count)" "$i"
         (( count++ ))
     done
     printf -- '\n'
