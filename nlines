@@ -137,6 +137,22 @@ function print_header(){
 }
 
 
+function print_exclusions(){
+    ##
+    ##  Display contents of exclusions list
+    ##
+    local count='1'
+
+    printf -- '\n\t%s\n\n' "List of File Objects Excluded from line count:"
+
+    for i in "${exclusions[@]}"; do
+        printf -- '\t\t%s  %s\n' "$count)" "$i"
+        (( count++ ))
+    done
+    printf -- '\n'
+}
+
+
 function print_object(){
     local object="$1"
     local twidth='42'
@@ -231,6 +247,12 @@ function nlines(){
 
     elif [[ $(echo "$@" | grep "\-\-sum") ]]; then
         process_objects "$@"
+
+    elif [[ $(echo "$@" | grep "\-\-configuration") ]]; then
+        echo "configuration menu display here"
+
+    elif [[ $(echo "$@" | grep "\-\-exclusions") ]]; then
+        print_exclusions
 
     else
         process_objects "$@"
