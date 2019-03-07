@@ -24,6 +24,8 @@ bd=$(echo -e ${bold})
 bdwt=$(echo -e ${bold}${a_brightwhite})
 bgf=$(echo -e ${greenbold_frame})
 bg=$(echo -e ${a_brightgreen})
+bb=$(echo -e ${a_brightblue})
+gbl=$(echo -e ${a_grayblue})
 obf=$(echo -e ${bold}${a_orange})
 bbf=$(echo -e ${pv_bluebold})
 bcy=$(echo -e ${cyan})
@@ -89,14 +91,14 @@ function help_menu(){
         ${title}-V${btext}, ${title}--version${btext}:  Show ${pkg} version & license information.
 
   ${title}EXAMPLES${btext}
-            ${title}Full path access to file object targets${btext}
+            ${gbl}Full path access to file object targets${btext}
                     $  $pkg  --sum  /usr/bin/ <tab><tab>
 
-            ${title}Relative Path access to text file objects${btext}
+            ${gbl}Relative Path access to text file objects${btext}
                     $  cd  <target directory>
                     $  $pkg  --sum  <tab><tab>
 
-            ${title}Add file extension to the exclusion list${btext}
+            ${gbl}Add file extension to the exclusion list${btext}
                     $  $pkg  --configuration  exclusions
    __________________________________________________________________
 
