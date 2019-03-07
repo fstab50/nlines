@@ -150,7 +150,7 @@ function _nlines_completions(){
     numargs=0
     numoptions=0
 
-    options='--help --sum'
+    options='--help --exclusions --configuration --sum'
     objects=$(_filter_objects)
 
     case "${prev}" in
