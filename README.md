@@ -37,7 +37,7 @@ To display the help menu:
     $ nlines --help
 ```
 
-[![help](./assets/help-menu.png)](https://rawgithub.com/fstab50/nlines/master/assets/help-menu.png)
+[![help](./assets/help-menu.png)](https://rawgithub.com/fstab50/nlines/master/assets/help-menu.png)<!-- .element height="50%" width="50%" -->
 
 
 [back to the top](#top)
