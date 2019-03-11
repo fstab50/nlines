@@ -62,7 +62,7 @@ function help_menu(){
 
         $ ${bin}$pkg${reset}  ${bbc}[${btext} --sum <value> ${bbc}|${btext} --help ${bbc}|${btext} --configuration ${bbc}]${btext}
 
-                        -s | --sum  <value>...
+                        -s | --sum  <N values> 
                        [-c | --configuration ]
                        [-e | --exclusions ]
                        [-h | --help  ]
