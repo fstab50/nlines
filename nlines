@@ -62,7 +62,7 @@ function help_menu(){
 
         $ ${bin}$pkg${reset}  ${bbc}[${btext} --sum <value> ${bbc}|${btext} --help ${bbc}|${btext} --configuration ${bbc}]${btext}
 
-                        -s | --sum  <N values> 
+                        -s | --sum  <N values>
                        [-c | --configuration ]
                        [-e | --exclusions ]
                        [-h | --help  ]
@@ -230,25 +230,28 @@ function process_objects(){
     printf -- "\t%s %${sp}s\n" "${bd}Total${rst}:" "${bbf}$hsum${rst}"
 }
 
+
+function sum_directory(){
+    local dir="$1"
+    local pwd=$PWD
+
+    cd $dir || exit 1
+    for i in *; do
+        if [ -f $i ] &&  included "$i"; then
+            sum=$(( $sum + $(cat $i | wc -l) ))
+            print_object "$i"
+        fi
+    done
+    cd $pwd || exit 1
+}
+
+
 function nlines(){
     ##
     ## length in lines of file provided as parameter
     ##
     local sum='0'
     local pwd=$PWD
-
-    function sum_directory(){
-        local dir="$1"
-
-        cd $dir || exit 1
-        for i in *; do
-            if [ -f $i ] &&  included "$i"; then
-                sum=$(( $sum + $(cat $i | wc -l) ))
-                print_object "$i"
-            fi
-        done
-        cd ../
-    }
 
     if [[ ! "$@" ]]; then
         help_menu | indent04
