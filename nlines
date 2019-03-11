@@ -155,7 +155,8 @@ function print_exclusions(){
     printf -- '\n\t%s\n\n' "${gbl}List of File patterns excluded from line count${rst}:"
 
     for i in $(build_exclusions_list); do
-        printf -- '\t\t%-4s   %s\n' "$count)" "$i"
+        div="${gbl})${rst}"
+        printf -- '\t\t%6s%2s%2s%-6s\n' "$count" "${div}" " " "$i"
         (( count++ ))
     done
     printf -- '\n'
