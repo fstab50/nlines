@@ -203,23 +203,17 @@ function process_objects(){
                     # is file object
                     sum=$(( $sum + $(cat $1 | wc -l) ))
                     print_object "$1"
-                    shift 1
 
                 elif [ -d "$1" ]; then
                     # is directory
-                    pwd=$PWD
-                    cd $1 || exit 1
-                    for i in *; do
+                    for i in $(find "$1" ! -iwholename '*.git*' -type f); do
                         if [ -f $i ] &&  included "$i"; then
                             sum=$(( $sum + $(cat $i | wc -l) ))
                             print_object "$i"
-                        elif [ -d $i ]; then
-                            sum_directory "$i"
                         fi
                     done
-                    cd $pwd || exit 1
-                    shift 1
                 fi
+                shift 1
                 ;;
         esac
     done
