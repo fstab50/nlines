@@ -15,6 +15,7 @@ Count the number of lines of text in a code project (or anything else)
 * [Getting Started](#getting-started)
 * [Dependencies](#dependencies)
 * [Help](#help)
+* [Exclusions](#excluded)
 * [Author & Copyright](#author--copyright)
 * [License](#license)
 * [Disclaimer](#disclaimer)
@@ -38,6 +39,20 @@ To display the help menu:
 ```
 
 ![help](./assets/help-menu.png)]<!-- .element height="50%" width="50%" -->
+
+
+[back to the top](#top)
+
+* * *
+## Exclusions
+
+[nlines](https://github.com/fstab50/nlines) persists a list of excluded file types on the local filesystem.  To see this list, type the following:
+
+```bash
+    $ nlines --exclusions
+```
+
+![help](./assets/exclusions.png)]<!-- .element height="50%" width="50%" -->
 
 
 [back to the top](#top)
