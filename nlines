@@ -67,8 +67,8 @@ function help_menu(){
                        [-e | --exclusions ]
                        [-h | --help  ]
                        [-V | --version ]
-
   ${title}OPTIONS${btext}
+
         ${title}-s${btext}, ${title}--sum${btext} <value>:  Sum the total number of lines of text.
 
         ${title}-c${btext}, ${title}--configuration${btext}:  Update runtime options via cli menu.
@@ -83,6 +83,7 @@ function help_menu(){
         ${title}-V${btext}, ${title}--version${btext}:  Show ${pkg} version & license information.
 
   ${title}EXAMPLES${btext}
+
             ${gbl}Full path access to file object targets${btext}
                     $  $pkg  --sum  /usr/bin/ <tab><tab>
 
