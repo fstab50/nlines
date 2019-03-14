@@ -12,6 +12,7 @@ pkg_root=$(echo $pkg | awk -F '.' '{print $1}')     # pkg without file extention
 pkg_path=$(cd $(dirname $0); pwd -P)                # location of pkg
 pkg_lib="$pkg_path/core"                            # location of source libraries
 config_dir="$HOME/.config/$pkg"                     # location of ancillary configuration files
+column_width='60'                                   # width of columnar screen output
 
 # source colors, exitcodes, version file, and  std_function defs | NOTE: source order dependent
 source $pkg_lib/colors.sh
@@ -140,10 +141,11 @@ function human_readable(){
     printf -- "%'d\n" $number
 }
 
+
 function print_header(){
-    local sp='42'
+    local sp=$column_width
     printf -- "\t%s %${sp}s\n" "object${rst}" "lines${rst}"
-    printf -- '\t%s\n' "-------------------------------------------"
+    printf '\t%*s\n' "$(($column_width + 1))" '' | tr ' ' -
 }
 
 
@@ -167,12 +169,13 @@ function print_exclusions(){
 
 function print_object(){
     local object="$1"
-    local twidth='42'
+    local twidth=$column_width
     local owidth=${#object}
+    local cutoff=$(( $column_width - 8 ))
     local sp
 
-    if [ $owidth -ge 34 ]; then
-        printname=${object::34}
+    if [ $owidth -ge $cutoff ]; then
+        printname=${object::$cutoff}
     else
         printname=$object
     fi
@@ -220,8 +223,8 @@ function process_objects(){
     done
     # format large numbers
     hsum=$(human_readable "$sum")
-    sp='56'
-    printf -- '\t%s\n' "-------------------------------------------"
+    sp=$(( $column_width + 14 ))
+    printf '\t%*s\n' "$(($column_width + 1))" '' | tr ' ' -
     printf -- "\t%s %${sp}s\n" "${bd}Total${rst}:" "${bbf}$hsum${rst}"
 }
 
