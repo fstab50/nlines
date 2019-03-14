@@ -138,8 +138,11 @@ function included(){
     ##  skips object types on exclusion list
     ##
     local object="$1"
+    local wfile
 
-    if [[ $(file $object | grep 'ASCII') ]] || [[ $(file $object | grep 'Unicode text') ]]; then
+    wfile=$(which file)
+
+    if [[ $($wfile $object | grep 'ASCII') ]] || [[ $($wfile $object | grep 'Unicode text') ]]; then
         for pattern in $(build_exclusions_list); do
             if [[ $(echo $object | grep -i "$pattern") ]]; then
                 return 1
@@ -147,7 +150,7 @@ function included(){
         done
         return 0
 
-    elif [[ $(file $object | grep -i binary) ]]; then
+    elif [[ $($wfile $object | grep -i binary) ]]; then
         return 1
     fi
 }
