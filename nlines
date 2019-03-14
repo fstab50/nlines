@@ -45,7 +45,7 @@ btext=${reset}                                        # clear accents; rtn to na
 frame=${btext}
 rst=${reset}
 
-border=$(echo -e ${bbf})
+border=$(echo -e ${bg})
 
 # --- declarations ---------------------------------------------------------------------------------
 
@@ -158,6 +158,14 @@ function print_header(){
 }
 
 
+function print_footer(){
+    local hsum="$1"
+    print_bar "$column_width"
+    sp=$(( $column_width + 8))
+    printf -- "\t%s %${sp}s\n" "${white}Total lines${rst}:" "${bbf}$hsum${rst}"
+}
+
+
 function print_exclusions(){
     ##
     ##  Display contents of exclusions list
@@ -232,9 +240,7 @@ function process_objects(){
     done
     # format large numbers
     hsum=$(human_readable "$sum")
-    print_bar "$column_width"
-    sp=$(( $column_width + 8))
-    printf -- "\t%s %${sp}s\n" "${bd}Total Lines${rst}:" "${bbf}$hsum${rst}"
+    print_footer "$hsum"
 }
 
 
