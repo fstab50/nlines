@@ -122,10 +122,10 @@ function excluded(){
     ##
     ##  excludes patterns persisted on fs
     ##
-    local file="$1"
+    local path="$1"
 
     for pattern in $(build_exclusions_list); do
-        if [[ $(echo $file | grep "$pattern" 2>/dev/null) ]]; then
+        if [[ $(echo $path | grep "$pattern") ]]; then
             return 0
         fi
     done
@@ -139,7 +139,7 @@ function included(){
     ##
     local object="$1"
     local wfile
-
+    
     wfile=$(which file)
 
     if [[ $($wfile $object | grep 'ASCII') ]] || [[ $($wfile $object | grep 'Unicode text') ]]; then
@@ -150,7 +150,7 @@ function included(){
         done
         return 0
 
-    elif [[ $($wfile $object | grep -i binary) ]]; then
+    elif [[ $($wfile $object | grep -i 'binary') ]]; then
         return 1
     fi
 }
