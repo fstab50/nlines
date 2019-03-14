@@ -26,7 +26,6 @@ bdwt=$(echo -e ${bold}${a_brightwhite})
 bgf=$(echo -e ${greenbold_frame})
 bg=$(echo -e ${a_brightgreen})
 bb=$(echo -e ${a_brightblue})
-
 gbl=$(echo -e ${ITALIC}${a_bluegray})
 obf=$(echo -e ${bold}${a_orange})
 bbf=$(echo -e ${pv_bluebold})
@@ -46,6 +45,7 @@ btext=${reset}                                        # clear accents; rtn to na
 frame=${btext}
 rst=${reset}
 
+border=$(echo -e ${bbc})
 
 # --- declarations ---------------------------------------------------------------------------------
 
@@ -145,7 +145,9 @@ function human_readable(){
 function print_header(){
     local sp=$column_width
     printf -- "\t%s %${sp}s\n" "object${rst}" "lines${rst}"
-    printf '\t%*s\n' "$(($column_width + 1))" '' | tr ' ' -
+    printf -- '%s' "${bbc}"
+    printf '\t%*s\n' "$(($column_width + 1))" '' | tr ' ' "-"
+    printf -- '%s' "$rst"
 }
 
 
@@ -223,9 +225,11 @@ function process_objects(){
     done
     # format large numbers
     hsum=$(human_readable "$sum")
-    sp=$(( $column_width + 14 ))
-    printf '\t%*s\n' "$(($column_width + 1))" '' | tr ' ' -
-    printf -- "\t%s %${sp}s\n" "${bd}Total${rst}:" "${bbf}$hsum${rst}"
+    sp=$(( $column_width + 3 ))
+    printf -- '%s' "${bbc}"
+    printf '\t%*s\n' "$(($column_width + 1))" '' | tr ' ' "-"
+    printf -- '%s' "$rst"
+    printf -- "\t%s %${sp}s\n" "${bd}Total Line Count${rst}:" "${bbf}$hsum${rst}"
 }
 
 
