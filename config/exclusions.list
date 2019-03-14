@@ -17,3 +17,5 @@
 .PNM
 .svg
 .SVG
+venv
+_env
