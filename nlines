@@ -45,7 +45,7 @@ btext=${reset}                                        # clear accents; rtn to na
 frame=${btext}
 rst=${reset}
 
-border=$(echo -e ${bg})
+border=$(echo -e ${red})
 
 # --- declarations ---------------------------------------------------------------------------------
 
@@ -118,18 +118,38 @@ function build_exclusions_list(){
 }
 
 
+function excluded(){
+    ##
+    ##  excludes patterns persisted on fs
+    ##
+    local file="$1"
+
+    for pattern in $(build_exclusions_list); do
+        if [[ $(echo $file | grep "$pattern" 2>/dev/null) ]]; then
+            return 0
+        fi
+    done
+    return 1
+}
+
+
 function included(){
     ##
     ##  skips object types on exclusion list
     ##
     local object="$1"
 
-    for pattern in $(build_exclusions_list); do
-        if [[ $(echo $object | grep "$pattern" 2>/dev/null) ]]; then
-            return 1
-        fi
-    done
-    return 0
+    if [[ $(file $object | grep 'ASCII') ]] || [[ $(file $object | grep 'Unicode text') ]]; then
+        for pattern in $(build_exclusions_list); do
+            if [[ $(echo $object | grep -i "$pattern") ]]; then
+                return 1
+            fi
+        done
+        return 0
+
+    elif [[ $(file $object | grep -i binary) ]]; then
+        return 1
+    fi
 }
 
 
@@ -208,7 +228,7 @@ function process_objects(){
     ##
     ## iterate thru $@, counting lines
     ##
-    #declare -a options=("${!1}")
+    declare -a arr_directories
 
     print_header
 
@@ -228,9 +248,11 @@ function process_objects(){
                 elif [ -d "$1" ]; then
                     # is directory
                     for i in $(find "$1" ! -iwholename '*.git*' -type f); do
-                        if [ -f $i ] &&  included "$i"; then
+                        if included "$i"; then
                             sum=$(( $sum + $(cat $i | wc -l) ))
                             print_object "$i"
+                        else
+                            continue
                         fi
                     done
                 fi
