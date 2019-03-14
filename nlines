@@ -254,7 +254,7 @@ function nlines(){
     if [[ ! "$@" ]]; then
         help_menu | indent04
 
-    elif [[ $(echo "$@" | grep "\-\-help") ]]; then
+    elif [[ $(echo "$@" | grep "\-\-help") ]] || [[ $(echo "$@" | grep "\-h") ]]; then
         help_menu | indent04
 
     elif [[ $(echo "$@" | grep "\-\-sum") ]]; then
