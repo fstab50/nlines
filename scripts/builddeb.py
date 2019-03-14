@@ -2,7 +2,7 @@
 """
 Summary.
 
-    builddeb (python3):  branchdiff binary operating system package (.deb, Debian systems)
+    builddeb (python3):  nlines binary operating system package (.deb, Debian systems)
 
         - Automatic determination of version to be built
         - Build version can optionally be forced to a specific version
@@ -21,7 +21,7 @@ Author:
 License:
     General Public License v3
     Additional terms may be found in the complete license agreement:
-    https://github.com/fstab50/branchdiff/blob/master/LICENSE
+    https://github.com/fstab50/nlines/blob/master/LICENSE
 
 OS Support:
     - Debian, Ubuntu, Ubuntu variants
@@ -54,13 +54,13 @@ except Exception:
 
 
 # globals
-PROJECT = 'branchdiff'
+PROJECT = 'nlines'
 module = os.path.basename(__file__)
 TMPDIR = '/tmp/build'
 VOLMNT = '/tmp/deb'
 CONTAINER_VOLMNT = '/mnt/deb'
 PACKAGE_CONFIG = '.debian.json'
-DISTRO_LIST = ['ubuntu14.04', 'ubuntu16.04', 'ubuntu18.04']
+DISTRO_LIST = ['ubuntu16.04', 'ubuntu18.04']
 
 # docker
 dclient = docker.from_env()
@@ -344,7 +344,7 @@ def builddir_structure(param_dict, version):
     Vars:
         :lib_path (str): src path to library modules in project root
         :builddir_path (str): dst path to root of the current build directory
-         (/<path>/branchdiff-1.X.X dir)
+         (/<path>/nlines-1.X.X dir)
 
     Returns:
         Success | Failure, TYPE: bool
@@ -733,7 +733,7 @@ def main(setVersion, environment, force=False, debug=False):
         Success | Failure, TYPE: bool
     """
     global PROJECT_BIN
-    PROJECT_BIN = 'branchdiff'
+    PROJECT_BIN = 'nlines'
     global PROJECT_ROOT
     PROJECT_ROOT = git_root()
     global SCRIPT_DIR
