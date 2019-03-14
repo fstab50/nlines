@@ -1,0 +1,78 @@
+{
+    "Package": "deb",
+    "Project": "nlines-bash",
+    "Executable": "nlines",
+    "ProjectUrl": "https://github.com/fstab50/nlines-bash",
+    "IssuesUrl": "https://github.com/fstab50/nlines-bash/issues",
+    "Description": "Count the number of lines in code projects",
+    "Version": "MAJOR_VERSION",
+    "Release": "MINOR_VERSION",
+    "PreInstall": ["", ""],
+    "DependencyList": [
+        "bash (>= 4.3)",
+        "findutils (>= 4.6.0)",
+        "debianutils  (>= 4.7)",
+        "coreutils (>= 8.0)",
+        "bash-completion"
+    ],
+    "LogFiles": [ ],
+    "VersionModule": "version.py",
+    "DockerImage": "centos7:debbuildD",
+    "DockerContiner": "builddeb-nlines",
+    "DockerUser": "builder",
+    "DockerBuildScript": "docker-builddeb.sh",
+    "BashCompletion": "nlines-completion.bash",
+    "ControlFile": {
+        "Name": "control",
+        "Summary": "Count the number of lines in code projects",
+        "Description":  "",
+        "BuildArch": "amd64",
+        "License": "GPL-3",
+        "Source": "nlines-MAJOR_VERSION.MINOR_VERSION.tar.gz",
+        "BuildDirName": "nlines-MAJOR_VERSION.MINOR_VERSION",
+        "Directories": [
+            {
+                "Dirname": "/usr/local/lib/nlines",
+                "Permissions": "0755"
+            },
+            {
+                "Dirname": "/usr/local/bin",
+                "Permissions": "0755"
+            }
+        ],
+        "Files": [
+            {
+                "filename": "nlines",
+                "SourceLocation": "nlines-MAJOR_VERSION/nlines",
+                "location": "/usr/local/bin/nlines",
+                "Permissions": "0755"
+
+            },
+            {
+                "filename": "std_functions.sh",
+                "SourceLocation": "/tmp/build/nlines-MAJOR_VERSION/std_functions.sh",
+                "SpecFilePath": "/usr/local/lib/nlines/std_functions.sh",
+                "Permissions": "0644"
+            },
+            {
+                "filename": "colors.sh",
+                "SourceLocation": "/tmp/build/nlines-MAJOR_VERSION/colors.sh",
+                "SpecFilePath": "/usr/local/lib/nlines/colors.sh",
+                "Permissions": "0644"
+            },
+            {
+                "filename": "exitcodes.sh",
+                "SourceLocation": "/tmp/build/nlines-MAJOR_VERSION/exitcodes.sh",
+                "SpecFilePath": "/usr/local/lib/nlines/colors.sh",
+                "Permissions": "0644"
+            },
+            {
+                "filename": "version.py",
+                "SourceLocation": "/tmp/build/nlines-MAJOR_VERSION/version.py",
+                "SpecFilePath": "/usr/local/lib/nlines/version.py",
+                "Permissions": "0644"
+            }
+        ],
+        "BuildComment": "Debian Package built by CI/CD automtation"
+    }
+}
