@@ -86,6 +86,32 @@ function _complete_nlines_commands(){
 }
 
 
+function _filedir(){
+    local i IFS='
+' xspec;
+    _tilde "$cur" || return 0;
+    local -a toks;
+    local quoted x tmp;
+    _quote_readline_by_ref "$cur" quoted;
+    x=$( compgen -d -- "$quoted" ) && while read -r tmp; do
+        toks+=("$tmp");
+    done <<< "$x";
+    if [[ "$1" != -d ]]; then
+        xspec=${1:+"!*.@($1|${1^^})"};
+        x=$( compgen -f -X "$xspec" -- $quoted ) && while read -r tmp; do
+            toks+=("$tmp");
+        done <<< "$x";
+    fi;
+    [[ -n ${COMP_FILEDIR_FALLBACK:-} && -n "$1" && "$1" != -d && ${#toks[@]} -lt 1 ]] && x=$( compgen -f -- $quoted ) && while read -r tmp; do
+        toks+=("$tmp");
+    done <<< "$x";
+    if [[ ${#toks[@]} -ne 0 ]]; then
+        compopt -o filenames 2> /dev/null;
+        COMPREPLY+=("${toks[@]}");
+    fi
+}
+
+
 function _pathopt(){
     ##
     ##  bash v4.4 profile reference function
