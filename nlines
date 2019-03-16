@@ -148,11 +148,15 @@ function included(){
                 return 1
             fi
         done
+        return 0
 
     elif [[ $($wfile $object | grep -i 'binary') ]]; then
         return 1
+
+    elif [[ $($wfile $object | grep 'RGB') ]] || [[ $($wfile $object | grep 'JPEG') ]]; then
+        return 1
     fi
-    return 0
+    return 1
 }
 
 
@@ -250,7 +254,7 @@ function process_objects(){
 
                 elif [ -d "$1" ]; then
                     # is directory
-                    for i in $(find "$1" ! -iwholename '*.git*' -type f); do
+                    for i in $(find "$1" ! -iwholename '*.git*' ! -iwholename '*venv*' -type f); do
                         if included "$i"; then
                             sum=$(( $sum + $(cat $i | wc -l) ))
                             print_object "$i"
