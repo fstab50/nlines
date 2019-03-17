@@ -153,7 +153,7 @@ function included(){
     elif [[ $($wfile $object | grep -i 'binary') ]]; then
         return 1
 
-    elif [[ $($wfile $object | grep 'RGB') ]] || [[ $($wfile $object | grep 'JPEG') ]]; then
+    elif [[ $($wfile $object | grep -i 'RGB') ]] || [[ $($wfile $object | grep -i 'JPEG') ]]; then
         return 1
     fi
     return 1
