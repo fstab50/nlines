@@ -34,6 +34,7 @@ wbf=$(echo -e ${whitebold_frame})
 wgc=$(echo -e ${a_gray})                              # white gray
 datec=$(echo -e ${blue})
 bbc=$(echo -e ${bold}${a_brightcyan})
+btc=$(echo -e ${a_brightcyan})
 title=$(echo -e ${bold}${a_brightwhite})              # title color, white + bold
 hic=$(echo -e ${bold}${a_brightyellowgreen})          # help menu accent 1
 bin=$(echo -e ${bold}${a_orange})                     # help menu binary accent
@@ -217,15 +218,27 @@ function print_object(){
     local twidth=$column_width
     local owidth=${#object}
     local cutoff=$(( $column_width - 8 ))
-    local sp
+    local sp path targetfile
 
+    targetfile=$(echo $object | awk -F '/' '{print $NF}')
+    path=${object%%$targetfile}
+
+    if [[ $path = "$targetfile" ]]; then
+        targetfile=""
+    fi
     if [ $owidth -ge $cutoff ]; then
-        printname=${object::$cutoff}
+        lengthname=${object::$cutoff}
+        if [ "$targetfile" = "" ]; then
+            printname="${btc}${path::$cutoff}${rst}"
+        else
+            printname="${path::$cutoff}${btc}$targetfile${rst}"
+        fi
     else
-        printname=$object
+        lengthname=$object
+        printname="$path${btc}$targetfile${rst}"
     fi
 
-    sp=$(( $twidth - ${#printname} ))
+    sp=$(( $twidth - ${#lengthname} ))
     rawnum="$(cat $object | wc -l)"
     hsum=$(human_readable "$rawnum")    # format large numbers
     if [[ $rawnum -ge '1000' ]]; then
