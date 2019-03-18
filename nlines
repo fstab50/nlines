@@ -12,7 +12,7 @@ pkg_root=$(echo $pkg | awk -F '.' '{print $1}')     # pkg without file extention
 pkg_path=$(cd $(dirname $0); pwd -P)                # location of pkg
 pkg_lib="$pkg_path/core"                            # location of source libraries
 config_dir="$HOME/.config/$pkg"                     # location of ancillary configuration files
-column_width='60'                                   # width of columnar screen output
+column_width='80'                                   # width of columnar screen output
 
 # source colors, exitcodes, version file, and  std_function defs | NOTE: source order dependent
 source $pkg_lib/colors.sh
@@ -27,7 +27,7 @@ bgf=$(echo -e ${greenbold_frame})
 bg=$(echo -e ${a_brightgreen})
 bb=$(echo -e ${a_brightblue})
 gbl=$(echo -e ${ITALIC}${a_bluegray})
-obf=$(echo -e ${bold}${a_orange})
+bbo=$(echo -e ${bold}${a_orange})
 bbf=$(echo -e ${pv_bluebold})
 bcy=$(echo -e ${cyan})
 wbf=$(echo -e ${whitebold_frame})
@@ -215,10 +215,14 @@ function print_exclusions(){
 
 function print_object(){
     local object="$1"
+    local lines="$2"
     local twidth=$column_width
     local owidth=${#object}
     local cutoff=$(( $column_width - 8 ))
     local sp path targetfile
+    local act=${btc}
+
+    #if (( "$lines" > '1000' )); then act=${hi_hum}; fi
 
     targetfile=$(echo $object | awk -F '/' '{print $NF}')
     path=${object%%$targetfile}
@@ -229,13 +233,13 @@ function print_object(){
     if [ $owidth -ge $cutoff ]; then
         lengthname=${object::$cutoff}
         if [ "$targetfile" = "" ]; then
-            printname="${btc}${path::$cutoff}${rst}"
+            printname="${act}${path::$cutoff}${rst}"
         else
-            printname="${path::$cutoff}${btc}$targetfile${rst}"
+            printname="${path::$cutoff}${act}$targetfile${rst}"
         fi
     else
         lengthname=$object
-        printname="$path${btc}$targetfile${rst}"
+        printname="$path${act}$targetfile${rst}"
     fi
 
     sp=$(( $twidth - ${#lengthname} ))
@@ -269,14 +273,14 @@ function process_objects(){
                 if [ -f "$1" ] &&  included "$1"; then
                     # is file object
                     sum=$(( $sum + $(cat $1 | wc -l) ))
-                    print_object "$1"
+                    print_object "$1" "$sum"
 
                 elif [ -d "$1" ]; then
                     # is directory
                     for i in $(find "$1" ! -iwholename '*.git*' ! -iwholename '*venv*' -type f); do
                         if included "$i"; then
                             sum=$(( $sum + $(cat $i | wc -l) ))
-                            print_object "$i"
+                            print_object "$i" "$sum"
                         else
                             continue
                         fi
