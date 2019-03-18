@@ -43,6 +43,7 @@ wt=$(echo -e ${a_brightwhite})                        # help menu accent 2
 fs=$(echo -e ${yellow})                               # file path color
 btext=${reset}                                        # clear accents; rtn to native term colors
 frame=${btext}
+hi_num=${bin}
 rst=${reset}
 
 border=$(echo -e ${red})
@@ -225,8 +226,13 @@ function print_object(){
     fi
 
     sp=$(( $twidth - ${#printname} ))
-    hsum=$(human_readable "$(cat $object | wc -l)")    # format large numbers
-    printf -- "\t%s %${sp}s\n" "$printname" "$hsum"
+    rawnum="$(cat $object | wc -l)"
+    hsum=$(human_readable "$rawnum")    # format large numbers
+    if [[ $rawnum -ge '1000' ]]; then
+        printf -- "\t%s %s%${sp}s%s\n" "$printname" "${hi_num}" "$hsum" "${rst}"
+    else
+        printf -- "\t%s %${sp}s\n" "$printname" "$hsum"
+    fi
     return 0
 }
 
