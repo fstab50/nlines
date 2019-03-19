@@ -49,7 +49,10 @@ frame=${btext}
 hi_num=${bin}
 rst=${reset}
 
-border=$(echo -e ${red})
+# accent colors
+file_highlight=$(echo -e ${a_bluegray})
+border=$(echo -e ${bold}${a_dgray})
+
 
 # --- declarations ---------------------------------------------------------------------------------
 
@@ -175,7 +178,7 @@ function human_readable(){
 
 function print_bar(){
     local width="$1"
-    printf -- '%s' "${bbc}"
+    printf -- '%s' "${border}"
     printf '\t%*s\n' "$(($width + 1))" '' | tr ' ' "-"
     printf -- '%s' "$rst"
 }
@@ -222,7 +225,7 @@ function print_object(){
     local owidth=${#object}
     local cutoff=$(( $column_width - 8 ))
     local sp path targetfile
-    local act=${btc}
+    local act=${file_highlight}
     local org=$(echo -e ${a_orange})
 
     targetfile=$(echo $object | awk -F '/' '{print $NF}')
