@@ -46,11 +46,12 @@ wt=$(echo -e ${a_brightwhite})                        # help menu accent 2
 fs=$(echo -e ${yellow})                               # file path color
 btext=${reset}                                        # clear accents; rtn to native term colors
 frame=${btext}
-hi_num=${bin}
 rst=${reset}
 
 # accent colors
 file_highlight=$(echo -e ${a_bluegray})
+hi_num=${bin}
+highlines=$(echo -e ${a_orange})
 border=$(echo -e ${bold}${a_dgray})
 
 
@@ -186,8 +187,13 @@ function print_bar(){
 
 function print_header(){
     local sp=$column_width
+    local legend tab
+
+    tab="               "
+    legend="( ${highlines}o${rst} high count )"
+
     print_bar "$sp"
-    printf -- "\t%s %${sp}s\n" "object${rst}" "lines${rst}"
+    printf -- "\t%s %${sp}s\n" "object${rst}" "line count${rst}"
     print_bar "$sp"
 }
 
