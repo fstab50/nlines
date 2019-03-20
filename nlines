@@ -150,7 +150,11 @@ function included(){
 
     wfile=$(which file)
 
-    if [[ $($wfile $object | grep 'ASCII') ]] || [[ $($wfile $object | grep 'Unicode text') ]]; then
+    if [[ $(echo $object | grep 'Permission denied') ]]; then
+        std_message "Your user ($USER) does not have adequate read permissions" "WARN"
+        return 1
+
+    elif [[ $($wfile $object | grep 'ASCII') ]] || [[ $($wfile $object | grep 'Unicode text') ]]; then
         for pattern in $(build_exclusions_list); do
             if [[ $(echo $object | grep -i "$pattern") ]]; then
                 return 1
@@ -229,7 +233,7 @@ function print_object(){
     local rawnum="$2"
     local twidth=$column_width
     local owidth=${#object}
-    local cutoff=$(( $column_width - 8 ))
+    local cutoff=$(( $column_width - 18 ))
     local sp path targetfile
     local act=${file_highlight}
     local org=$(echo -e ${a_orange})
@@ -237,9 +241,11 @@ function print_object(){
     targetfile=$(echo $object | awk -F '/' '{print $NF}')
     path=${object%%$targetfile}
 
+    # do not repeat path if targetfile is path (i.e. object in current dir)
     if [[ $path = "$targetfile" ]]; then
         targetfile=""
     fi
+
     if [ $owidth -ge $cutoff ]; then
         lengthname=${object::$cutoff}
         if [ "$targetfile" = "" ]; then
@@ -288,7 +294,7 @@ function process_objects(){
 
                 elif [ -d "$1" ]; then
                     # is directory
-                    for i in $(find "$1" ! -iwholename '*.git*' ! -iwholename '*venv*' -type f); do
+                    for i in $(find "$1" ! -iwholename '*.git*' ! -iwholename '*venv*' -type f 2>&1); do
                         if included "$i"; then
                             object_sum="$(cat $i | wc -l)"
                             sum=$(( $sum + $object_sum ))
@@ -319,7 +325,7 @@ function sum_directory(){
             print_object "$i"
         fi
     done
-    cd $pwd || exit 1
+    cd $pwd || exit $E_OSERROR
 }
 
 
@@ -352,4 +358,4 @@ function nlines(){
 
 nlines "$@"
 
-exit 0
+exit $E_OK
