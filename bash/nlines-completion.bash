@@ -177,18 +177,7 @@ function _nlines_completions(){
     numoptions=0
 
     options='--help --exclusions --configuration --sum'
-    objects=$(_filter_objects)
-    is_sum=$(_is_sum(){ if [[ $(echo "${COMP_WORDS[@]}" | grep \-\-sum) ]]; then return 0; else return 1; fi;})
-
-    case "$is_sum" in
-        0)
-            _pathopt
-            return 0
-            ;;
-        1)
-            return 0
-            ;;
-    esac
+    _is_sum(){ if [[ "$(echo "${COMP_WORDS[@]}" | grep '\-\-sum')" ]]; then is_sum='yes'; else is_sum='no'; fi;}
 
     case "${prev}" in
 
@@ -197,6 +186,7 @@ function _nlines_completions(){
             ;;
 
         'nlines')
+            objects=$(_filter_objects)
             COMPREPLY=( $(compgen -W "${options}" -- ${cur}) )
             return 0
             ;;
@@ -207,12 +197,13 @@ function _nlines_completions(){
             ;;
 
         *)
-            _pathopt
+            objects=$(_filter_objects)
+            COMPREPLY=( $(compgen -W "${objects}" -- ${cur}) )
             return 0
             ;;
 
     esac
 
-    COMPREPLY=( $(compgen -W "${objects}" -- ${cur}) )
+    #COMPREPLY=( $(compgen -W "${objects}" -- ${cur}) )
 
 } && complete -F _nlines_completions nlines
