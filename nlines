@@ -48,10 +48,12 @@ frame=${btext}
 rst=${reset}
 
 # accent colors
-file_highlight=$(echo -e ${a_bluegray})
+file_highlight=$(echo -e ${a_brightgreen})
+count_color=$(echo -e ${rst})
+path_highlight=$(echo -e ${a_bluegray})
 hi_num=${bin}
 highlines=$(echo -e ${a_orange})
-border=$(echo -e ${bold}${a_dgray})
+border=$(echo -e ${bold}${a_wgray})
 cut_symbol=$(echo -e ${bold}$(tput setaf 1)~/${rst})
 
 
@@ -256,14 +258,14 @@ function print_object(){
         cut=true
 
         if [ "$targetfile" = "" ]; then
-            printname="${act}${path::$total_cut}${rst}"
+            printname="${path_highlight}${path::$total_cut}${rst}"
         else
             path="${path::$total_cut}${cut_symbol}"
-            printname="${path}${act}$targetfile${rst}"
+            printname="${path_highlight}${path}${act}$targetfile${rst}"
         fi
     else
         lengthname=$object
-        printname="$path${act}$targetfile${rst}"
+        printname="${path_highlight}$path${act}$targetfile${rst}"
     fi
 
     if [[ "$cut" ]]; then
@@ -275,9 +277,9 @@ function print_object(){
 
     if [[ "$rawnum" -ge "$long_lines" ]]; then
         #sp=$(( $sp - 3 ))
-        printf -- "\t%s %s%${sp}s%s\n" "${path}${org}$targetfile${rst}" "${hi_num}" "$hsum" "${rst}"
+        printf -- "\t%s %s%${sp}s%s\n" "${path_highlight}${path}${org}$targetfile${rst}" "${hi_num}" "$hsum" "${rst}"
     else
-        printf -- "\t%s %${sp}s\n" "$printname" "$hsum"
+        printf -- "\t%s %s%${sp}s%s\n" "$printname" "${count_color}" "$hsum" "${rst}"
     fi
     cut=""
     return 0
