@@ -12,7 +12,7 @@ pkg_root=$(echo $pkg | awk -F '.' '{print $1}')     # pkg without file extention
 pkg_path=$(cd $(dirname $0); pwd -P)                # location of pkg
 pkg_lib="$pkg_path/core"                            # location of source libraries
 config_dir="$HOME/.config/$pkg"                     # location of ancillary configuration files
-column_width='75'                                   # total width of columnar screen output
+output_width='75'                                   # total width of columnar screen output
 long_lines='1000'                                   # threashold for marking files with extensive line counts
 
 # source colors, exitcodes, version file, and  std_function defs | NOTE: source order dependent
@@ -77,7 +77,6 @@ function help_menu(){
                        [-h | --help  ]
                        [-V | --version ]
   ${title}OPTIONS${btext}
-
         ${title}-s${btext}, ${title}--sum${btext} <value>:  Sum the total number of lines of text.
 
         ${title}-c${btext}, ${title}--configuration${btext}:  Update runtime options via cli menu.
@@ -90,6 +89,11 @@ function help_menu(){
         ${title}-h${btext}, ${title}--help${btext}:  Display this help menu.
 
         ${title}-V${btext}, ${title}--version${btext}:  Show ${pkg} version & license information.
+
+  ${title}LEGEND${btext}
+                ${bd}${file_highlight}o${rst} : file object counted
+                ${bd}${highlines}o${rst} : line count above threashold (> $long_lines)
+               ${cut_symbol} : path too long; truncated
 
   ${title}EXAMPLES${btext}
 
@@ -190,7 +194,7 @@ function print_bar(){
 
 
 function print_header(){
-    local sp=$column_width
+    local sp=$output_width
     local legend tab
 
     tab="               "
@@ -204,8 +208,8 @@ function print_header(){
 
 function print_footer(){
     local hsum="$1"
-    print_bar "$column_width"
-    sp=$(( $column_width + 8))
+    print_bar "$output_width"
+    sp=$(( $output_width + 8))
     printf -- "\t%s %${sp}s\n" "${white}Total lines${rst}:" "${bbf}$hsum${rst}"
 }
 
@@ -231,9 +235,9 @@ function print_exclusions(){
 function print_object(){
     local object="$1"
     local rawnum="$2"
-    local twidth=$column_width
+    local twidth=$output_width
     local owidth=${#object}
-    local cutoff=$(( $column_width - 8 ))
+    local cutoff=$(( $output_width - 8 ))
     local sp path targetfile
     local act=${file_highlight}
     local org=$(echo -e ${a_orange})
