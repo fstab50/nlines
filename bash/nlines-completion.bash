@@ -178,6 +178,17 @@ function _nlines_completions(){
 
     options='--help --exclusions --configuration --sum'
     objects=$(_filter_objects)
+    is_sum=$(_is_sum(){ if [[ $(echo "${COMP_WORDS[@]}" | grep \-\-sum) ]]; then return 0; else return 1; fi;})
+
+    case "$is_sum" in
+        0)
+            _pathopt
+            return 0
+            ;;
+        1)
+            return 0
+            ;;
+    esac
 
     case "${prev}" in
 
@@ -191,6 +202,11 @@ function _nlines_completions(){
             ;;
 
         '--sum')
+            _pathopt
+            return 0
+            ;;
+
+        *)
             _pathopt
             return 0
             ;;
