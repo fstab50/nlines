@@ -12,7 +12,7 @@ pkg_root=$(echo $pkg | awk -F '.' '{print $1}')     # pkg without file extention
 pkg_path=$(cd $(dirname $0); pwd -P)                # location of pkg
 pkg_lib="$pkg_path/core"                            # location of source libraries
 config_dir="$HOME/.config/$pkg"                     # location of ancillary configuration files
-#output_width='75'                                   # total width of columnar screen output
+min_width='65'                                      # total width of columnar screen output
 max_width=110
 long_lines='1000'                                   # threashold for marking files with extensive line counts
 
@@ -300,6 +300,9 @@ function calc_output_width(){
 
     if (( $length > $max_width )); then
         echo "$max_width"
+
+    elif (( $length < $min_width )); then
+        echo "$min_width"
     else
         echo "$length"
     fi
