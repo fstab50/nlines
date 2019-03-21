@@ -13,6 +13,7 @@ pkg_path=$(cd $(dirname $0); pwd -P)                # location of pkg
 pkg_lib="$pkg_path/core"                            # location of source libraries
 config_dir="$HOME/.config/$pkg"                     # location of ancillary configuration files
 output_width='75'                                   # total width of columnar screen output
+max_width=110
 long_lines='1000'                                   # threashold for marking files with extensive line counts
 
 # source colors, exitcodes, version file, and  std_function defs | NOTE: source order dependent
@@ -196,6 +197,7 @@ function print_bar(){
 
 function print_header(){
     local sp=$output_width
+    local sp="$1"
     local legend tab
 
     tab="               "
@@ -236,9 +238,9 @@ function print_exclusions(){
 function print_object(){
     local object="$1"
     local rawnum="$2"
-    local twidth=$output_width
+    local twidth=$3
     local owidth=${#object}
-    local cutoff=$(( $output_width - 8 - ${#rawnum} ))
+    local cutoff=$(( $3 - 8 - ${#rawnum} ))
     local sp path targetfile
     local act=${file_highlight}
     local org=$(echo -e ${a_orange})
@@ -285,13 +287,33 @@ function print_object(){
 }
 
 
+function calc_output_width(){
+    local length=0
+
+    for i in "$@"; do
+        for j in $(find "$i" ! -iwholename '*.git*' ! -iwholename '*venv*' -type f 2>&1); do
+            if (( ${#j} > $length )); then
+                length=${#j}
+            fi
+        done
+    done
+
+    if (( $length > $max_width )); then
+        echo "$max_width"
+    else
+        echo "$length"
+    fi
+}
+
+
 function process_objects(){
     ##
     ## iterate thru $@, counting lines
     ##
 
     # begin output
-    print_header
+    w=$(calc_output_width "$@")
+    print_header "$w"
 
     while [ $# -gt 0 ]; do
         case "$1" in
@@ -305,7 +327,7 @@ function process_objects(){
                     # is file object
                     object_sum="$(cat $1 | wc -l)"
                     sum=$(( $sum + $object_sum ))
-                    print_object "$1" "$object_sum"
+                    print_object "$1" "$object_sum" $w
 
                 elif [ -d "$1" ]; then
                     # is directory
@@ -313,7 +335,7 @@ function process_objects(){
                         if included "$i"; then
                             object_sum="$(cat $i | wc -l)"
                             sum=$(( $sum + $object_sum ))
-                            print_object "$i" "$object_sum"
+                            print_object "$i" "$object_sum" $w
                         else
                             continue
                         fi
