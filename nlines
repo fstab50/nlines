@@ -94,11 +94,10 @@ function help_menu(){
 
   ${title}LEGEND${btext}
                 ${bd}${file_highlight}o${rst} : file object counted
-                ${bd}${highlines}o${rst} : line count above threashold (> $long_lines)
+                ${bd}${highlines}o${rst} : line count above threshold (> $long_lines)
                ${cut_symbol} : path too long; truncated
 
   ${title}EXAMPLES${btext}
-
             ${gbl}Full path access to file object targets${btext}
                     $  $pkg  --sum  /usr/bin/ <tab><tab>
 
@@ -239,7 +238,7 @@ function print_object(){
     local rawnum="$2"
     local twidth=$output_width
     local owidth=${#object}
-    local cutoff=$(( $output_width - 8 ))
+    local cutoff=$(( $output_width - 8 - ${#rawnum} ))
     local sp path targetfile
     local act=${file_highlight}
     local org=$(echo -e ${a_orange})
@@ -281,7 +280,7 @@ function print_object(){
     else
         printf -- "\t%s %s%${sp}s%s\n" "$printname" "${count_color}" "$hsum" "${rst}"
     fi
-    cut=""
+    cut=""      # reset cut bool
     return 0
 }
 
