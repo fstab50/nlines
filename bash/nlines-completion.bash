@@ -197,8 +197,7 @@ function _nlines_completions(){
             ;;
 
         *)
-            objects=$(_filter_objects)
-            COMPREPLY=( $(compgen -W "${objects}" -- ${cur}) )
+            _pathopt
             return 0
             ;;
 
