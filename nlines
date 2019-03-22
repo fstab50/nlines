@@ -13,7 +13,7 @@ pkg_path=$(cd $(dirname $0); pwd -P)                # location of pkg
 pkg_lib="$pkg_path/core"                            # location of source libraries
 config_dir="$HOME/.config/$pkg"                     # location of ancillary configuration files
 min_width='60'                                      # total width of columnar screen output
-max_width='100'
+max_width=$(( $(tput cols) - 8 ))
 long_lines='1000'                                   # threashold for marking files with extensive line counts
 
 # source colors, exitcodes, version file, and  std_function defs | NOTE: source order dependent
@@ -49,13 +49,14 @@ frame=${btext}
 rst=${reset}
 
 # accent colors
-file_highlight=$(echo -e ${a_brightgreen})
-count_color=$(echo -e ${rst})
+file_highlight=$(echo -e ${a_brightblue})
+count_color=$(echo -e ${a_brightwhite})
 path_highlight=$(echo -e ${a_bluegray})
-hi_num=${bin}
-highlines=$(echo -e ${a_orange})
+hi_num=${bd}${bin}
+highlines=$(echo -e ${bd}${a_orange})
 border=$(echo -e ${bold}${a_wgray})
-cut_symbol=$(echo -e ${bold}$(tput setaf 1)~/${rst})
+a_cs=$(echo -e ${a_wgray2})
+cut_symbol=$(echo -e ${a_cs}\<\>${rst})
 
 
 # --- declarations ---------------------------------------------------------------------------------
