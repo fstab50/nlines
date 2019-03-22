@@ -23,10 +23,14 @@ if [[ "$(gcreds -s | grep $PROFILE)" ]] && [[ ! "$(gcreds -s | grep expired)" ]]
     cd "$ROOT/assets"
 
     for i in $(ls .); do
+
+        # upload object
         aws --profile $PROFILE s3 cp ./$i s3://$BUCKET/$KEY/$i
         echo "s3 object $i uploaded..."
+
         aws --profile $PROFILE s3api put-object-acl --acl 'public-read' --bucket $BUCKET --key $KEY/$i
         echo "s3 object acl applied to $i..."
+        
     done
     cd "$ROOT" || true
 
