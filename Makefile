@@ -24,6 +24,10 @@ DOC_PATH := $(CUR_DIR)/docs
 REQUIREMENT = $(CUR_DIR)/requirements.txt
 VERSION_FILE = $(LIB_DIR)/version.py
 
+# s3
+BUCKET := 'awscloud.center'
+KEY := 'images'
+
 
 # --- rollup targets  ------------------------------------------------------------------------------
 
@@ -106,16 +110,8 @@ installrpm: buildrpm   ## Install (source: pypi). Build artifacts exist
 
 
 .PHONY: upload-s3-artifacts
-rebuild-docs:   ##  Regenerate sphinx documentation
-	if [ "$(shell gcreds -s | grep $PROFILE)" ] && [ ! "$(shell gcreds -s | grep expired)" ]; then \
-		cd $(CUR_DIR)/assets && \
-		$(shell for i in $(ls .); do \
-			aws --profile $(PROFILE) s3 cp $(i) s3://$(BUCKET)/$(KEY)/$(i); \
-			echo "s3 object $i uploaded..."; \
-			aws --profile $(PROFILE) s3api put-object-acl --acl public-read --bucket $(BUCKET) --key $(KEY)/$(i); \
-			echo "s3 object acl applied to $i..."; \
-		done) \
-	else @echo "You must rerun gcreds to generate temporary credentials for $(PROFI?LE)"; fi
+upload-s3-artifacts:   ##  Regenerate sphinx documentation
+	bash $(CUR_DIR)/scripts/upload-s3-artifacts.sh
 
 
 
