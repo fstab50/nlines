@@ -39,7 +39,7 @@ To display the help menu:
     $ nlines --help
 ```
 
-![help](./assets/help-menu.png)]<!-- .element height="50%" width="50%" -->
+![help](https://s3.us-east-2.amazonaws.com/awscloud.center/images/help-menu.png)]
 
 
 [back to the top](#top)
