@@ -1,22 +1,17 @@
-import os
 from _version import __version__ as version
 from pyaws import logd
-
+from core.parameter_processing import ParameterSet
 
 __author__ = 'Blake Huber'
 __version__ = version
-__license__ = "MIT"
-__maintainer__ = "Blake Huber"
-__email__ = "blakeca00[AT]gmail.com"
-__status__ = "Development"
+__email__ = "blake.huber@atos.net"
 
-HOME = os.environ.get('HOME')
-PACKAGE = 'branchdiff'
+PACKAGE = 'core'
 enable_logging = True
-log_mode = 'FILE'          # log to cloudwatch logs
-log_filename = PACKAGE + '_build.log'
-log_dir = 'logs'
-log_path = HOME + '/' + log_dir + '/' + log_filename
+log_mode = 'STREAM'          # log to cloudwatch logs
+log_filename = ''
+log_dir = '/logs'
+log_path = log_dir + '/' + log_filename
 
 
 log_config = {
