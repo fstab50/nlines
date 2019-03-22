@@ -16,6 +16,7 @@ Count the number of lines of text in a code project (or anything else)
 * [Dependencies](#dependencies)
 * [Help](#help)
 * [Exclusions](#exclusions)
+* [Screenshots](#screenshots)
 * [Author & Copyright](#author--copyright)
 * [License](#license)
 * [Disclaimer](#disclaimer)
@@ -53,6 +54,20 @@ To display the help menu:
 ```
 
 ![help](./assets/exclusions.png)]<!-- .element height="50%" width="50%" -->
+
+
+[back to the top](#top)
+
+* * *
+## Screenshots
+
+Counting lines in large repository with long paths.
+
+```bash
+    $ nlines  --sum  git/AWSAMPLES/aws-serverless-workshops/
+```
+
+[![repo1-1](./assets/repofinal.png)(https://s3.us-east-2.amazonaws.com/awscloud.center/images/repofinal.png)]
 
 
 [back to the top](#top)
