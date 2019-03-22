@@ -1,5 +1,5 @@
 #
-#	 Makefile, ver 1.6, PROJECT:  nlines
+#	 Makefile, ver 1.7, PROJECT:  nlines
 #
 # --- declarations  --------------------------------------------------------------------------------
 
@@ -19,6 +19,7 @@ PIP_CALL := $(VENV_DIR)/bin/pip3
 ACTIVATE = $(shell . $(VENV_DIR)/bin/activate)
 MAKE = $(shell which make)
 MODULE_PATH := $(LIB_DIR)
+PROFILE := gcreds-da-atos
 DOC_PATH := $(CUR_DIR)/docs
 REQUIREMENT = $(CUR_DIR)/requirements.txt
 VERSION_FILE = $(LIB_DIR)/version.py
@@ -102,6 +103,20 @@ installdeb: builddeb   ## Install (source: pypi). Build artifacts exist
 installrpm: buildrpm   ## Install (source: pypi). Build artifacts exist
 	if [ ! -d $(VENV_DIR) ]; then $(MAKE) setup-venv; fi; \
 	cd $(CUR_DIR) && . $(VENV_DIR)/bin/activate && bash $(SCRIPT_DIR)/installrpm.sh
+
+
+.PHONY: upload-s3-artifacts
+rebuild-docs:   ##  Regenerate sphinx documentation
+	if [ "$(shell gcreds -s | grep $PROFILE)" ] && [ ! "$(shell gcreds -s | grep expired)" ]; then \
+		cd $(CUR_DIR)/assets && \
+		$(shell for i in $(ls .); do \
+			aws --profile $(PROFILE) s3 cp $(i) s3://$(BUCKET)/$(KEY)/$(i); \
+			echo "s3 object $i uploaded..."; \
+			aws --profile $(PROFILE) s3api put-object-acl --acl public-read --bucket $(BUCKET) --key $(KEY)/$(i); \
+			echo "s3 object acl applied to $i..."; \
+		done) \
+	else @echo "You must rerun gcreds to generate temporary credentials for $(PROFI?LE)"; fi
+
 
 
 .PHONY: help
