@@ -70,13 +70,6 @@ Counting lines in large repository with long paths.
 ![repo1-1](https://s3.us-east-2.amazonaws.com/awscloud.center/images/repofinal.png)
 
 
-
-<p align="center">
-  <img src="https://s3.us-east-2.amazonaws.com/awscloud.center/images/repofinal.png" width="180" title="line count">
-  <img src="https://s3.us-east-2.amazonaws.com/awscloud.center/images/repofinal.png" width="550" alt="full image line count>
-</p>
-
-
 [back to the top](#top)
 
 * * *
