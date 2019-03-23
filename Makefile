@@ -91,17 +91,18 @@ builddeb:     ## Build Debian distribution (.deb) os package
 .PHONY: buildrpm
 buildrpm:     ## Build Redhat distribution (.rpm) os package
 	@echo "Building RPM package format of $(PROJECT)";
+	cp $(LIB_DIR)/version.py $(SCRIPT_DIR)/version.py
 	if [ ! -f $(VENV_DIR) ]; then $(MAKE) setup-venv; fi; \
 	if [ $(VERSION) ]; then cd $(CUR_DIR) && . $(VENV_DIR)/bin/activate && \
 	$(PYTHON3_PATH) $(SCRIPT_DIR)/buildrpm.py --build --set-version $(VERSION); else \
 	cd $(CUR_DIR) && . $(VENV_DIR)/bin/activate && $(PYTHON3_PATH) $(SCRIPT_DIR)/buildrpm.py --build; fi
+	rm -f $(SCRIPT_DIR)/version.py
 
 
 .PHONY: installdeb
 installdeb: builddeb   ## Install (source: pypi). Build artifacts exist
 	if [ ! -d $(VENV_DIR) ]; then $(MAKE) setup-venv; fi; \
 	cd $(CUR_DIR) && . $(VENV_DIR)/bin/activate && bash $(SCRIPT_DIR)/installdeb.sh
-
 
 .PHONY: installrpm
 installrpm: buildrpm   ## Install (source: pypi). Build artifacts exist
