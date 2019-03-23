@@ -109,8 +109,8 @@ installrpm: buildrpm   ## Install (source: pypi). Build artifacts exist
 	cd $(CUR_DIR) && . $(VENV_DIR)/bin/activate && bash $(SCRIPT_DIR)/installrpm.sh
 
 
-.PHONY: s3upload
-s3upload:   ## Upload README images to Amazon S3
+.PHONY: upload-images
+upload-images:   ## Upload README images to Amazon S3
 	bash $(CUR_DIR)/scripts/upload-s3-artifacts.sh
 
 
