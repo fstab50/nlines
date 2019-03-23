@@ -1,10 +1,11 @@
-from _version import __version__ as version
+from version import __version__ as version
 from pyaws import logd
-from core.parameter_processing import ParameterSet
+
 
 __author__ = 'Blake Huber'
 __version__ = version
-__email__ = "blake.huber@atos.net"
+__email__ = "blakeca00@gmail.com"
+
 
 PACKAGE = 'core'
 enable_logging = True

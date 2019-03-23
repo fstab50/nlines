@@ -897,7 +897,7 @@ def prebuild(builddir, volmnt, parameter_file):
             )
     except Exception as e:
         logger.exception(
-            '{}: Failure to import _version module _version'.format(inspect.stack()[0][3])
+            '{}: Failure to import version module'.format(inspect.stack()[0][3])
         )
         return False
 
@@ -952,7 +952,7 @@ def postbuild(version, version_module, builddir_path, debian_root):
             return package_path
 
     except OSError as e:
-        logger.exception('{}: Postbuild clean up failure'.format(inspect.stack()[0][3]))
+        logger.exception('{}: Postbuild clean up failure: {}'.format(inspect.stack()[0][3], e))
         return False
     return package_path
 
