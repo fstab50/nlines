@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 PROFILE='gcreds-da-atos'
-BUCKET='awscloud.center'
-KEY='images'
+BUCKET='http-imagestore'
+KEY='nlines-bash'
 
 
 
@@ -30,7 +30,7 @@ if [[ "$(gcreds -s | grep $PROFILE)" ]] && [[ ! "$(gcreds -s | grep expired)" ]]
 
         aws --profile $PROFILE s3api put-object-acl --acl 'public-read' --bucket $BUCKET --key $KEY/$i
         echo "s3 object acl applied to $i..."
-        
+
     done
     cd "$ROOT" || true
 
