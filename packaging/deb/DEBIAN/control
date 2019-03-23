@@ -1,4 +1,4 @@
-Package: branchdiff
+Package: nlines
 Version: 0.0.0
 Section: devel
 Priority: optional
@@ -10,14 +10,8 @@ Depends:  DEPLIST
 Download-Size: 48 kB
 Standards-Version: 3.9.6
 Architecture: BUILD_ARCH
-Description:  Instantly know status of the current git working branch
-  branchdiff is a utility for use with git version control. branchdiff
-  provides user access to advanced  git features without requiring any
-  knowledge of advanced git syntax.
-  .
-  branch diff features:
-    * Illustration of differences between current working branch and master branch
-    * Details when commits were made to the current branch, by whom
-    * Summary statistics for all commits
-    * Advanced file difference illustration between branches
+Description:  nlines is a commandline utility to count lines of code
+or ascii text and display color coded results.  Binary files are skipped.
+nlines has a user-defined exclusions list used to tell nlines which file
+extensions should not be counted.
 Homepage: PROJECT_URL
