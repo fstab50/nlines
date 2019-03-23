@@ -109,10 +109,9 @@ installrpm: buildrpm   ## Install (source: pypi). Build artifacts exist
 	cd $(CUR_DIR) && . $(VENV_DIR)/bin/activate && bash $(SCRIPT_DIR)/installrpm.sh
 
 
-.PHONY: upload-s3-artifacts
-upload-s3-artifacts:   ##  Regenerate sphinx documentation
+.PHONY: s3upload
+s3upload:   ## Upload README images to Amazon S3
 	bash $(CUR_DIR)/scripts/upload-s3-artifacts.sh
-
 
 
 .PHONY: help
