@@ -111,7 +111,9 @@ installrpm: buildrpm   ## Install (source: pypi). Build artifacts exist
 
 .PHONY: upload-images
 upload-images:   ## Upload README images to Amazon S3
+	cp $(LIB_DIR)/version.py $(SCRIPT_DIR)/version.py
 	bash $(CUR_DIR)/scripts/upload-s3-artifacts.sh
+	rm -f $(SCRIPT_DIR)/version.py
 
 
 .PHONY: help
