@@ -54,9 +54,9 @@ count_color=$(echo -e ${a_brightwhite})
 path_highlight=$(echo -e ${a_bluegray})
 hi_num=${bd}${bin}
 highlines=$(echo -e ${bd}${a_orange})
-border=$(echo -e ${bold}${a_wgray})
-a_cs=$(echo -e ${a_wgray2})
-cut_symbol=$(echo -e ${a_cs}\<\>${rst})
+border=$(echo -e ${bold}${a_bluegray})
+a_cs=$(echo -e ${a_wgray})
+cut_symbol=$(echo -e ${bd}${a_cs}-\> ${rst})
 
 
 # --- declarations ---------------------------------------------------------------------------------
@@ -245,6 +245,7 @@ function print_object(){
     local sp path targetfile
     local act=${file_highlight}
     local org=$(echo -e ${a_orange})
+    local adj_factor=3
 
     targetfile=$(echo $object | awk -F '/' '{print $NF}')
     path=${object%%$targetfile}
@@ -271,7 +272,7 @@ function print_object(){
     fi
 
     if [[ "$cut" ]]; then
-        sp=$(( $twidth - ${#lengthname} - 2 ))
+        sp=$(( $twidth - ${#lengthname} - $adj_factor ))
     else
         sp=$(( $twidth - ${#lengthname} ))
     fi
@@ -290,6 +291,7 @@ function print_object(){
 
 function calc_output_width(){
     local length=0
+    local i j
 
     for i in "$@"; do
         for j in $(find "$i" ! -iwholename '*.git*' ! -iwholename '*venv*' -type f 2>&1); do
