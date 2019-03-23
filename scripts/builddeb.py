@@ -175,7 +175,6 @@ def masterbranch_version(version_module):
     commands = ['git checkout master', 'git checkout {}'.format(branch)]
 
     try:
-        # checkout master
         #stdout_message('Checkout master branch:\n\n%s' % subprocess.getoutput(commands[0]))
         masterversion = read(version_module).split('=')[1].strip().strip('"')
 
