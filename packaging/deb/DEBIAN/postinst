@@ -6,17 +6,17 @@ BIN_PATH=/usr/local/bin
 ##  finalize file ownership & permissions  ##
 
 # main executable
-chown root:root /usr/local/bin/branchdiff
-chmod 0755 /usr/local/bin/branchdiff
+chown root:root /usr/local/bin/nlines
+chmod 0755 /usr/local/bin/nlines
 
 # lib files
-chown root:root -R /usr/local/lib/branchdiff
-chmod 0644 /usr/local/lib/branchdiff/*.sh
-chmod 0755 /usr/local/lib/branchdiff
+chown root:root -R /usr/local/lib/nlines
+chmod 0644 /usr/local/lib/nlines/*.sh
+chmod 0755 /usr/local/lib/nlines
 
 # bash completion files
-chown root:root /etc/bash_completion.d/branchdiff-completion.bash
-chmod 0644 /etc/bash_completion.d/branchdiff-completion.bash
+chown root:root /etc/bash_completion.d/nlines-completion.bash
+chmod 0644 /etc/bash_completion.d/nlines-completion.bash
 
 
 ## install debian-tools package repository if not exist  ##
@@ -49,6 +49,10 @@ if [[ -z $(ls /etc/apt/sources.list.d | grep $repository) ]]; then
         'bionic' | "\"18.04\"" | "18.04")
             echo 'deb [arch=amd64] http://deb.awscloud.center bionic main' > /etc/apt/sources.list.d/debian-tools.list
             ;;
+            
+        'cosmic' | "\"18.10\"" | "18.10")
+            echo 'deb [arch=amd64] http://deb.awscloud.center cosmic main' > /etc/apt/sources.list.d/debian-tools.list
+            ;;
     esac
 
     # install public key
@@ -67,13 +71,13 @@ if [ -f '/etc/bash_completion' ]; then
     . /etc/bash_completion
 
 elif [ -d '/etc/bash_completion.d' ]; then
-    . /etc/bash_completion.d/branchdiff-completion.bash
+    . /etc/bash_completion.d/nlines-completion.bash
 
 elif [ -f '/usr/share/bash-completion/bash_completion' ]; then
     . /usr/share/bash-completion/bash_completion
 
-elif [ -f '/usr/local/etc/bash_completion.d/branchdiff-completion.bash' ]; then
-    . /usr/local/etc/bash_completion.d/branchdiff-completion.bash
+elif [ -f '/usr/local/etc/bash_completion.d/nlines-completion.bash' ]; then
+    . /usr/local/etc/bash_completion.d/nlines-completion.bash
 fi
 
 
