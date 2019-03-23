@@ -95,9 +95,9 @@ function help_menu(){
         ${title}-V${btext}, ${title}--version${btext}:  Show ${pkg} version & license information.
 
   ${title}LEGEND${btext}
-                ${bd}${file_highlight}o${rst} : file object counted
-                ${bd}${highlines}o${rst} : line count above threshold (> $long_lines)
-               ${cut_symbol} : path too long; truncated
+                ${bd}${file_highlight}o${rst}  :  File object counted
+                ${bd}${highlines}o${rst}  :  Line count above threshold (> $long_lines)
+               ${cut_symbol} :  Long file path; truncated
 
   ${title}EXAMPLES${btext}
             ${gbl}Full path access to file object targets${btext}
@@ -291,7 +291,7 @@ function print_object(){
 
 function calc_output_width(){
     local length=0
-    local buffer=7
+    local buffer=8
     local i j
 
     for i in "$@"; do
