@@ -3,8 +3,12 @@
 import os
 import sys
 import subprocess
+import logging
+import inspect
+from botocore.exceptions import ClientError
 from pyaws.session import boto3_session
-from pyaws import logd
+from version import __version__
+
 
 # formatting
 act = Colors.ORANGE                     # accent highlight (bright orange)
@@ -22,6 +26,9 @@ profilename = 'gcreds-da-atos'
 
 global s3
 s3 = boto3_session(service='s3', profile=profilename)
+
+logger = logging.getLogger(__version__)
+logger.setLevel(logging.INFO)
 
 
 def git_root():
@@ -63,13 +70,13 @@ def upload_object(s3object, profile=None):
                 CopySource=s3object
             )
     except ClientError as e:
-
+        fname = inspect.stack()[0][3]
+        logger.exception('{}: Error while uploading {} to Amazon S3: {}'.format(fname, objectname, e))
     return valid_upload(bucket, objectname, key, profile)
 
 
-def valid_upload(s3bkt, obj, k, profilename)
-
-
+def valid_upload(s3bkt, obj, k, profilename):
+    pass
 
 
 def init():
@@ -80,7 +87,6 @@ def init():
     os.chdir(git_root())
 
     logger = logd.getLogger(__version__)
-
 
 
 if __name__ == '__main__':
