@@ -241,7 +241,7 @@ function print_object(){
     local rawnum="$2"
     local twidth=$3
     local owidth=${#object}
-    local cutoff=$(( $3 - 4 - ${#rawnum} ))
+    local cutoff=$(( $3 - 6 - ${#rawnum} ))
     local sp path targetfile
     local act=${file_highlight}
     local org=$(echo -e ${a_orange})
@@ -291,7 +291,7 @@ function print_object(){
 
 function calc_output_width(){
     local length=0
-    local buffer=5
+    local buffer=7
     local i j
 
     for i in "$@"; do
