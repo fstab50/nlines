@@ -81,7 +81,6 @@ function help_menu(){
                        [-h | --help  ]
                        [-V | --version ]
   ${title}OPTIONS${btext}
-        ${title}-s${btext}, ${title}--sum${btext} <value>:  Sum the total number of lines of text.
 
         ${title}-c${btext}, ${title}--configuration${btext}:  Update runtime options via cli menu.
             Change  display format, output color, toggle off human
@@ -91,6 +90,8 @@ function help_menu(){
         ${title}-e${btext}, ${title}--exclusions${btext}:  Display contents of the exlusions list.
 
         ${title}-h${btext}, ${title}--help${btext}:  Display this help menu.
+
+        ${title}-s${btext}, ${title}--sum${btext} <value>:  Sum the total number of lines of text.
 
         ${title}-V${btext}, ${title}--version${btext}:  Show ${pkg} version & license information.
 
