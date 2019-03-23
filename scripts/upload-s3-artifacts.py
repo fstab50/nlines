@@ -20,8 +20,8 @@ yl = Colors.GOLD3                       # color when copying, creating paths
 rst = Colors.RESET                      # reset all color, formatting
 
 
-bucket = 'awscloud.center'
-key = 'images'
+bucket = 'http-imagestore'
+key = 'nlines-bash'
 profilename = 'gcreds-da-atos'
 
 global s3
