@@ -13,7 +13,7 @@ pkg_path=$(cd $(dirname $0); pwd -P)                # location of pkg
 pkg_lib="$pkg_path/core"                            # location of source libraries
 config_dir="$HOME/.config/$pkg"                     # location of ancillary configuration files
 min_width='60'                                      # total width of columnar screen output
-max_width=$(( $(tput cols) - 8 ))
+max_width=$(( $(tput cols) - 14 ))
 long_lines='1000'                                   # threashold for marking files with extensive line counts
 
 # source colors, exitcodes, version file, and  std_function defs | NOTE: source order dependent
