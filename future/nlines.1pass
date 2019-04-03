@@ -1,0 +1,435 @@
+#!/usr/bin/env bash
+
+##
+##  nlines:
+##     - Estimates total number of lines in files
+##     - See nlines-completion.bash located in .bash_completion.d
+##
+
+CONFIG_DIR="$HOME/.config/bash"
+pkg=$(basename $0)                                  # pkg (script) full name
+pkg_root=$(echo $pkg | awk -F '.' '{print $1}')     # pkg without file extention
+pkg_path=$(cd $(dirname $0); pwd -P)                # location of pkg
+pkg_lib="$pkg_path/core"                            # location of source libraries
+config_dir="$HOME/.config/$pkg"                     # location of ancillary configuration files
+min_width='60'                                      # total width of columnar screen output
+max_width=$(( $(tput cols) - 14 ))
+long_lines='1000'                                   # threashold for marking files with extensive line counts
+
+# source colors, exitcodes, version file, and  std_function defs | NOTE: source order dependent
+source $pkg_lib/colors.sh
+source $pkg_lib/exitcodes.sh
+source $pkg_lib/version.py
+source $pkg_lib/std_functions.sh
+
+# formatting
+bd=$(echo -e ${bold})
+bdwt=$(echo -e ${bold}${a_brightwhite})
+bgf=$(echo -e ${greenbold_frame})
+bg=$(echo -e ${a_brightgreen})
+bb=$(echo -e ${a_brightblue})
+gbl=$(echo -e ${ITALIC}${a_bluegray})
+bbo=$(echo -e ${bold}${a_orange})
+bbf=$(echo -e ${pv_bluebold})
+bcy=$(echo -e ${cyan})
+wbf=$(echo -e ${whitebold_frame})
+wgc=$(echo -e ${a_gray})                              # white gray
+datec=$(echo -e ${blue})
+bbc=$(echo -e ${bold}${a_brightcyan})
+btc=$(echo -e ${a_brightcyan})
+title=$(echo -e ${bold}${a_brightwhite})              # title color, white + bold
+hic=$(echo -e ${bold}${a_brightyellowgreen})          # help menu accent 1
+bin=$(echo -e ${bold}${a_orange})                     # help menu binary accent
+ul=$(echo -e ${underline})                            # std underline
+bd=$(echo -e ${bold})                                 # std bold
+wt=$(echo -e ${a_brightwhite})                        # help menu accent 2
+fs=$(echo -e ${yellow})                               # file path color
+btext=${reset}                                        # clear accents; rtn to native term colors
+frame=${btext}
+rst=${reset}
+
+# accent colors
+file_highlight=$(echo -e ${a_brightblue})
+count_color=$(echo -e ${a_brightwhite})
+path_highlight=$(echo -e ${a_bluegray})
+hi_num=${bd}${bin}
+highlines=$(echo -e ${bd}${a_orange})
+border=$(echo -e ${bold}${a_bluegray})
+a_cs=$(echo -e ${a_wgray})
+cut_symbol=$(echo -e ${bd}${a_cs}-\> ${rst})
+
+
+# --- declarations ---------------------------------------------------------------------------------
+
+
+function help_menu(){
+    cat <<EOM
+
+                       ${title}nlines${btext} command help
+
+  ${title}DESCRIPTION${btext}
+
+        Count the total number of lines of text in code projects
+
+  ${title}SYNOPSIS${btext}
+
+        $ ${bin}$pkg${reset}  ${bbc}[${btext} --sum <value> ${bbc}|${btext} --help ${bbc}|${btext} --configuration ${bbc}]${btext}
+
+                        -s | --sum  <values>
+                       [-c | --configuration ]
+                       [-e | --exclusions ]
+                       [-h | --help  ]
+                       [-V | --version ]
+  ${title}OPTIONS${btext}
+
+        ${title}-c${btext}, ${title}--configuration${btext}:  Update runtime options via cli menu.
+            Change  display format, output color, toggle off human
+            formatted  numbers for programmatic output consumption
+            of tables.  Add file extensions to the exclusion list.
+
+        ${title}-e${btext}, ${title}--exclusions${btext}:  Display contents of the exlusions list.
+
+        ${title}-h${btext}, ${title}--help${btext}:  Display this help menu.
+
+        ${title}-s${btext}, ${title}--sum${btext} <value>:  Sum the total number of lines of text.
+
+        ${title}-V${btext}, ${title}--version${btext}:  Show ${pkg} version & license information.
+
+  ${title}LEGEND${btext}
+                ${bd}${file_highlight}o${rst}  :  File object counted
+                ${bd}${highlines}o${rst}  :  Line count above threshold (> $long_lines)
+               ${cut_symbol} :  Long file path; truncated
+
+  ${title}EXAMPLES${btext}
+            ${gbl}Full path access to file object targets${btext}
+                    $  $pkg  --sum  /usr/bin/ <tab><tab>
+
+            ${gbl}Relative Path access to text file objects${btext}
+                    $  cd  <target directory>
+                    $  $pkg  --sum  <tab><tab>
+
+            ${gbl}Add file extension to the exclusion list${btext}
+                    $  $pkg  --configuration  exclusions
+   __________________________________________________________________
+
+            ${btext}README:  ${url}https://github.com/fstab50/${pkg}${btext}
+   __________________________________________________________________
+${reset}
+EOM
+    #
+    # <-- end function help_menu -->
+}
+
+
+function build_exclusions_list(){
+    ##
+    ## Builds list of excluded file patterns
+    ##
+    local listfile='exclusions.list'
+    declare -a temparray
+    for i in $(cat $config_dir/$listfile); do
+        temparray=( "${temparray[@]}" "$i" )
+    done
+    echo "${temparray[@]}"
+}
+
+
+function excluded(){
+    ##
+    ##  excludes patterns persisted on fs
+    ##
+    local path="$1"
+
+    for pattern in $(build_exclusions_list); do
+        if [[ $(echo $path | grep "$pattern") ]]; then
+            return 0
+        fi
+    done
+    return 1
+}
+
+
+function included(){
+    ##
+    ##  skips object types on exclusion list
+    ##
+    local object="$1"
+    local wfile
+
+    wfile=$(which file)
+
+    if [[ $(echo $object | grep 'Permission denied') ]]; then
+        std_message "Your user ($USER) does not have adequate read permissions" "WARN"
+        return 1
+
+    elif [[ $($wfile $object | grep 'ASCII') ]] || [[ $($wfile $object | grep 'Unicode text') ]]; then
+        for pattern in $(build_exclusions_list); do
+            if [[ $(echo $object | grep -i "$pattern") ]]; then
+                return 1
+            fi
+        done
+        return 0
+
+    elif [[ $($wfile $object | grep -i 'binary') ]]; then
+        return 1
+
+    elif [[ $($wfile $object | grep -i 'RGB') ]] || [[ $($wfile $object | grep -i 'JPEG') ]]; then
+        return 1
+    fi
+    return 1
+}
+
+
+function human_readable(){
+    ##
+    ##  Adds commas
+    ##
+    local number="$1"
+    printf -- "%'d\n" $number
+}
+
+
+function print_bar(){
+    local width="$1"
+    printf -- '%s' "${border}"
+    printf '\t%*s\n' "$(($width + 1))" '' | tr ' ' "-"
+    printf -- '%s' "$rst"
+}
+
+
+function print_header(){
+    local sp="$1"
+    local legend tab
+
+    tab="               "
+    legend="( ${highlines}o${rst} high count )"
+
+    print_bar "$sp"
+    printf -- "\t%s %${sp}s\n" "object${rst}" "line count${rst}"
+    print_bar "$sp"
+}
+
+
+function print_footer(){
+    local output_width=$1
+    local hsum="$2"
+    print_bar "$output_width"
+    sp=$(( $output_width + 8))
+    printf -- "\t%s %${sp}s\n" "${white}Total lines${rst}:" "${bbf}$hsum${rst}"
+}
+
+
+function print_exclusions(){
+    ##
+    ##  Display contents of exclusions list
+    ##
+    local count='1'
+
+    printf -- '\n\t%s\n\n' "${gbl}List of File patterns excluded from line count${rst}:"
+
+    for i in $(build_exclusions_list); do
+        div="${gbl})${rst}"
+        printf -- '\t\t%6s%2s%2s%-6s\n' "$count" "${div}" " " "$i"
+        (( count++ ))
+    done
+    printf -- '\n'
+    return 0
+}
+
+
+function print_object(){
+    local object="$1"
+    local rawnum="$2"
+    local twidth=$3
+    local owidth=${#object}
+    local cutoff=$(( $3 - 6 - ${#rawnum} ))
+    local sp path targetfile
+    local act=${file_highlight}
+    local org=$(echo -e ${a_orange})
+    local adj_factor=3
+
+    targetfile=$(echo $object | awk -F '/' '{print $NF}')
+    path=${object%%$targetfile}
+
+    # do not repeat path if targetfile is path (i.e. object in current dir)
+    if [[ $path = "$targetfile" ]]; then
+        targetfile=""
+    fi
+
+    if [ $owidth -ge $cutoff ]; then
+        total_cut=$(( $cutoff - ${#targetfile} ))
+        lengthname=${object::$cutoff}
+        cut=true
+
+        if [ "$targetfile" = "" ]; then
+            printname="${path_highlight}${path::$total_cut}${rst}"
+        else
+            path="${path::$total_cut}${cut_symbol}"
+            printname="${path_highlight}${path}${act}$targetfile${rst}"
+        fi
+    else
+        lengthname=$object
+        printname="${path_highlight}$path${act}$targetfile${rst}"
+    fi
+
+    if [[ "$cut" ]]; then
+        sp=$(( $twidth - ${#lengthname} - $adj_factor ))
+    else
+        sp=$(( $twidth - ${#lengthname} ))
+    fi
+    hsum=$(human_readable "$rawnum")    # format large numbers
+
+    if [[ "$rawnum" -ge "$long_lines" ]]; then
+        #sp=$(( $sp - 3 ))
+        printf -- "\t%s %s%${sp}s%s\n" "${path_highlight}${path}${org}$targetfile${rst}" "${hi_num}" "$hsum" "${rst}"
+    else
+        printf -- "\t%s %s%${sp}s%s\n" "$printname" "${count_color}" "$hsum" "${rst}"
+    fi
+    cut=""      # reset cut bool
+    return 0
+}
+
+
+function path_finder(){
+    ##
+    ##  identifies all filesystem paths
+    ##
+    local i j
+    local length=0
+    declare -a parameters
+
+    parameters=("${!1}")
+
+    # map all paths into an array (mapfile builtin)
+    mapfile -t arr_paths < <(find "${parameters[@]}" ! -iwholename '*.git*' ! -iwholename '*venv*' -type f 2>&1)
+    echo "${arr_paths[@]}"
+}
+
+
+function calc_output_width(){
+    local paths=("${!1}")
+    local length=0
+    local buffer=8
+    local i j
+
+    for i in "$@"; do
+        for j in "${paths[@]}"; do
+            if (( ${#j} > $length )); then
+                length=${#j}
+            fi
+        done
+    done
+
+    if (( $length > $max_width )); then
+        echo "$max_width"
+
+    elif (( $length < $min_width )); then
+        echo "$(( $min_width + $buffer ))"
+
+    else
+        echo "$(( $length + $buffer ))"
+    fi
+}
+
+
+function process_objects(){
+    ##
+    ## iterate thru $@, counting lines
+    ##
+    declare -a inputs
+    inputs=("${!1}")
+
+    # find all fs paths
+    for path in $(path_finder "${inputs[@]}"); do
+        if [[ $(echo $path | grep "\-\-sum") ]]; then
+            continue
+        else
+            fspaths=( "${fspaths[@]}" "$path" )
+        fi
+    done
+
+    # calculate length of longest path
+    w=$(calc_output_width "${fspaths[@]}")
+    print_header "$w"
+
+    while [ $# -gt 0 ]; do
+        case "$1" in
+
+            '--sum')
+                shift 1
+                ;;
+
+            *)
+                if [ -f "$1" ] &&  included "$1"; then
+                    # is file object
+                    object_sum="$(cat $1 | wc -l)"
+                    sum=$(( $sum + $object_sum ))
+                    print_object "$1" "$object_sum" $w
+
+                elif [ -d "$1" ]; then
+                    # is directory
+                    for i in "${fspaths[@]}"; do
+                        if included "$i"; then
+                            object_sum="$(cat $i | wc -l)"
+                            sum=$(( $sum + $object_sum ))
+                            print_object "$i" "$object_sum" $w
+                        else
+                            continue
+                        fi
+                    done
+                fi
+                shift 1
+                ;;
+        esac
+    done
+    # format large numbers
+    hsum=$(human_readable "$sum")
+    print_footer $w "$hsum"
+}
+
+
+function sum_directory(){
+    local dir="$1"
+    local pwd=$PWD
+
+    cd $dir || exit 1
+    for i in *; do
+        if [ -f $i ] &&  included "$i"; then
+            sum=$(( $sum + $(cat $i | wc -l) ))
+            print_object "$i"
+        fi
+    done
+    cd $pwd || exit $E_OSERROR
+}
+
+
+function nlines(){
+    ##
+    ## length in lines of file provided as parameter
+    ##
+    local sum='0'
+    local pwd=$PWD
+
+    if [[ ! "$@" ]]; then
+        help_menu | indent04
+
+    elif [[ $(echo "$@" | grep "\-\-help") ]] || [[ $(echo "$@" | grep "\-h") ]]; then
+        help_menu | indent04
+
+    elif [[ $(echo "$@" | grep "\-\-sum") ]]; then
+        process_objects "$@"
+
+    elif [[ $(echo "$@" | grep "\-\-configuration") ]]; then
+        echo "configuration menu display here"
+
+    elif [[ $(echo "$@" | grep "\-\-exclusions") ]]; then
+        print_exclusions
+
+    else
+        process_objects "$@"
+    fi
+}
+
+nlines "$@"
+
+exit $E_OK
