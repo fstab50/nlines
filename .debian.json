@@ -13,7 +13,8 @@
         "findutils (>= 4.6.0)",
         "debianutils  (>= 4.7)",
         "coreutils (>= 8.0)",
-        "bash-completion"
+        "bash-completion",
+        "wget"
     ],
     "LogFiles": [ ],
     "VersionModule": "version.py",
