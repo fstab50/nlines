@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Summary:
-    buildrpm (python3):  branchdiff binary operating system package (.rpm, Redhat, Redhat-based systems)
+    buildrpm (python3):  nlines binary operating system package (.rpm, Redhat, Redhat-based systems)
 
         - Automatic determination of version to be built
         - Build version can optionally be forced to a specific version
@@ -20,7 +20,7 @@ Author:
 License:
     General Public License v3
     Additional terms may be found in the complete license agreement:
-    https://bitbucket.org/blakeca00/branchdiffthon3/src/master/LICENSE.md
+    https://bitbucket.org/blakeca00/nlinesthon3/src/master/LICENSE.md
 
 OS Support:
     - Redhat, CentOS, Fedora, Redhat-based variants
@@ -52,7 +52,7 @@ except Exception:
 
 
 # globals
-PROJECT = 'branchdiff'
+PROJECT = 'nlines'
 module = os.path.basename(__file__)
 TMPDIR = '/tmp/build'
 VOLMNT = '/tmp/rpm'
@@ -350,7 +350,7 @@ def builddir_structure(param_dict, force):
     Vars:
         :lib_path (str): src path to library modules in project root
         :builddir_path (str): dst path to root of the current build directory
-         (/<path>/branchdiff-1.X.X dir)
+         (/<path>/nlines-1.X.X dir)
 
     Returns:
         Success | Failure, TYPE: bool
@@ -455,7 +455,7 @@ def build_package(build_root, builddir):
 
         if os.path.exists(builddir):
             os.chdir(builddir)
-            cmd = 'rpmbuild -ba SPECS/branchdiff.spec'
+            cmd = 'rpmbuild -ba SPECS/nlines.spec'
             stdout_message('Building {}...  '.format(bn + builddir + rst))
             stdout_message(subprocess.getoutput(cmd))
             os.chdir(pwd)
@@ -829,7 +829,7 @@ def main(setVersion, environment, package_configpath, force=False, debug=False):
     """
     # all globals declared here
     global PROJECT_BIN
-    PROJECT_BIN = 'branchdiff'
+    PROJECT_BIN = 'nlines'
     global PROJECT_ROOT
     PROJECT_ROOT = git_root()
     global SCRIPT_DIR
