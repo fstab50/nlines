@@ -54,7 +54,9 @@ pre-build:    ## Remove residual build artifacts
 	mkdir $(CUR_DIR)/dist
 
 
-setup-venv:  pre-build   ## Create and activiate python venv
+setup-venv: $(VENV_DIR)
+
+$(VENV_DIR):  pre-build   ## Create and activiate python venv
 	$(PYTHON3_PATH) -m venv $(VENV_DIR); \
 	. $(VENV_DIR)/bin/activate && $(PIP_CALL) install -U setuptools pip && \
 	$(PIP_CALL) install -r $(REQUIREMENT);
@@ -80,10 +82,9 @@ deplist: pre-build  setup-venv    ## Gen OS pkg desc files. FORCE=x to force reg
 
 
 .PHONY: builddeb
-builddeb:    ## Build Debian distribution (.deb) os package
-	@echo "Building Debian package format of $(PROJECT)"; \
-	cp $(LIB_DIR)/version.py $(SCRIPT_DIR)/version.py; \
-	if [ ! -d $(VENV_DIR) ]; then $(MAKE) setup-venv; fi;
+builddeb:  setup-venv  ## Build Debian distribution (.deb) os package
+	@echo "Building Debian package format of $(PROJECT)";
+	cp $(LIB_DIR)/version.py $(SCRIPT_DIR)/version.py; 
 	if [ $(VERSION) ]; then . $(VENV_DIR)/bin/activate && \
 	$(PYTHON3_PATH) $(SCRIPT_DIR)/builddeb.py --build --set-version $(VERSION); \
 	else cd $(CUR_DIR) && . $(VENV_DIR)/bin/activate && $(PYTHON3_PATH) $(SCRIPT_DIR)/builddeb.py --build; fi
