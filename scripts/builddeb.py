@@ -303,10 +303,9 @@ def create_builddirectory(path, version, force):
         Success | Failure, TYPE: bool
     """
     try:
-        print('\nversion IS: %s' % version)
 
         builddir = PROJECT + '-' + version + '_amd64'
-        print('\nBUILDDIR IS: %s' % builddir)
+
         # rm builddir when force if exists
         if force is True and builddir in os.listdir(path):
             rmtree(path + '/' + builddir)
@@ -779,7 +778,7 @@ def main(setVersion, environment, force=False, debug=False):
 
         r_struture = builddir_structure(vars, VERSION)
         r_updates = builddir_content_updates(vars, environment, VERSION)
-        pdb.set_trace()
+
         if r_struture and r_updates and build_package(BUILD_ROOT, BUILDDIRNAME):
             return postbuild(VERSION, VERSION_FILE, BUILD_ROOT + '/' + BUILDDIRNAME, DEBIAN_ROOT)
 
