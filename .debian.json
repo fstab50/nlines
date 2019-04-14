@@ -1,9 +1,9 @@
 {
     "Package": "deb",
-    "Project": "nlines-bash",
+    "Project": "nlines",
     "Executable": "nlines",
-    "ProjectUrl": "https://github.com/fstab50/nlines-bash",
-    "IssuesUrl": "https://github.com/fstab50/nlines-bash/issues",
+    "ProjectUrl": "https://github.com/fstab50/nlines",
+    "IssuesUrl": "https://github.com/fstab50/nlines/issues",
     "Description": "Count the number of lines in code projects",
     "Version": "MAJOR_VERSION",
     "Release": "MINOR_VERSION",
