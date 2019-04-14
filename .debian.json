@@ -74,6 +74,12 @@
                 "SourceLocation": "/tmp/build/nlines-MAJOR_VERSION/version.py",
                 "SpecFilePath": "/usr/local/lib/nlines/version.py",
                 "Permissions": "0644"
+            },
+            {
+                "filename": "exclusions.list",
+                "SourceLocation": "/tmp/build/nlines-MAJOR_VERSION/usr/local/lib/config",
+                "SpecFilePath": "/usr/local/lib/nlines/config/exclusions.list",
+                "Permissions": "0644"
             }
         ],
         "BuildComment": "Debian Package built by CI/CD automtation"
