@@ -351,6 +351,7 @@ def builddir_structure(param_dict, version):
     root = git_root()
     project_dirname = root.split('/')[-1]
     core_dir = root + '/' + 'core'
+    config_dir = root + '/' + 'config'
     build_root = TMPDIR
 
 
@@ -452,6 +453,23 @@ def builddir_structure(param_dict, version):
                         message='Copied:\t{} {} {}'.format(lk + _src_path + rst, arrow, lk + _dst_path + rst),
                         prefix='OK'
                     )
+
+        for confile in os.listdir(config_dir):
+
+            if not os.path.exists(lib_path + '/config'):
+                os.makedirs(lib_path + '/config')     # create config dir in builddir
+
+            _src = config_dir + '/' + confile
+            _dst = lib_path + '/config/' + confile
+            copyfile(_src, _dst)
+
+            # status msg
+            _src_path = '../' + project_dirname + _src.split(project_dirname)[1]
+            _dst_path = '../' + project_dirname + _dst.split(project_dirname)[1]
+            stdout_message(
+                    message='Copied:\t{} {} {}'.format(lk + _src_path + rst, arrow, lk + _dst_path + rst),
+                    prefix='OK'
+                )
 
         if not os.path.exists(comp_dst):
             # create path
@@ -778,7 +796,7 @@ def main(setVersion, environment, force=False, debug=False):
 
         r_struture = builddir_structure(vars, VERSION)
         r_updates = builddir_content_updates(vars, environment, VERSION)
-
+        
         if r_struture and r_updates and build_package(BUILD_ROOT, BUILDDIRNAME):
             return postbuild(VERSION, VERSION_FILE, BUILD_ROOT + '/' + BUILDDIRNAME, DEBIAN_ROOT)
 
