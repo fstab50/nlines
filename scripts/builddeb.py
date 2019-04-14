@@ -937,6 +937,8 @@ def postbuild(version, version_module, builddir_path, debian_root):
         # remove build directory, residual artifacts
         if os.path.exists(builddir_path):
             rmtree(builddir_path)
+        if os.path.exists(root + '/scripts/' + version_module):
+            os.remove(root + '/scripts/' + version_module)
 
         # rewrite version file with current build version
         with open(root + '/core/' + version_module, 'w') as f3:
