@@ -150,6 +150,41 @@ function depcheck(){
 }
 
 
+function display_program_version(){
+    ##
+    ## output script version info, license
+    ##
+    local _version=$__version__
+    local _hic=$(echo -e ${a_bluepurple})
+    local _year=$(date +%G)
+    local _bashver="$(
+                bash --version | head -n1 | awk -F 'version' '{print $2}' \
+                    | awk '{print $1}' | awk -F '(' '{print $1}'
+            )"
+    local _bd=$(echo -e ${bold})
+    #
+    cat <<EOM
+    ______________________________________________________________________
+
+
+
+
+
+            ${_hic}$pkg${reset} version: ${title}$_version${reset}   |   GNU Bash ${white}$_bashver${reset}
+
+
+
+
+    ______________________________________________________________________
+
+       Copyright 2017-$_year, Blake Huber.  This program distributed under
+       MIT License.  Copyright notice must remain with derivative works.
+    ______________________________________________________________________
+
+EOM
+}
+
+
 function excluded(){
     ##
     ##  excludes patterns persisted on fs
@@ -403,6 +438,9 @@ function nlines(){
 
     elif [[ $(echo "$@" | grep "\-\-help") ]] || [[ $(echo "$@" | grep "\-h") ]]; then
         help_menu | indent04
+
+    elif [[ $(echo "$@" | grep "\-\-version") ]] || [[ $(echo "$@" | grep "\-V") ]]; then
+        display_program_version
 
     elif [[ $(echo "$@" | grep "\-\-sum") ]]; then
         process_objects "$@"
