@@ -14,7 +14,8 @@
         "debianutils  (>= 4.7)",
         "coreutils (>= 8.0)",
         "bash-completion",
-        "wget"
+        "wget",
+        "gnupg2"
     ],
     "LogFiles": [ ],
     "VersionModule": "version.py",
