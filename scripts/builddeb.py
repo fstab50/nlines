@@ -382,7 +382,7 @@ def builddir_structure(param_dict, version):
             rmtree(builddir_path)
         os.makedirs(builddir_path)
         stdout_message(
-                message='Created:\t{}'.format(yl + builddir_path + rst),
+                message='Created builddir_path: {}'.format(yl + builddir_path + rst),
                 prefix='OK'
             )
 
@@ -390,17 +390,17 @@ def builddir_structure(param_dict, version):
             copytree(debian_path, builddir_path + '/' + debian_dir)
             # status msg
             _src_path = '../' + project_dirname + debian_path.split(project_dirname)[1]
-            _dst_path = '../' + project_dirname + (builddir_path + '/' + debian_dir).split(project_dirname)[1]
+            _dst_path = builddir_path + '/' + debian_dir
             stdout_message(
-                    message='Copied:\t{} {} {}'.format(lk + _src_path + rst, arrow, lk + _dst_path + rst),
+                    message='Copied: {} {} {}'.format(lk + _src_path + rst, arrow, lk + _dst_path + rst),
                     prefix='OK'
                 )
-
+        #pdb.set_trace()
         if not os.path.exists(binary_path):
             os.makedirs(binary_path)
-            _dst_path = '../' + project_dirname + binary_path.split(project_dirname)[1]
+            _dst_path = binary_path
             stdout_message(
-                    message='Created:\t{}'.format(lk + _dst_path + rst),
+                    message='Created: {}'.format(lk + _dst_path + rst),
                     prefix='OK'
                 )
 
