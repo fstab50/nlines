@@ -176,8 +176,15 @@ function _nlines_completions(){
     numargs=0
     numoptions=0
 
-    options='--help --exclusions --configuration --sum'
-    _is_sum(){ if [[ "$(echo "${COMP_WORDS[@]}" | grep '\-\-sum')" ]]; then is_sum='yes'; else is_sum='no'; fi;}
+    options='--help --exclusions --configuration --sum --version'
+
+    function _is_sum(){
+        if [[ "$(echo "${COMP_WORDS[@]}" | grep '\-\-sum')" ]]; then
+            is_sum='yes'
+        else
+            is_sum='no'
+        fi
+    }
 
     case "${prev}" in
 
@@ -186,13 +193,16 @@ function _nlines_completions(){
             ;;
 
         'nlines')
-            objects=$(_filter_objects)
             COMPREPLY=( $(compgen -W "${options}" -- ${cur}) )
             return 0
             ;;
 
         '--sum')
             _pathopt
+            return 0
+            ;;
+
+        '--version')
             return 0
             ;;
 
