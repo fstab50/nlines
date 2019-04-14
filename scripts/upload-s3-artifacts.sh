@@ -2,7 +2,7 @@
 
 PROFILE='gcreds-da-atos'
 BUCKET='http-imagestore'
-KEY='nlines-bash'
+KEY='nlines'
 
 
 

@@ -40,7 +40,7 @@ To display the help menu:
     $ nlines --help
 ```
 
-![help](https://s3.us-east-2.amazonaws.com/http-imagestore/nlines-bash/help-menu.png)]
+![help](https://s3.us-east-2.amazonaws.com/http-imagestore/nlines/help-menu.png)]
 
 
 [back to the top](#top)
@@ -54,7 +54,7 @@ To display the help menu:
     $ nlines --exclusions
 ```
 
-![help](https://s3.us-east-2.amazonaws.com/http-imagestore/nlines-bash/exclusions.png)]<!-- .element height="50%" width="50%" -->
+![help](https://s3.us-east-2.amazonaws.com/http-imagestore/nlines/exclusions.png)]<!-- .element height="50%" width="50%" -->
 
 
 [back to the top](#top)
@@ -68,7 +68,7 @@ Counting lines in large repository with long paths.
     $ nlines  --sum  git/AWSAMPLES/aws-serverless-workshops/
 ```
 
-![repo1-1](https://s3.us-east-2.amazonaws.com/http-imagestore/nlines-bash/repofinal.png)
+![repo1-1](https://s3.us-east-2.amazonaws.com/http-imagestore/nlines/repofinal.png)
 
 
 [back to the top](#top)
