@@ -395,7 +395,7 @@ def builddir_structure(param_dict, version):
                     message='Copied: {} {} {}'.format(lk + _src_path + rst, arrow, lk + _dst_path + rst),
                     prefix='OK'
                 )
-        #pdb.set_trace()
+
         if not os.path.exists(binary_path):
             os.makedirs(binary_path)
             _dst_path = binary_path
@@ -779,7 +779,7 @@ def main(setVersion, environment, force=False, debug=False):
 
         r_struture = builddir_structure(vars, VERSION)
         r_updates = builddir_content_updates(vars, environment, VERSION)
-
+        pdb.set_trace()
         if r_struture and r_updates and build_package(BUILD_ROOT, BUILDDIRNAME):
             return postbuild(VERSION, VERSION_FILE, BUILD_ROOT + '/' + BUILDDIRNAME, DEBIAN_ROOT)
 
@@ -957,8 +957,9 @@ def postbuild(version, version_module, builddir_path, debian_root):
 
 
 class ParameterSet():
-    """Recursion class for processing complex dictionary schema."""
-
+    """
+    Recursion class for processing complex dictionary schema.
+    """
     def __init__(self, parameter_file, version):
         """
         Summary.
