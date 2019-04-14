@@ -10,8 +10,8 @@ Depends:  DEPLIST
 Download-Size: 48 kB
 Standards-Version: 3.9.6
 Architecture: BUILD_ARCH
-Description:  nlines is a commandline utility to count lines of code
-or ascii text and display color coded results.  Binary files are skipped.
-nlines has a user-defined exclusions list used to tell nlines which file
-extensions should not be counted.
+Description: nlines is a commandline utility to count lines of code
+  or ascii text and display color coded results.  Binary files are skipped.
+  nlines has a user-defined exclusions list used to tell nlines which file
+  extensions should not be counted.
 Homepage: PROJECT_URL
