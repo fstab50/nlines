@@ -396,9 +396,6 @@ def builddir_structure(param_dict, force):
         for libfile in os.listdir(lib_path):
             if libfile.endswith('.pyc') or libfile.endswith('.pyo'):
                 continue
-
-            elif os.path.isdir(libfile):
-                copytree(lib_path + '/' + libfile, builddir_path + '/' + libfile)
             else:
                 lib_src = lib_path + '/' + libfile
                 lib_dst = builddir_path + '/' + libfile
@@ -406,6 +403,11 @@ def builddir_structure(param_dict, force):
                 stdout_message(
                     message='Copied:  {} {} {}'.format(lk + lib_src + rst, arrow, lk + lib_dst + rst),
                     prefix='OK')
+
+        # place config file in build_root
+        config_src = root + '/config'
+        config_dst = builddir_path + '/config'
+        copytree(config_src, config_dst)
 
         # place specfile in build_root
         spec_dst = build_root + '/' + specfile
