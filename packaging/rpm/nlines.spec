@@ -32,7 +32,7 @@ Requires: bash-completion
 %description
 nlines is a commandline utility to count the lines of ascii text
 files and display color coded results.  Binary files are skipped.
-nlines has a user-defined exclusions list used to tell the program 
+nlines has a user-defined exclusions list used to tell the program
 which file extensions should not be counted.
 
 %prep
@@ -51,6 +51,7 @@ install -m 0644 std_functions.sh $RPM_BUILD_ROOT/%{_libdir}/std_functions.sh
 install -m 0644 colors.sh $RPM_BUILD_ROOT/%{_libdir}/colors.sh
 install -m 0644 exitcodes.sh $RPM_BUILD_ROOT/%{_libdir}/exitcodes.sh
 install -m 0644 version.py $RPM_BUILD_ROOT/%{_libdir}/version.py
+install -m 0644 config/exclusions.list $RPM_BUILD_ROOT/%{_libdir}/config/exclusions.list
 install -m 0644 nlines-completion.bash $RPM_BUILD_ROOT/%{_compdir}/nlines-completion.bash
 
 
