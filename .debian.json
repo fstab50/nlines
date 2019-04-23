@@ -9,8 +9,8 @@
     "Release": "MINOR_VERSION",
     "PreInstall": ["", ""],
     "DependencyList": [
-        "bash (>= 4.3)",
-        "findutils (>= 4.6.0)",
+        "bash (>= 4.2)",
+        "findutils (>= 4.5.0)",
         "debianutils  (>= 4.7)",
         "coreutils (>= 8.0)",
         "bash-completion",
