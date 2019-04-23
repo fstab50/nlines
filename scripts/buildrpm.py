@@ -37,7 +37,7 @@ import subprocess
 import tarfile
 import fileinput
 from shutil import copy2 as copyfile
-from shutil import rmtree, which
+from shutil import copytree, rmtree, which
 import distro
 import docker
 import loggers
@@ -396,6 +396,9 @@ def builddir_structure(param_dict, force):
         for libfile in os.listdir(lib_path):
             if libfile.endswith('.pyc') or libfile.endswith('.pyo'):
                 continue
+
+            elif os.path.isdir(libfile):
+                copytree(lib_path + '/' + libfile, builddir_path + '/' + libfile)
             else:
                 lib_src = lib_path + '/' + libfile
                 lib_dst = builddir_path + '/' + libfile
