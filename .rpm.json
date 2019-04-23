@@ -7,13 +7,14 @@
     "Release": "MINOR_VERSION",
     "PreInstall": ["rpm-build", "rpmdevtools"],
     "DependencyList": [
-        "bash >= 4.1",
-        "bc >= 1.0",
-        "git >= 1.8.3",
-        "epel-release",
+        "bash >= 4.3",
+        "findutils >= 4.6.0",
         "coreutils >= 8.0",
         "bash-completion",
-        "which"
+        "gawk",
+        "gnupg2",
+        "sudo",
+        "wget"
     ],
     "LogFiles": [ ],
     "VersionModule": "version.py",
