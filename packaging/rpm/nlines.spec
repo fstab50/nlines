@@ -28,21 +28,12 @@ Requires:      DEPLIST
 Requires: bash-completion
 %endif
 
-%if 0%{?amzn1}
-Requires: epel-release
-%endif
-
 
 %description
-nlines is a utility for use with git version control. nlines
-provides user access to advanced  git features without requiring any
-knowledge of advanced git syntax.
-.
-branch diff features:
-  * Illustration of differences between current working branch and master branch
-  * Details when commits were made to the current branch, by whom
-  * Summary statistics for all commits
-  * Advanced file difference illustration between branches
+nlines is a commandline utility to count the lines of ascii text
+files and display color coded results.  Binary files are skipped.
+nlines has a user-defined exclusions list used to tell the program 
+which file extensions should not be counted.
 
 %prep
 
@@ -107,17 +98,6 @@ if [ $SUDO_USER ]; then
         printf -- '%s\n' 'export PATH' >> "/home/$SUDO_USER/.profile"
     fi
 
-fi
-
-
-##   install bash_completion (amazonlinux 1 only); other epel pkgs   ##
-
-if [ -f '/usr/local/lib/nlines/os_distro.sh' ]; then
-    if [ "$(sh /usr/local/lib/nlines/os_distro.sh | awk '{print $2}')" -eq "1" ]; then
-        yum -y install bash-completion xclip  --enablerepo=epel
-    fi
-else
-    yum -y install xclip --enablerepo=epel
 fi
 
 
