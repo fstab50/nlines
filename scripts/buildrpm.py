@@ -70,6 +70,7 @@ lk = Colors.DARKBLUE                    # color for filesystem path confirmation
 red = Colors.RED                        # color for failed operations
 yl = Colors.GOLD3                       # color when copying, creating paths
 rst = Colors.RESET                      # reset all color, formatting
+arrow = yl + Colors.BOLD + '-->' + rst
 
 
 # global logger
@@ -608,6 +609,9 @@ def builddir_content_updates(param_dict, osimage, version, debug):
 def cp_dockerfiles(src, dst):
     """
     Copy dockerfiles and associated build artifacts to build_root
+
+    >> NOT CURRENTLY USED <<
+
     """
     # place docker build script
     script_src = src + '/' + dockerscript
