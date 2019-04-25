@@ -21,3 +21,5 @@
 pycache
 _env
 venv
+.html
+.xml
