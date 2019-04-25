@@ -206,6 +206,7 @@ function included(){
     ##
     local object="$1"
     local wfile
+    declare -a arr_exclusions
 
     wfile=$(which file)
 
@@ -214,11 +215,13 @@ function included(){
         return 1
 
     elif [[ $($wfile $object | grep 'ASCII') ]] || [[ $($wfile $object | grep 'Unicode text') ]]; then
-        for pattern in $(build_exclusions_list); do
-            if [[ $(echo $object | grep -i "$pattern") ]]; then
-                return 1
-            fi
-        done
+
+        mapfile -t arr_exclusions < <(build_exclusions_list)
+        ext=$(echo ${object##*/} | awk -F '.' '{print $2}')
+
+        if [[ $(echo "${arr_exclusions[@]}" | grep -i "$ext" 2>/dev/null) ]]; then
+            return 1
+        fi
         return 0
 
     elif [[ $($wfile $object | grep -i 'binary') ]]; then
