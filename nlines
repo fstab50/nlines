@@ -436,19 +436,19 @@ function nlines(){
     if [[ ! "$@" ]]; then
         help_menu | indent04
 
-    elif [[ $(echo "$@" | grep "\-\-help") ]] || [[ $(echo "$@" | grep "\-h") ]]; then
+    elif [[ $(echo "$@" | grep "\-\-help" 2>/dev/null) ]] || [[ $(echo "$@" | grep "\-h" 2>/dev/null) ]]; then
         help_menu | indent04
 
-    elif [[ $(echo "$@" | grep "\-\-version") ]] || [[ $(echo "$@" | grep "\-V") ]]; then
+    elif [[ $(echo "$@" | grep "\-\-version" 2>/dev/null) ]] || [[ $(echo "$@" | grep "\-V" 2>/dev/null) ]]; then
         display_program_version
 
-    elif [[ $(echo "$@" | grep "\-\-sum") ]]; then
+    elif [[ $(echo "$@" | grep "\-\-sum" 2>/dev/null) ]]; then
         process_objects "$@"
 
-    elif [[ $(echo "$@" | grep "\-\-configuration") ]]; then
+    elif [[ $(echo "$@" | grep "\-\-configuration" 2>/dev/null) ]]; then
         echo "configuration menu display here"
 
-    elif [[ $(echo "$@" | grep "\-\-exclusions") ]]; then
+    elif [[ $(echo "$@" | grep "\-\-exclusions" 2>/dev/null) ]]; then
         print_exclusions
 
     else
