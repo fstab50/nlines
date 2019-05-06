@@ -303,7 +303,7 @@ function print_object(){
     path=${object%%$targetfile}
 
     # do not repeat path if targetfile is path (i.e. object in current dir)
-    if [[ $path = "$targetfile" ]]; then
+    if [[ "$path" = "$targetfile" ]]; then
         targetfile=""
     fi
 
