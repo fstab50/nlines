@@ -82,8 +82,8 @@ function help_menu(){
                        [-V | --version ]
   ${title}OPTIONS${btext}
 
-        ${title}-c${btext}, ${title}--configure${btext}: Invoke menu to update runtime options such
-            as change display format,  output color, toggle human
+        ${title}-c${btext}, ${title}--configure${btext}: Invoke runtime options menu to
+            to change display format, output color, toggle human
             formatted numbers for programmatic output consumption
             of tables.  Add file extensions to the exclusion list.
 
@@ -102,11 +102,11 @@ function help_menu(){
 
   ${title}EXAMPLES${btext}
             ${gbl}Full path access to file object targets${btext}
-                    $  $pkg  --sum  /usr/bin/ <tab><tab>
+                    $  $pkg  --sum  /home/user1/Documents
 
             ${gbl}Relative Path access to text file objects${btext}
                     $  cd  <target directory>
-                    $  $pkg  --sum  <tab><tab>
+                    $  $pkg  --sum .
 
             ${gbl}Add file extension to the exclusion list${btext}
                     $  $pkg  --configure  exclusions
