@@ -176,7 +176,7 @@ function _nlines_completions(){
     numargs=0
     numoptions=0
 
-    options='--help --exclusions --configuration --sum --version'
+    commands='--help --exclusions --configure --sum --version'
 
     function _is_sum(){
         if [[ "$(echo "${COMP_WORDS[@]}" | grep '\-\-sum')" ]]; then
@@ -188,12 +188,12 @@ function _nlines_completions(){
 
     case "${prev}" in
 
-        '--help' | '--exclusions' | '--configuration')
+        '--help' | '--exclusions' | '--configure')
             return 0
             ;;
 
         'nlines')
-            COMPREPLY=( $(compgen -W "${options}" -- ${cur}) )
+            COMPREPLY=( $(compgen -W "${commands}" -- ${cur}) )
             return 0
             ;;
 
@@ -213,6 +213,6 @@ function _nlines_completions(){
 
     esac
 
-    #COMPREPLY=( $(compgen -W "${objects}" -- ${cur}) )
+    COMPREPLY=( $(compgen -W "${commands}" -- ${cur}) )
 
 } && complete -F _nlines_completions nlines
