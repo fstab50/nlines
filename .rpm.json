@@ -8,7 +8,7 @@
     "PreInstall": ["rpm-build", "rpmdevtools"],
     "DependencyList": [
         "bash >= 4.2",
-        "findutils >= 4.5.0",
+        "findutils >= 4.4.0",
         "coreutils >= 8.0",
         "bash-completion",
         "gawk",
