@@ -82,12 +82,12 @@ function help_menu(){
                        [-V | --version ]
   ${title}OPTIONS${btext}
 
-        ${title}-c${btext}, ${title}--configure${btext}: Invoke runtime options menu to
-            to change display format, output color, toggle human
-            formatted numbers for programmatic output consumption
-            of tables.  Add file extensions to the exclusion list.
+        ${title}-c${btext}, ${title}--configure${btext}:  Menu to configure  runtime options such as
+            display format, output color, or toggle numerical output
+            to enable programmatic consumption of tabular output.
 
-        ${title}-e${btext}, ${title}--exclusions${btext}:  Display contents of the exlusions list.
+        ${title}-e${btext}, ${title}--exclusions${btext}: Display the contents of the exlusions list
+            containing file type extensions excluded from line count
 
         ${title}-h${btext}, ${title}--help${btext}:  Display this help menu.
 
