@@ -134,6 +134,36 @@ function build_exclusions_list(){
 }
 
 
+function configure_options(){
+    ##
+    ## Configure runtime options
+    ##
+    local new_types ext
+    declare -a arr_extensions
+    std_message "Configuration menu" "INFO"
+    print_exclusions
+
+    # user input
+    read -p "  Enter file type extensions to exclude separated by commas [skip]: " new_types
+
+    # process input, else skip
+    if [[ "$new_types" ]]; then
+        ext=$(echo $new_types | awk -F ',' -v f=1 -v t=6 '{for(i=f;i<=t;i++) printf("%s %s",$i,(i==t)?"\n":OFS)}')
+        mapfile -t arr_extensions < <(echo $ext)
+
+        # add extensions to list
+        for i in "${arr_extensions[@]}"; do
+            if [[ $(echo $i | grep '.') ]]; then
+                printf -- '%s\n' "$i" >> "$config_dir/$exclusion_file"
+            else
+                printf -- '%s\n' ".$i" >> "$config_dir/$exclusion_file"
+            fi
+        done
+        std_message "New exclusion list" "INFO"
+        print_exclusions
+    fi
+}
+
 function depcheck(){
     ##
     ##  prerun dependency check
@@ -446,7 +476,7 @@ function nlines(){
         process_objects "$@"
 
     elif [[ $(echo "$@" | grep "\-\-configure" 2>/dev/null) ]]; then
-        echo "configuration menu display here"
+        configure_options
 
     elif [[ $(echo "$@" | grep "\-\-exclusions" 2>/dev/null) ]]; then
         print_exclusions
