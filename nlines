@@ -134,12 +134,10 @@ function build_exclusions_list(){
 }
 
 
-function configure_options(){
+function _configure_add(){
     ##
-    ## Configure runtime options
+    ##  Add to exclusions list
     ##
-    local new_types ext
-    std_message "Configuration menu start" "INFO"
     print_exclusions
 
     # user input
@@ -163,6 +161,71 @@ function configure_options(){
         print_exclusions
     fi
     printf -- '\n'
+    #
+    # <-- end function _configure_add -->
+}
+
+
+function _configure_remove(){
+    ##
+    ##  Remove from exclusions.list
+    ##
+    local choice type
+    local index=1
+    declare -a arr_exclusions arr_clean
+
+    read -p "  Do you want to remove a file extension from the exclusions list? [no]: " choice
+
+    case $choice in
+        'y' | 'Y' | 'yes' | 'Yes')
+            printf -- '\n'
+            mapfile -t arr_exclusions < <(cat "$config_dir/$exclusion_file" 2>/dev/null)
+
+            for type in "${arr_exclusions[@]}"; do
+                div="${gbl})${rst}"
+                printf -- '\t\t%6s%2s%2s%-6s\n' "$index" "${div}" " " "$type"
+                (( index++ ))
+            done
+
+            while true; do
+                read -p "  Enter the number to remove [quit]: " choice
+                if [[ $choice -le '1' ]] && [[ $choice -ge "${#arr_exclusions[@]}" ]]; then
+                    remove=($choice)
+                    arr_clean=( "${arr_exclusions[@]/$remove}" )
+                    break
+                else
+                    std_message "You must enter a number betwee 1 and $index" "INFO"
+                fi
+            done
+
+            # rewrite exclusions list
+            touch "$config_dir/$exclusion_file"
+            for i in "${arr_clean[@]}"; do
+                printf -- '%s\n' "$i" >> "$config_dir/$exclusion_file"
+            done
+            ;;
+
+        *)
+            return 0
+            ;;
+    esac
+    #
+    # <-- end function _configure_remove -->
+}
+
+
+function configure_options(){
+    ##
+    ## Configure runtime options
+    ##
+    local new_types ext
+    std_message "Configuration menu start" "INFO"
+
+    # Add file extensions to exclusions
+    _configure_add
+
+    # remove exclusion file types
+    _configure_remove
 }
 
 
