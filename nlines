@@ -139,7 +139,6 @@ function configure_options(){
     ## Configure runtime options
     ##
     local new_types ext
-    declare -a arr_extensions
     std_message "Configuration menu" "INFO"
     print_exclusions
 
@@ -149,14 +148,15 @@ function configure_options(){
     # process input, else skip
     if [[ "$new_types" ]]; then
         ext=$(echo $new_types | awk -F ',' -v f=1 -v t=6 '{for(i=f;i<=t;i++) printf("%s %s",$i,(i==t)?"\n":OFS)}')
-        mapfile -t arr_extensions < <(echo $ext)
 
         # add extensions to list
-        for i in "${arr_extensions[@]}"; do
-            if [[ $(echo $i | grep '.') ]]; then
+        for i in $(echo $ext); do
+            if [[ $(echo $i | grep "\.") ]]; then
                 printf -- '%s\n' "$i" >> "$config_dir/$exclusion_file"
+
             else
-                printf -- '%s\n' ".$i" >> "$config_dir/$exclusion_file"
+                j=".${i}"
+                printf -- '%s\n' "$j" >> "$config_dir/$exclusion_file"
             fi
         done
         std_message "New exclusion list" "INFO"
