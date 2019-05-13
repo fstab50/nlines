@@ -171,7 +171,8 @@ function _configure_remove(){
     ##  Remove from exclusions.list
     ##
     local choice type
-    local index=1
+    local count=1
+    local index
     declare -a arr_exclusions arr_clean
 
     read -p "  Do you want to remove a file extension from the exclusions list? [no]: " choice
@@ -183,14 +184,15 @@ function _configure_remove(){
 
             for type in "${arr_exclusions[@]}"; do
                 div="${gbl})${rst}"
-                printf -- '\t\t%6s%2s%2s%-6s\n' "$index" "${div}" " " "$type"
-                (( index++ ))
+                printf -- '\t\t%6s%2s%2s%-6s\n' "$count" "${div}" " " "$type"
+                (( count++ ))
             done
 
             while true; do
                 read -p "  Enter the number to remove [quit]: " choice
-                if [[ $choice -le '1' ]] && [[ $choice -ge "${#arr_exclusions[@]}" ]]; then
-                    remove=($choice)
+                index=$(( $choice - 1 ))
+                if [[ $index -ge '1' ]] && [[ $index -le "${#arr_exclusions[@]}" ]]; then
+                    remove=(${arr_exclusions[$index]})
                     arr_clean=( "${arr_exclusions[@]/$remove}" )
                     break
                 else
@@ -199,7 +201,7 @@ function _configure_remove(){
             done
 
             # rewrite exclusions list
-            touch "$config_dir/$exclusion_file"
+            printf -- '\n' > "$config_dir/$exclusion_file"
             for i in "${arr_clean[@]}"; do
                 printf -- '%s\n' "$i" >> "$config_dir/$exclusion_file"
             done
