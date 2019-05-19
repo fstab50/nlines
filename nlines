@@ -166,6 +166,26 @@ function _configure_add(){
 }
 
 
+function _configure_main_menu(){
+    ##
+    ##  Display Top level configure menu choices
+    ##
+    cat <<EOM
+    ______________________________________________________________________
+
+
+        $pkg${reset} Runtime Option Configuration Menu:
+
+            a)  Add file type to exclusion list
+            b)  Remove file type from exclusion list
+            c)  Hi-count Limit threshold
+
+    ______________________________________________________________________
+
+EOM
+}
+
+
 function _configure_remove(){
     ##
     ##  Remove from exclusions.list
@@ -221,7 +241,10 @@ function configure_options(){
     ## Configure runtime options
     ##
     local new_types ext
-    std_message "Configuration menu start" "INFO"
+    clear    # clear screen
+
+    # print configure main menu
+    _configure_main_menu
 
     # Add file extensions to exclusions
     _configure_add
