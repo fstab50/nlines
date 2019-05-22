@@ -242,9 +242,10 @@ function configure_options(){
     ##
     local new_types ext
     clear    # clear screen
+    _configure_main_menu
 
     # print configure main menu
-    operation=$(_configure_main_menu)
+    read -p "  choose operation [quit]: " operation
 
     case $operation in
         'a')
@@ -256,6 +257,10 @@ function configure_options(){
             # remove exclusion file types
             _configure_remove
             ;;
+        *)
+            exit 0
+            ;;
+    esac
 }
 
 
