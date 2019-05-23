@@ -54,9 +54,11 @@ function _filter_objects(){
     ##
     ##  returns file objects in pwd; minus exception list members
     ##
-    declare -a container
+    declare -a container objects
 
-    for object in $(ls $PWD); do
+    mapfile -t objects < <(ls $PWD)
+
+    for object in "${objects[@]}"; do
         if [[ $(echo "${exceptions[@]}" | grep $object) ]]; then
             continue
         else
@@ -70,7 +72,7 @@ function _filter_objects(){
 
 function _complete_nlines_commands(){
     local cmds="$1"
-    local split='6'       # times to split screen width
+    local split='4'       # times to split screen width
     local ct="0"
     local IFS=$' \t\n'
     local formatted_cmds=( $(compgen -W "${cmds}" -- "${COMP_WORDS[1]}") )
@@ -193,8 +195,12 @@ function _nlines_completions(){
             ;;
 
         'nlines')
-            COMPREPLY=( $(compgen -W "${commands}" -- ${cur}) )
-            return 0
+            if [ "$cur" = "" ] || [ "$cur" = "--" ]; then
+
+                _complete_nlines_commands "${commands}"
+                return 0
+
+            fi
             ;;
 
         '--sum')
