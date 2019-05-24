@@ -10,7 +10,7 @@ Depends:  DEPLIST
 Download-Size: 48 kB
 Standards-Version: 3.9.6
 Architecture: BUILD_ARCH
-Description: nlines is a commandline utility to count the lines of ascii text
+Description: Commandline utility to count lines of ascii text
   files and display color coded results.  Binary files are skipped.
   nlines has a user-defined exclusions list used to tell the program which file
   extensions should not be counted.
