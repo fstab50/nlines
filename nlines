@@ -174,13 +174,16 @@ function _configure_main_menu(){
     ______________________________________________________________________
 
 
-        $pkg${reset} Runtime Option Configuration Menu:
+        ${bdwt}$pkg${reset} Runtime option configuration menu:
+
 
             a)  Add file type to exclusion list
 
             b)  Remove file type from exclusion list
 
-            c)  Set high line count threshold
+            c)  Set large line count threshold
+
+            d)  quit
 
     ______________________________________________________________________
 
@@ -253,6 +256,7 @@ function configure_options(){
     ## Configure runtime options
     ##
     local new_types ext
+    
     clear    # clear screen
     _configure_main_menu
 
@@ -271,6 +275,7 @@ function configure_options(){
             # remove exclusion file types
             _configure_remove
             ;;
+
         *)
             exit 0
             ;;
