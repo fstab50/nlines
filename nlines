@@ -484,7 +484,7 @@ function calc_output_width(){
         done
     done
 
-    if (( $length > $max_width )); then
+    if (( $length > $(( $max_width - $buffer )) )); then
         echo "$max_width"
 
     elif (( $length < $min_width )); then
