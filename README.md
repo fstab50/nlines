@@ -10,17 +10,36 @@ Count the number of lines of text in a code project (or anything else)
 **Version**:	0.8.0
 
 * * *
-
 ## Contents
 
-* [Getting Started](#getting-started)
-* [Dependencies](#dependencies)
-* [Help](#help)
-* [Exclusions](#exclusions)
-* [Screenshots](#screenshots)
 * [Author & Copyright](#author--copyright)
-* [License](#license)
-* [Disclaimer](#disclaimer)
+
+
+
+* [**GETTING STARTED**](#getting-started)
+
+* [**DEPENDENCIES**](#dependencies)
+
+* [**SUPPORTED LINUX DISTRIBUTIONS**](#supported-linux-distributions)
+
+* [**INSTALLATION**](#installation)
+    * [Ubuntu, Linux Mint, Debian-based Distributions](#installation)
+
+* [**USAGE**](#help)
+
+* [**EXCLUSIONS**](#exclusions)
+
+* [**SCREENSHOTS**](#screenshots)
+
+* [**AUTHOR & COPYRIGHT**](#authorcopyright)
+
+* [**LICENSE**](#license)
+
+* [**DISCLAIMER**](#disclaimer)
+
+--
+
+[back to the top](#top)
 
 * * *
 
