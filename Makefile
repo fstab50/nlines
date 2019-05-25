@@ -84,7 +84,7 @@ deplist: pre-build  setup-venv    ## Gen OS pkg desc files. FORCE=x to force reg
 .PHONY: builddeb
 builddeb:  setup-venv  ## Build Debian distribution (.deb) os package
 	@echo "Building Debian package format of $(PROJECT)";
-	cp $(LIB_DIR)/version.py $(SCRIPT_DIR)/version.py; 
+	cp $(LIB_DIR)/version.py $(SCRIPT_DIR)/version.py;
 	if [ $(VERSION) ]; then . $(VENV_DIR)/bin/activate && \
 	$(PYTHON3_PATH) $(SCRIPT_DIR)/builddeb.py --build --set-version $(VERSION); \
 	else cd $(CUR_DIR) && . $(VENV_DIR)/bin/activate && $(PYTHON3_PATH) $(SCRIPT_DIR)/builddeb.py --build; fi
@@ -104,6 +104,7 @@ installdeb: builddeb   ## Install (source: pypi). Build artifacts exist
 	if [ ! -d $(VENV_DIR) ]; then $(MAKE) setup-venv; fi; \
 	cd $(CUR_DIR) && . $(VENV_DIR)/bin/activate && bash $(SCRIPT_DIR)/installdeb.sh
 
+
 .PHONY: installrpm
 installrpm: buildrpm   ## Install (source: pypi). Build artifacts exist
 	if [ ! -d $(VENV_DIR) ]; then $(MAKE) setup-venv; fi; \
@@ -112,9 +113,7 @@ installrpm: buildrpm   ## Install (source: pypi). Build artifacts exist
 
 .PHONY: upload-images
 upload-images:   ## Upload README images to Amazon S3
-	cp $(LIB_DIR)/version.py $(SCRIPT_DIR)/version.py
 	bash $(CUR_DIR)/scripts/upload-s3-artifacts.sh
-	rm -f $(SCRIPT_DIR)/version.py
 
 
 .PHONY: help
