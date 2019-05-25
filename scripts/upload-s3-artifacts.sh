@@ -1,9 +1,12 @@
 #!/usr/bin/env bash
 
-PROFILE='gcreds-da-atos'
+TMPDIR='/tmp'
+PROFILE='imagestore'
 BUCKET='http-imagestore'
 KEY='nlines'
 
+pkg_path=$(cd "$(dirname $0)"; pwd -P)
+source "$pkg_path/colors.sh"
 
 
 function _git_root(){
@@ -14,26 +17,50 @@ function _git_root(){
 }
 
 
+function _valid_iamuser(){
+    ##
+    ##  use Amazon STS to validate credentials of iam user
+    ##
+    local iamuser="$1"
+
+    if [[ $(aws sts get-caller-identity --profile $PROFILE 2>/dev/null) ]]; then
+        return 0
+    fi
+    return 1
+}
 
 
 ROOT=$(_git_root)
 
-if [[ "$(gcreds -s | grep $PROFILE)" ]] && [[ ! "$(gcreds -s | grep expired)" ]]; then
 
-    cd "$ROOT/assets"
+if _valid_iamuser $PROFILE; then
 
-    for i in $(ls .); do
+    printf -- '\n'
+    cd "$ROOT/assets" || true
+
+    declare -a arr_files
+    mapfile -t arr_files < <(ls . 2>/dev/null)
+
+    for i in "${arr_files[@]}"; do
 
         # upload object
-        aws --profile $PROFILE s3 cp ./$i s3://$BUCKET/$KEY/$i
-        echo "s3 object $i uploaded..."
+        printf -- '\n%s\n\n' "s3 object $BOLD$i$UNBOLD:"
+        aws --profile $PROFILE s3 cp ./$i s3://$BUCKET/$KEY/$i 2>/dev/null > $TMPDIR/aws.txt
+        printf -- '\t%s\n' "- s3 upload: $(cat $TMPDIR/aws.txt  | awk -F ':' '{print $2 $3}')"
 
         aws --profile $PROFILE s3api put-object-acl --acl 'public-read' --bucket $BUCKET --key $KEY/$i
-        echo "s3 object acl applied to $i..."
+        printf -- '\t%s\n' "- s3 acl applied to object $i..."
 
     done
+
+    printf -- '\n'
     cd "$ROOT" || true
 
 else
-    echo "You must rerun gcreds to generate temporary credentials for $(PROFILE)"
+    echo "You must ensure $PROFILE is present in the local awscli configuration"
 fi
+
+# clean up
+rm $TMPDIR/aws.txt || true
+
+exit 0
