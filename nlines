@@ -177,8 +177,10 @@ function _configure_main_menu(){
         $pkg${reset} Runtime Option Configuration Menu:
 
             a)  Add file type to exclusion list
+
             b)  Remove file type from exclusion list
-            c)  Hi-count Limit threshold
+
+            c)  Set high line count threshold
 
     ______________________________________________________________________
 
@@ -195,42 +197,52 @@ function _configure_remove(){
     local index
     declare -a arr_exclusions arr_clean
 
-    read -p "  Do you want to remove a file extension from the exclusions list? [no]: " choice
+    printf -- '\n'
 
-    case $choice in
-        'y' | 'Y' | 'yes' | 'Yes')
-            printf -- '\n'
-            mapfile -t arr_exclusions < <(cat "$config_dir/$exclusion_file" 2>/dev/null)
+    for type in $(cat "$config_dir/$exclusion_file"); do
+        div="${gbl})${rst}"
+        printf -- '\t\t%6s%2s%2s%-6s\n' "$count" "${div}" " " "$type"
+        arr_exclusions=( "${arr_exclusions[@]}"  "$type" )
+        (( count++ ))
+    done
 
-            for type in "${arr_exclusions[@]}"; do
-                div="${gbl})${rst}"
-                printf -- '\t\t%6s%2s%2s%-6s\n' "$count" "${div}" " " "$type"
-                (( count++ ))
-            done
+    while true; do
+        printf -- '\n'
+        read -p "    Enter the number to remove [quit]: " choice
+        printf -- '\n'
 
-            while true; do
-                read -p "  Enter the number to remove [quit]: " choice
-                index=$(( $choice - 1 ))
-                if [[ $index -ge '1' ]] && [[ $index -le "${#arr_exclusions[@]}" ]]; then
-                    remove=(${arr_exclusions[$index]})
-                    arr_clean=( "${arr_exclusions[@]/$remove}" )
-                    break
+        index=$(( $choice - 1 ))
+
+        if [[ $index -ge '0' ]] && [[ $index -le "${#arr_exclusions[@]}" ]]; then
+
+            remove=${arr_exclusions[$index]}
+
+            for i in "${arr_exclusions[@]}"; do
+                if [[ "$i" = "$remove" ]]; then
+                    continue
                 else
-                    std_message "You must enter a number betwee 1 and $index" "INFO"
+                    arr_clean=( "${arr_clean[@]}" $i )
                 fi
             done
+            break
 
-            # rewrite exclusions list
-            printf -- '\n' > "$config_dir/$exclusion_file"
-            for i in "${arr_clean[@]}"; do
-                printf -- '%s\n' "$i" >> "$config_dir/$exclusion_file"
-            done
-            ;;
-
-        *)
+        elif [[ "$index" -eq -1 ]]; then
+            printf -- '\n'
             return 0
-            ;;
-    esac
+
+        else
+            std_message "You must enter a number betwee 1 and $(( $index + 1 ))" "INFO"
+        fi
+    done
+
+    # rewrite exclusions list
+    printf -- '\n' > "$config_dir/$exclusion_file"
+    for i in "${arr_clean[@]}"; do
+        printf -- '%s\n' "$i" >> "$config_dir/$exclusion_file"
+    done
+
+    std_message "Successfully removed ${bdwt}$remove${rst} from exclusion list." "OK"
+    print_exclusions
     #
     # <-- end function _configure_remove -->
 }
@@ -245,7 +257,9 @@ function configure_options(){
     _configure_main_menu
 
     # print configure main menu
-    read -p "  choose operation [quit]: " operation
+    printf -- '\n'
+    read -p "    Choose operation [quit]: " operation
+    printf -- '\n'
 
     case $operation in
         'a')
