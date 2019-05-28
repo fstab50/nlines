@@ -63,6 +63,11 @@ cut_symbol=$(echo -e ${bd}${a_cs}-\> ${rst})
 
 
 function help_menu(){
+
+    fh=$file_highlight
+    hl=$highlines
+    cs=$cut_symbol
+
     cat <<EOM
 
                        ${title}nlines${btext} command help
@@ -96,9 +101,13 @@ function help_menu(){
         ${title}-V${btext}, ${title}--version${btext}:  Show ${pkg} version & license information.
 
   ${title}LEGEND${btext}
-                ${bd}${file_highlight}o${rst}  :  File object counted
-                ${bd}${highlines}o${rst}  :  Line count above threshold (> $long_lines)
-               ${cut_symbol} :  Long file path; truncated
+        -------------------------------------------------------
+        |  ${bd}${fh}o${rst}  |  Filesystem object counted (${fh}blue${rst})             |
+        -------------------------------------------------------
+        |  ${bd}${hl}o${rst}  |  Line count above threshold (> $long_lines, ${hl}orange${rst})  |
+        -------------------------------------------------------
+        | ${cs} |  Long file path; truncated (${bd}${a_cs}white${rst})            |
+        -------------------------------------------------------
 
   ${title}EXAMPLES${btext}
             ${gbl}Full path access to file object targets${btext}
@@ -256,7 +265,7 @@ function configure_options(){
     ## Configure runtime options
     ##
     local new_types ext
-    
+
     clear    # clear screen
     _configure_main_menu
 
