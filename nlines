@@ -350,7 +350,7 @@ function excluded(){
     local path="$1"
 
     for pattern in $(build_exclusions_list); do
-        if [[ $(echo $path | grep "$pattern") ]]; then
+        if [[ $(echo $path | grep -i "$pattern") ]]; then
             return 0
         fi
     done
