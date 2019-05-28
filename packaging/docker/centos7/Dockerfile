@@ -22,7 +22,7 @@ RUN yum -y groups mark convert
 RUN yum -y groupinstall "Development Tools"
 RUN yum -y install epel-release
 RUN yum -y update; yum clean all
-RUN yum -y install rpm-build rpmdevtools
+RUN yum -y install rpm-build rpmdevtools source-highlight highlight
 
 RUN yum install -y gcc gcc-c++ \
                    libtool libtool-ltdl \
