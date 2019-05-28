@@ -121,7 +121,7 @@ To display the help menu:
     $ nlines --help
 ```
 
-![help](https://s3.us-east-2.amazonaws.com/http-imagestore/nlines/help-menu.png)]
+[![help](./assets/help-menu.png)](https://s3.us-east-2.amazonaws.com/http-imagestore/nlines/help-menu.png)
 
 
 [back to the top](#top)
@@ -135,7 +135,7 @@ To display the help menu:
     $ nlines --exclusions
 ```
 
-![help](https://s3.us-east-2.amazonaws.com/http-imagestore/nlines/exclusions.png)]<!-- .element height="50%" width="50%" -->
+![help](https://s3.us-east-2.amazonaws.com/http-imagestore/nlines/exclusions.png)<!-- .element height="50%" width="50%" -->
 
 
 [back to the top](#top)
