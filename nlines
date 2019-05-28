@@ -197,6 +197,8 @@ function _configure_main_menu(){
     ______________________________________________________________________
 
 EOM
+    #
+    # <-- end function _configure_main_menu -->
 }
 
 
@@ -289,6 +291,8 @@ function configure_options(){
             exit 0
             ;;
     esac
+    #
+    # <-- end function configure_options -->
 }
 
 
@@ -301,10 +305,12 @@ function depcheck(){
     if [[ ! -d "$config_dir" ]]; then
         mkdir -p "$config_dir"
     fi
-    if [[ ! -f "$config_dir/$listfile" ]]; then
-        cp "$pkg_lib/config/$listfile" "$config_dir/$listfile"
+    if [[ -f "$config_dir/$listfile" ]]; then
+        mv "$config_dir/$listfile" "$config_dir/exclusions.old"
     fi
-
+    cp "$pkg_lib/config/$listfile" "$config_dir/$listfile"
+    #
+    # <-- end function depcheck -->
 }
 
 
@@ -340,6 +346,8 @@ function display_program_version(){
     ______________________________________________________________________
 
 EOM
+    #
+    # <-- end function display_program_version -->
 }
 
 
@@ -386,6 +394,8 @@ function included(){
         return 1
     fi
     return 1
+    #
+    # <-- end function included -->
 }
 
 
@@ -443,6 +453,8 @@ function print_exclusions(){
     done
     printf -- '\n'
     return 0
+    #
+    # <-- end function print_exclusions -->
 }
 
 
@@ -486,6 +498,7 @@ function print_object(){
     else
         sp=$(( $twidth - ${#lengthname} ))
     fi
+
     hsum=$(human_readable "$rawnum")    # format large numbers
 
     if [[ "$rawnum" -ge "$long_lines" ]]; then
@@ -494,12 +507,18 @@ function print_object(){
     else
         printf -- "\t%s %s%${sp}s%s\n" "$printname" "${count_color}" "$hsum" "${rst}"
     fi
+
     cut=""      # reset cut bool
     return 0
+    #
+    # <-- end function print_object -->
 }
 
 
 function calc_output_width(){
+    ##
+    ##  Calculate column total cli width
+    ##
     local length=0
     local buffer=4
     local i j
@@ -521,6 +540,8 @@ function calc_output_width(){
     else
         echo "$(( $length + $buffer ))"
     fi
+    #
+    # <-- end function calc_output_width -->
 }
 
 
@@ -563,9 +584,13 @@ function process_objects(){
                 ;;
         esac
     done
+
     # format large numbers
     hsum=$(human_readable "$sum")
     print_footer $w "$hsum"
+
+    #
+    # <-- end function process_objects -->
 }
 
 
@@ -586,7 +611,7 @@ function sum_directory(){
 
 function nlines(){
     ##
-    ## length in lines of file provided as parameter
+    ## length in num of lines of files/ dirs provided as parameters
     ##
     local sum='0'
     local pwd=$PWD
@@ -612,6 +637,8 @@ function nlines(){
     else
         process_objects "$@"
     fi
+    #
+    # <-- end function nlines main -->
 }
 
 
