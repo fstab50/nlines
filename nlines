@@ -106,7 +106,7 @@ function help_menu(){
           -------------------------------------------------------
           |  ${bd}${hl}o${rst}  |  Line count above threshold (> $long_lines, ${hl}orange${rst})  |
           -------------------------------------------------------
-          | ${cs} |  Long file path; truncated (${bd}${a_cs}white${rst})            |
+          | ${cs} |  Truncated file path (${bd}${a_cs}white${rst})                  |
           -------------------------------------------------------
 
   ${title}EXAMPLES${btext}
