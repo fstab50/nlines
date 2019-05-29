@@ -401,10 +401,10 @@ function included(){
 
 function human_readable(){
     ##
-    ##  Adds commas
+    ##  Adds comma-separated thousands in long integers
     ##
     local number="$1"
-    printf -- "%'d\n" $number
+    printf -- '%s\n' "$number" | sed ':a;s/\B[0-9]\{3\}\>/,&/;ta'
 }
 
 
