@@ -15,6 +15,7 @@ exclusion_file='exclusions.list'                    # list of excluded file exte
 min_width='60'                                      # total width of columnar screen output
 max_width=$(( $(tput cols) - 10 ))
 long_lines='1000'                                   # threashold for marking files with extensive line counts
+threshold_file='linecount.threshold'
 
 # source colors, exitcodes, version file, and  std_function defs | NOTE: source order dependent
 source $pkg_lib/colors.sh
@@ -262,6 +263,16 @@ function _configure_remove(){
 }
 
 
+function _configure_linect_threshold(){
+    ##
+    ##  Sets threshold to highlight objects with large line count
+    ##
+    std_message "Set the threshold at which filesystem objects are highlighted for large line count" "INFO"
+    std_message "The current line count threshold is: ${bd}$long_lines${rst}" "OK"
+    return 0
+}
+
+
 function configure_options(){
     ##
     ## Configure runtime options
@@ -287,6 +298,11 @@ function configure_options(){
             _configure_remove
             ;;
 
+        'c')
+            # set high line ct threshold
+            _configure_linect_threshold
+            ;;
+
         *)
             exit 0
             ;;
@@ -309,6 +325,13 @@ function depcheck(){
         mv "$config_dir/$listfile" "$config_dir/exclusions.old"
     fi
     cp "$pkg_lib/config/$listfile" "$config_dir/$listfile"
+
+    # set high line count threshold
+    if [[ -f "$config_dir/$threshold_file" ]]; then
+        long_lines=$(cat "$config_dir/$threshold_file")
+    else
+        printf -- '%s\n' "$long_lines" > "$config_dir/$threshold_file"
+    fi
     #
     # <-- end function depcheck -->
 }
