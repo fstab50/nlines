@@ -267,8 +267,32 @@ function _configure_linect_threshold(){
     ##
     ##  Sets threshold to highlight objects with large line count
     ##
+    local choice
+    local re
+
+    re='^[0-9]+$'
+
     std_message "Set the threshold at which filesystem objects are highlighted for large line count" "INFO"
     std_message "The current line count threshold is: ${bd}$long_lines${rst}" "OK"
+
+    while true; do
+
+        read -p "    Enter a new line count threshold [$long_lines]: " choice
+        
+        if [[ -z "$choice" ]]; then
+            std_message "Line count threshold remains ${bd}$long_lines${rst}" "INFO"
+            break
+        elif [[ $choice =~ $re ]] ; then
+            # choice is int
+            printf -- '%s\n' "$choice" > "$config_dir/$threshold_file"
+            long_lines="$choice"
+            std_message "Line count threshold set to ${bd}$long_lines${rst}" "OK"
+            break
+
+        else
+            std_message "You must enter an integer number" "WARN"
+        fi
+    done
     return 0
 }
 
@@ -321,10 +345,9 @@ function depcheck(){
     if [[ ! -d "$config_dir" ]]; then
         mkdir -p "$config_dir"
     fi
-    if [[ -f "$config_dir/$listfile" ]]; then
-        mv "$config_dir/$listfile" "$config_dir/exclusions.old"
+    if [[ ! -f "$config_dir/$listfile" ]]; then
+        cp "$pkg_lib/config/$listfile" "$config_dir/$listfile"
     fi
-    cp "$pkg_lib/config/$listfile" "$config_dir/$listfile"
 
     # set high line count threshold
     if [[ -f "$config_dir/$threshold_file" ]]; then
