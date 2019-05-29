@@ -78,13 +78,13 @@ function help_menu(){
 
   ${title}SYNOPSIS${btext}
 
-        $ ${bin}$pkg${reset}  ${bbc}[${btext} --sum <value> ${bbc}|${btext} --help ${bbc}|${btext} --configure ${bbc}]${btext}
+          $ ${bin}$pkg${reset}  ${bbc}[${btext} --sum <value> ${bbc}|${btext} --help ${bbc}|${btext} --configure   ${bbc}]${btext}
 
-                        -s | --sum  <values>
-                       [-c | --configure ]
-                       [-e | --exclusions ]
-                       [-h | --help  ]
-                       [-V | --version ]
+                          -s | --sum  <values>
+                         [-c | --configure ]
+                         [-e | --exclusions ]
+                         [-h | --help  ]
+                         [-V | --version ]
   ${title}OPTIONS${btext}
 
         ${title}-c${btext}, ${title}--configure${btext}:  Menu to configure  runtime options such as
@@ -101,24 +101,24 @@ function help_menu(){
         ${title}-V${btext}, ${title}--version${btext}:  Show ${pkg} version & license information.
 
   ${title}LEGEND${btext}
-        -------------------------------------------------------
-        |  ${bd}${fh}o${rst}  |  Filesystem object counted (${fh}blue${rst})             |
-        -------------------------------------------------------
-        |  ${bd}${hl}o${rst}  |  Line count above threshold (> $long_lines, ${hl}orange${rst})  |
-        -------------------------------------------------------
-        | ${cs} |  Long file path; truncated (${bd}${a_cs}white${rst})            |
-        -------------------------------------------------------
+          -------------------------------------------------------
+          |  ${bd}${fh}o${rst}  |  Filesystem object counted (${fh}blue${rst})             |
+          -------------------------------------------------------
+          |  ${bd}${hl}o${rst}  |  Line count above threshold (> $long_lines, ${hl}orange${rst})  |
+          -------------------------------------------------------
+          | ${cs} |  Long file path; truncated (${bd}${a_cs}white${rst})            |
+          -------------------------------------------------------
 
   ${title}EXAMPLES${btext}
-            ${gbl}Full path access to file object targets${btext}
-                    $  $pkg  --sum  /home/user1/Documents
+              ${gbl}Full path access to file object targets${btext}
+                      $  $pkg  --sum  /home/user1/Documents
 
-            ${gbl}Relative Path access to text file objects${btext}
-                    $  cd  <target directory>
-                    $  $pkg  --sum .
+              ${gbl}Relative Path access to text file objects${btext}
+                      $  cd  <target directory>
+                      $  $pkg  --sum .
 
-            ${gbl}Add file extension to the exclusion list${btext}
-                    $  $pkg  --configure  exclusions
+              ${gbl}Add file extension to the exclusion list${btext}
+                      $  $pkg  --configure
    __________________________________________________________________
 
             ${btext}README:  ${url}https://github.com/fstab50/${pkg}${btext}
