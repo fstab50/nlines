@@ -1243,7 +1243,9 @@ def init_cli():
         return exit_codes['EX_OK']['Code']
 
     elif args.build:
+
         libsrc = git_root() + '/' + 'core'
+
         if valid_version(args.set) and prebuild(TMPDIR, libsrc, VOLMNT, git_root() + '/' + args.parameter_file):
             package, contents = main(
                         setVersion=args.set,
