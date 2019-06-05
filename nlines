@@ -102,13 +102,13 @@ function help_menu(){
         ${title}-V${btext}, ${title}--version${btext}:  Show ${pkg} version & license information.
 
   ${title}LEGEND${btext}
+
+             ${bd}${fh}o${rst}  |  Filesystem object counted (${fh}blue${rst})
           -------------------------------------------------------
-          |  ${bd}${fh}o${rst}  |  Filesystem object counted (${fh}blue${rst})             |
+             ${bd}${hl}o${rst}  |  Line count above threshold (> $long_lines, ${hl}orange${rst})
           -------------------------------------------------------
-          |  ${bd}${hl}o${rst}  |  Line count above threshold (> $long_lines, ${hl}orange${rst})   |
-          -------------------------------------------------------
-          | ${cs} |  Truncated file path (${bd}${a_cs}white${rst})                  |
-          -------------------------------------------------------
+            ${cs} |  Truncated file path (${bd}${a_cs}white${rst})
+          
 
   ${title}EXAMPLES${btext}
               ${gbl}Full path access to file object targets${btext}
