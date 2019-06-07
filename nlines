@@ -108,7 +108,7 @@ function help_menu(){
              ${bd}${hl}o${rst}  |  Line count above threshold (> $long_lines, ${hl}orange${rst})
           -------------------------------------------------------
             ${cs} |  Truncated file path (${bd}${a_cs}white${rst})
-          
+
 
   ${title}EXAMPLES${btext}
               ${gbl}Full path access to file object targets${btext}
@@ -382,7 +382,7 @@ function display_program_version(){
 
 
 
-            ${_hic}$pkg${reset} version: ${title}$_version${reset}   |   GNU Bash ${white}$_bashver${reset}
+               ${_hic}$pkg${reset} version: ${title}$_version${reset}    |    GNU Bash ${white}$_bashver${reset}
 
 
 
