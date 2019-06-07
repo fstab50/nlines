@@ -53,22 +53,24 @@ RUN echo "builder ALL=(ALL:ALL) NOPASSWD:ALL" >> /etc/sudoers
 
 # rpmbuild deps
 RUN cd && rpmdev-setuptree
-RUN mv ~/rpmbuild /home/builder/
+RUN mv  ~/rpmbuild /home/builder/
 
 ADD ./bashrc  /home/builder/.bashrc
-ADD ./.rpmmacros /home/builder/
-ADD ./docker-buildrpm.sh /home/builder/
+ADD ./.rpmmacros /home/builder/.rpmmacros
+ADD ./docker-buildrpm.sh /home/builder/docker-buildrpm.sh
+ADD ./.gitconfig /home/builder/.gitconfig
 
-RUN chown -R builder /home/builder
 
 EXPOSE 8080
 
-USER builder
 
 # configure home for builder
 RUN mkdir -p /home/builder/.config/bash
 ADD ./colors.sh /home/builder/.config/bash/
 ADD ./motd-centos.sh /home/builder/.config/bash/motd.sh
+
+# set user ownership
+RUN chown -R builder:builder /home/builder
 
 # environment variables
 ENV CONTAINER=rpmbuild OS=centos DIST=el7
