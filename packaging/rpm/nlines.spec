@@ -64,7 +64,9 @@ install -m 0644 nlines-completion.bash $RPM_BUILD_ROOT/%{_compdir}/nlines-comple
 /%{_compdir}
 
 
-%post  -p  /usr/bin/env bash
+%post
+
+#!/usr/bin/env bash
 
 BIN_PATH=/usr/local/bin
 

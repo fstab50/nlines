@@ -57,7 +57,6 @@ RUN mv  ~/rpmbuild /home/builder/
 
 ADD ./bashrc  /home/builder/.bashrc
 ADD ./.rpmmacros /home/builder/.rpmmacros
-ADD ./docker-buildrpm.sh /home/builder/docker-buildrpm.sh
 ADD ./.gitconfig /home/builder/.gitconfig
 
 
