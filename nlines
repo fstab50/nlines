@@ -482,7 +482,7 @@ function print_footer(){
     local hsum="$2"
     print_bar "$output_width"
     sp=$(( $output_width + 8))
-    printf -- "\t%s %${sp}s\n" "${white}Total lines${rst}:" "${bbf}$hsum${rst}"
+    printf -- "\t%s %${sp}s\n" "Total lines:" "${bbf}$hsum${rst}"
 }
 
 
