@@ -93,7 +93,7 @@ The easiest way to install **nlines** is via the Debian-tools repository:
     $  grep ^ /etc/apt/sources.list /etc/apt/sources.list.d/*
     ```
 
-    [![repository-contents](./assets/repo-install-verify.png)](https://s3.us-east-2.amazonaws.com/http-imagestore/nlines/repo-install-verify.png)
+    [![repository-contents](./assets/repo-install-verify.png)](http://d1qxyi0fawulzu.cloudfront.net/nlines/repo-install-verify.png)
 
 4. Update and install the package:
 
@@ -107,7 +107,7 @@ The easiest way to install **nlines** is via the Debian-tools repository:
     $ apt show nlines
     ```
 
-    ![apt](./assets/apt-show.png)
+    [![apt](./assets/apt-show.png)](http://d1qxyi0fawulzu.cloudfront.net/nlines/apt-show.png)
 
 --
 
@@ -168,7 +168,7 @@ To display the help menu:
     $ nlines --help
 ```
 
-[![help](./assets/help-menu.png)](https://s3.us-east-2.amazonaws.com/http-imagestore/nlines/help-menu.png)
+[![help](./assets/help-menu.png)](http://d1qxyi0fawulzu.cloudfront.net/nlines/help-menu.png)
 
 
 [back to the top](#top)
@@ -182,7 +182,7 @@ To display the help menu:
     $ nlines --exclusions
 ```
 
-![help](https://s3.us-east-2.amazonaws.com/http-imagestore/nlines/exclusions.png)<!-- .element height="50%" width="50%" -->
+[![help](./assets/exclusions.png)](http://d1qxyi0fawulzu.cloudfront.net/nlines/exclusions.png)<!-- .element height="50%" width="50%" -->
 
 
 [back to the top](#top)
