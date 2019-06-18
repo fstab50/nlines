@@ -125,10 +125,8 @@ The easiest way to install **nlines** on redhat-based Linux distributions is via
     $ sudo yum install wget
     ```
 
-    [![rpm-install1](./assets/rpm-install-1.png)](https://raw.githubusercontent.com/fstab50/nlines/master/assets/rpm-install-1.png)
-
     ```
-    $ wget http://awscloud.center.s3-website.us-east-2.amazonaws.com/rpm/developer-tools.repo
+    $ wget http://awscloud.center/rpm/developer-tools.repo
     ```
 
     ```
@@ -141,18 +139,13 @@ The easiest way to install **nlines** on redhat-based Linux distributions is via
     $ sudo yum update -y
     ```
 
-3. Install **branchdiff** os package
+3. Install **nlines** os package
 
     ```
-    $ sudo yum install nlines
+    $ sudo yum install -y nlines
     ```
 
-    [![rpm-install2](./assets/rpm-install-2.png)](https://raw.githubusercontent.com/fstab50/nlines/master/assets/rpm-install-2.png)
-
-
-    Answer "y":
-
-    [![rpm-install3](./assets/rpm-install-3.png)](https://raw.githubusercontent.com/fstab50/nlines/master/assets/rpm-install-3.png)
+    [![rpm-install1](./assets/rpm-install1.png)](http://d1qxyi0fawulzu.cloudfront.net/nlines/rpm-install1.png)
 
 
 4. Verify Installation
@@ -161,7 +154,7 @@ The easiest way to install **nlines** on redhat-based Linux distributions is via
     $ yum info nlines
     ```
 
-    [![rpm-install4](./assets/rpm-install-4.png)](https://raw.githubusercontent.com/fstab50/nlines/master/assets/rpm-install-4.png)
+    [![rpm-install2](./assets/rpm-install2.png)](http://d1qxyi0fawulzu.cloudfront.net/nlines/rpm-install2.png)
 
 [back to the top](#top)
 
