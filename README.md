@@ -18,6 +18,7 @@ Count the number of lines of text in a code project (or anything else)
 
 * [**INSTALLATION**](#installation)
     * [Ubuntu, Linux Mint, Debian-based Distributions](#installation)
+    * [Redhat, CentOS, Fedora, Amazon Linux](#redhat-distro-install)    
 
 * [**USAGE**](#help)
 
@@ -51,8 +52,8 @@ Count the number of lines of text in a code project (or anything else)
 * Ubuntu 16.04, Ubuntu 18.04  
 * Linux Mint 18, 19
 * Debian variants of Ubuntu / Linux Mint distributions above
+* Redhat 7+, CentOS 7+  
 
-**Note**: Redhat and other rpm-based distributions are currently not supported
 
 --
 
@@ -111,6 +112,59 @@ The easiest way to install **nlines** is via the Debian-tools repository:
 --
 
 [back to the top](#top)
+
+
+* * *
+<a name="redhat-distro-install"></a>
+### Redhat, CentOS, Fedora, Amazon Linux
+The easiest way to install **nlines** on redhat-based Linux distributions is via the [developer-tools](http://awscloud.center) package repository:
+
+1. Download and install the repo definition file
+
+    ```
+    $ sudo yum install wget
+    ```
+
+    [![rpm-install1](./assets/rpm-install-1.png)](https://raw.githubusercontent.com/fstab50/nlines/master/assets/rpm-install-1.png)
+
+    ```
+    $ wget http://awscloud.center.s3-website.us-east-2.amazonaws.com/rpm/developer-tools.repo
+    ```
+
+    ```
+    $ sudo mv developer-tools.repo /etc/yum.repos.d/  &&  sudo chown 0:0 developer-tools.repo
+    ```
+
+2. Update local repository cache
+
+    ```
+    $ sudo yum update -y
+    ```
+
+3. Install **branchdiff** os package
+
+    ```
+    $ sudo yum install nlines
+    ```
+
+    [![rpm-install2](./assets/rpm-install-2.png)](https://raw.githubusercontent.com/fstab50/nlines/master/assets/rpm-install-2.png)
+
+
+    Answer "y":
+
+    [![rpm-install3](./assets/rpm-install-3.png)](https://raw.githubusercontent.com/fstab50/nlines/master/assets/rpm-install-3.png)
+
+
+4. Verify Installation
+
+    ```
+    $ yum info nlines
+    ```
+
+    [![rpm-install4](./assets/rpm-install-4.png)](https://raw.githubusercontent.com/fstab50/nlines/master/assets/rpm-install-4.png)
+
+[back to the top](#top)
+
 
 * * *
 ## Help
