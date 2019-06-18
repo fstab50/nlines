@@ -2,7 +2,7 @@
 
 TMPDIR='/tmp'
 PROFILE='imagestore'
-BUCKET='http-imagestore'
+BUCKET='images.awscloud.center'
 KEY='nlines'
 
 pkg_path=$(cd "$(dirname $0)"; pwd -P)
@@ -32,7 +32,7 @@ function _valid_iamuser(){
 ROOT=$(_git_root)
 
 # color codes
-source "$ROOT/core/colors.sh"
+source "$ROOT/scripts/colors.sh"
 
 
 if _valid_iamuser $PROFILE; then
@@ -46,7 +46,7 @@ if _valid_iamuser $PROFILE; then
     for i in "${arr_files[@]}"; do
 
         # upload object
-        printf -- '\n%s\n\n' "s3 object ${BOLD}$i${UNBOLD}:"
+        printf -- '\n%s\n\n' "s3 object $BOLD$i$UNBOLD:"
         aws --profile $PROFILE s3 cp ./$i s3://$BUCKET/$KEY/$i 2>/dev/null > $TMPDIR/aws.txt
         printf -- '\t%s\n' "- s3 upload: $(cat $TMPDIR/aws.txt  | awk -F ':' '{print $2 $3}')"
 
