@@ -79,7 +79,7 @@ function help_menu(){
 
   ${title}SYNOPSIS${btext}
 
-          $ ${bin}$pkg${reset}  ${bbc}[${btext} --sum <value> ${bbc}|${btext} --help ${bbc}|${btext} --configure   ${bbc}]${btext}
+        $ ${bin}$pkg${reset}  ${bbc}[${btext}  --sum <value>  ${bbc}|${btext}  --help  ${bbc}|${btext}  --configure  ${bbc}]${btext}
 
                           -s | --sum  <values>
                          [-c | --configure ]
