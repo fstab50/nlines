@@ -196,7 +196,7 @@ Counting lines in large repository with long paths.
     $ nlines  --sum  git/AWSAMPLES/aws-serverless-workshops/
 ```
 
-![repo1-1](https://s3.us-east-2.amazonaws.com/http-imagestore/nlines/repofinal.png)
+[![repo1-1](./assets/repofinal.png)](http://d1qxyi0fawulzu.cloudfront.net/nlines/repofinal.png)
 
 
 [back to the top](#top)
