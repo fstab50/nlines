@@ -14,6 +14,7 @@
         "debianutils  (>= 4.4)",
         "coreutils (>= 8.0)",
         "bash-completion",
+        "file (>= 5.0)",
         "gawk",
         "gnupg2",
         "sudo",

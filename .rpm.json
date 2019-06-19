@@ -9,11 +9,13 @@
     "DependencyList": [
         "bash >= 4.2",
         "findutils >= 4.4.0",
+        "file >= 5.0",
         "coreutils >= 8.0",
         "bash-completion",
         "gawk",
         "gnupg2",
         "sudo",
+        "which",
         "wget"
     ],
     "LogFiles": [ ],
