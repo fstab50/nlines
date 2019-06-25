@@ -36,9 +36,9 @@ KEY := 'images'
 
 build-all: clean builddeb buildrpm    ## Clean and Build Debian & RPM pkgs
 
-zero-builddeb: clean deplist builddeb    ## Clean and Build Debian (.deb) pkg
+zero-builddeb: clean builddeb    ## Clean and Build Debian (.deb) pkg
 
-zero-buildrpm: clean deplist buildrpm    ## Clean and Build Redhat (.rpm) pkg
+zero-buildrpm: clean buildrpm    ## Clean and Build Redhat (.rpm) pkg
 
 zero-installdeb:	clean builddeb installdeb	## Clean, Build & Install Debian (.deb) pkg
 
@@ -74,20 +74,13 @@ test:     ## Run pytest unittests
 	else bash $(CUR_DIR)/scripts/make-test.sh $(CUR_DIR) $(VENV_DIR) $(MODULE_PATH); fi
 
 
-.PHONY: deplist
-deplist: pre-build  setup-venv    ## Gen OS pkg desc files. FORCE=x to force regen
-	if [ $(FORCE) ]; then . $(VENV_DIR)/bin/activate && \
-	$(PYTHON3_PATH) $(SCRIPT_DIR)/build_deplist.py --force; \
-	else . $(VENV_DIR)/bin/activate && $(PYTHON3_PATH) $(SCRIPT_DIR)/build_deplist.py; fi
-
-
 .PHONY: builddeb
 builddeb:  setup-venv  ## Build Debian distribution (.deb) os package
-	@echo "Building Debian package format of $(PROJECT)";
-	cp $(LIB_DIR)/version.py $(SCRIPT_DIR)/version.py;
+	@echo "Building Debian package format of $(PROJECT)"; \
+	cp $(LIB_DIR)/version.py $(SCRIPT_DIR)/version.py; \
 	if [ $(VERSION) ]; then . $(VENV_DIR)/bin/activate && \
-	$(PYTHON3_PATH) $(SCRIPT_DIR)/builddeb.py --build --set-version $(VERSION); \
-	else cd $(CUR_DIR) && . $(VENV_DIR)/bin/activate && $(PYTHON3_PATH) $(SCRIPT_DIR)/builddeb.py --build; fi
+	$(PYTHON3_PATH) $(SCRIPT_DIR)/builddeb.py --build --set-version $(VERSION); else \
+	cd $(CUR_DIR) && . $(VENV_DIR)/bin/activate && $(PYTHON3_PATH) $(SCRIPT_DIR)/builddeb.py --build; fi
 
 
 .PHONY: buildrpm
