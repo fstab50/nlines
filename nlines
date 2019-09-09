@@ -300,7 +300,12 @@ function _configure_linect_threshold(){
             std_message "You must enter an integer number" "WARN"
         fi
     done
-    return 0
+    printf -- '\n'
+    read -p '    Return to main menu [quit]: ' choice
+
+    if [ -z $choice ]; then
+        configure_options
+    fi
 }
 
 
