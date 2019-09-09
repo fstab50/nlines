@@ -192,7 +192,8 @@ Run time options for [nlines](https://github.com/fstab50/nlines) can be configur
 
 [![help](./assets/configure_3.png)](http://d1qxyi0fawulzu.cloudfront.net/nlines/configure_4.png)
 
-* **Option B**: To remove a file type from the exclusion list so that files of this type are _included in line counts_, select option "B":
+* **Option B**: To remove a file type from the exclusion list so that files of this type are _included in line counts_,
+select option "B":
 
 [![help](./assets/configure_4.png)](http://d1qxyi0fawulzu.cloudfront.net/nlines/configure_4.png)
 
