@@ -75,7 +75,7 @@ test:     ## Run pytest unittests
 
 
 .PHONY: builddeb
-builddeb:  setup-venv  ## Build Debian distribution (.deb) os package
+builddeb: clean setup-venv  ## Build Debian distribution (.deb) os package
 	@echo "Building Debian package format of $(PROJECT)"; \
 	cp $(LIB_DIR)/version.py $(SCRIPT_DIR)/version.py; \
 	if [ $(VERSION) ]; then . $(VENV_DIR)/bin/activate && \
@@ -84,7 +84,7 @@ builddeb:  setup-venv  ## Build Debian distribution (.deb) os package
 
 
 .PHONY: buildrpm
-buildrpm:     ## Build Redhat distribution (.rpm) os package
+buildrpm: clean  ## Build Redhat distribution (.rpm) os package
 	@echo "Building RPM package format of $(PROJECT)"; \
 	if [ ! -f $(VENV_DIR) ]; then $(MAKE) setup-venv; fi; \
 	if [ $(VERSION) ]; then cd $(CUR_DIR) && . $(VENV_DIR)/bin/activate && \
