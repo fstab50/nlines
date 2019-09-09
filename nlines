@@ -42,6 +42,7 @@ btc=$(echo -e ${a_brightcyan})
 title=$(echo -e ${bold}${a_brightwhite})              # title color, white + bold
 hic=$(echo -e ${bold}${a_brightyellowgreen})          # help menu accent 1
 bin=$(echo -e ${bold}${a_orange})                     # help menu binary accent
+org=$(echo -e ${a_orange})                     # help menu binary accent
 ul=$(echo -e ${underline})                            # std underline
 bd=$(echo -e ${bold})                                 # std bold
 wt=$(echo -e ${a_brightwhite})                        # help menu accent 2
@@ -103,13 +104,12 @@ function help_menu(){
         ${title}-V${btext}, ${title}--version${btext}:  Show ${pkg} version & license information.
 
   ${title}LEGEND${btext}
-
-             ${bd}${fh}o${rst}  |  Filesystem object counted (${fh}blue${rst})
-          -------------------------------------------------------
-             ${bd}${hl}o${rst}  |  Line count above threshold (> $long_lines, ${hl}orange${rst})
-          -------------------------------------------------------
-            ${cs} |  Truncated file path (${bd}${a_cs}white${rst})
-
+        ____________________________________________________________
+        |                                                          |
+        |    ${bd}${fh}o${rst}  |  Filesystem object counted (${fh}blue${rst})                |
+        |    ${bd}${hl}o${rst}  |  Line count above threshold (> $long_lines, ${org}orange${rst})     |
+        |   ${cs} |  Truncated file path (${bd}${a_cs}white${rst})                     |
+        |__________________________________________________________|
 
   ${title}EXAMPLES${btext}
               ${gbl}Full path access to file object targets${btext}
