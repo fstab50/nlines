@@ -7,7 +7,7 @@
 
 Count the number of lines of text in a code project (or anything else)
 
-**Version**:	1.0.2
+**Version**:	1.0.5
 
 * * *
 ## Contents
