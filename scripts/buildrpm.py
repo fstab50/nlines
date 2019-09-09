@@ -746,6 +746,9 @@ def docker_init(src, builddir, osimage, param_dict, debug):
     bash_cmd = '/bin/sleep 30'
     buildscript = 'docker-buildrpm.sh'
 
+    # copy buildscript to directory where build files assembled
+    copyfile(src + '/' + buildscript, builddir + '/' + buildscript)
+
     try:
 
         # create host mount for container volume
@@ -790,7 +793,7 @@ def docker_init(src, builddir, osimage, param_dict, debug):
 
         buildfile_list = list(
             filter(
-                lambda x: x.endswith('.tar.gz') or x.endswith('.spec'), os.listdir('.')
+                lambda x: x.endswith('.tar.gz') or x.endswith('.spec') or x.endswith('.sh'), os.listdir('.')
             )
         )
 
@@ -1053,7 +1056,7 @@ def postbuild(root, container, rpm_root, scripts_dir, version_module, version):
     minor = version.split('.')[-1]
     volmnt = VOLMNT
     delete = True
-
+    
     try:
 
         # cp rpm created to repo
