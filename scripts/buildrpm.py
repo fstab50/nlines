@@ -816,7 +816,7 @@ def docker_init(src, builddir, osimage, param_dict, debug):
                     )
 
         # exec rpmbuild script
-        cmd = f'docker exec -i {container.name} sh -c \'cd ~ && bash {buildscript}\''
+        cmd = f'docker exec -i {container.name} sh -c \'cd /home/builder && bash {buildscript}\''
         stdout_message(subprocess.getoutput(cmd))
 
         if container_running(container.name):
@@ -1056,7 +1056,7 @@ def postbuild(root, container, rpm_root, scripts_dir, version_module, version):
     minor = version.split('.')[-1]
     volmnt = VOLMNT
     delete = True
-    
+
     try:
 
         # cp rpm created to repo
