@@ -20,7 +20,7 @@ pkg_root=$(echo $pkg | awk -F '.' '{print $1}')     # pkg without file extention
 pkg_path=$(cd $(dirname $0); pwd -P)                # location of pkg
 TMPDIR='/tmp'
 username="builder"
-home_dir="$(echo $HOME)"
+home_dir="$(su - $username; echo $HOME)"
 NOW=$(date +'%Y-%m-%d')
 BUILDDIR="$HOME/rpmbuild"
 VOLMNT="/mnt/rpm"
@@ -297,7 +297,7 @@ function std_error_exit(){
 
 depcheck $LOG_DIR $LOG_FILE
 
-cd ~
+cd "$home_dir"
 
 if [ ! -d $BUILDDIR ]; then
     sudo yum -y install rpm-build rpmdevtools
@@ -305,14 +305,14 @@ if [ ! -d $BUILDDIR ]; then
 fi
 
 # place spec file
-cp ~/nlines.spec $BUILDDIR/SPECS/
+cp "$home_dir/nlines.spec" "$BUILDDIR/SPECS/"
 std_message "cp specfile to build dir. Contents of target dir: $(ls -lh $BUILDDIR/SPECS)" "INFO" $LOG_FILE
 
 # create sources
-cp ~/nlines*.tar.gz $BUILDDIR/SOURCES/
+cp "$home_dir/nlines*.tar.gz" "$BUILDDIR/SOURCES/"
 std_message "cp TARfile to build dir. Contents of target dir: $(ls -lh $BUILDDIR/SOURCES)" "INFO" $LOG_FILE
 
-cd ~/rpmbuild
+cd "$home_dir/rpmbuild"
 std_message "Changed to rpmbuild working directory. (PWD: $PWD)" "INFO" $LOG_FILE
 
 # build rpm
