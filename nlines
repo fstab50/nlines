@@ -172,6 +172,7 @@ function _configure_add(){
         print_exclusions
     fi
     printf -- '\n'
+    configure_options
     #
     # <-- end function _configure_add -->
 }
@@ -211,9 +212,11 @@ function _configure_remove(){
     local choice type
     local count=1
     local index
+
     declare -a arr_exclusions arr_clean
 
     printf -- '\n'
+    printf -- '\n\t%s\n\n' "${gbl}List of File patterns excluded from line count${rst}:"
 
     for type in $(cat "$config_dir/$exclusion_file"); do
         div="${gbl})${rst}"
@@ -224,7 +227,7 @@ function _configure_remove(){
 
     while true; do
         printf -- '\n'
-        read -p "    Enter the number to remove [quit]: " choice
+        read -p "      Enter the number to remove [quit]: " choice
         printf -- '\n'
 
         index=$(( $choice - 1 ))
@@ -244,7 +247,7 @@ function _configure_remove(){
 
         elif [[ "$index" -eq -1 ]]; then
             printf -- '\n'
-            return 0
+            configure_options   # return to main menu
 
         else
             std_message "You must enter a number betwee 1 and $(( $index + 1 ))" "INFO"
@@ -258,7 +261,8 @@ function _configure_remove(){
     done
 
     std_message "Successfully removed ${bdwt}$remove${rst} from exclusion list." "OK"
-    print_exclusions
+    _configure_remove
+    #
     #
     # <-- end function _configure_remove -->
 }
