@@ -152,7 +152,7 @@ function _configure_add(){
     print_exclusions
 
     # user input
-    read -p "  Enter file type extensions to exclude separated by commas, no spaces [skip]: " new_types
+    read -p "  Enter file type extensions to exclude separated by commas, no spaces [quit]: " new_types
 
     # process input, else skip
     if [[ "$new_types" ]]; then
@@ -169,7 +169,7 @@ function _configure_add(){
             fi
         done
         std_message "Exclusion list updated successfully." "OK"
-        print_exclusions
+        _configure_add
     fi
     printf -- '\n'
     configure_options
