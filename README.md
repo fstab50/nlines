@@ -5,32 +5,34 @@
 
 ## Summary
 
-Count the number of lines of text in a code project (or anything else)
+Count the number of lines of text in a code projects (or other text artifacts) in Linux operating system environments.  Ideal for Linux development environments which lack higher order language support such as [Python](http://www.python.org), [Nodejs](https://nodejs.org), etc.
 
 **Version**:	1.0.5
 
 * * *
 ## Contents
 
-* [**DEPENDENCIES**](#dependencies)
+* [**Dependencies**](#dependencies)
 
-* [**SUPPORTED LINUX DISTRIBUTIONS**](#supported-linux-distributions)
+* [**Supported Linux Distributions**](#supported-linux-distributions)
 
-* [**INSTALLATION**](#installation)
+* [**Installation**](#installation)
     * [Ubuntu, Linux Mint, Debian-based Distributions](#installation)
-    * [Redhat, CentOS, Fedora, Amazon Linux](#redhat-distro-install)    
+    * [Redhat, CentOS, Fedora, Amazon Linux](#redhat-distro-install)
 
-* [**USAGE**](#help)
+* [**Use**](#help)
 
-* [**EXCLUSIONS**](#exclusions)
+* [**Exclusions**](#exclusions)
 
-* [**SCREENSHOTS**](#screenshots)
+* [**Configuration**](#configuration)
+*
+* [**Screenshots**](#screenshots)
 
-* [**AUTHOR & COPYRIGHT**](#author--copyright)
+* [**Author & Copyright**](#author--copyright)
 
-* [**LICENSE**](#license)
+* [**License**](#license)
 
-* [**DISCLAIMER**](#disclaimer)
+* [**Disclaimer**](#disclaimer)
 
 --
 
@@ -49,10 +51,10 @@ Count the number of lines of text in a code project (or anything else)
 * * *
 ## Supported Linux Distributions
 
-* Ubuntu 16.04, Ubuntu 18.04  
+* Ubuntu 16.04, Ubuntu 18.04
 * Linux Mint 18, 19
 * Debian variants of Ubuntu / Linux Mint distributions above
-* Redhat 7+, CentOS 7+  
+* Redhat 7+, CentOS 7+
 
 
 --
@@ -67,7 +69,7 @@ Count the number of lines of text in a code project (or anything else)
 
 The easiest way to install **nlines** is via the Debian-tools repository:
 
-1. Download the public key:  
+1. Download the public key:
 
     ```
     $ wget -qO - http://awscloud.center/keys/public.key | sudo apt-key add -
@@ -169,6 +171,20 @@ To display the help menu:
 ```
 
 [![help](./assets/help-menu.png)](http://d1qxyi0fawulzu.cloudfront.net/nlines/help-menu.png)
+
+
+[back to the top](#top)
+
+* * *
+## Configuration
+
+Run time options for [nlines](https://github.com/fstab50/nlines) can be configured by entering the configure menu:
+
+```bash
+    $ nlines --configure
+```
+
+[![help](./assets/configure_1.png)](http://d1qxyi0fawulzu.cloudfront.net/nlines/configure_1.png)
 
 
 [back to the top](#top)
