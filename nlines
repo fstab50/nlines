@@ -30,6 +30,7 @@ bgf=$(echo -e ${greenbold_frame})
 bg=$(echo -e ${a_brightgreen})
 bb=$(echo -e ${a_brightblue})
 gbl=$(echo -e ${ITALIC}${a_bluegray})
+blp=$(echo -e ${a_bluepurple})
 bbo=$(echo -e ${bold}${a_orange})
 bbf=$(echo -e ${pv_bluebold})
 bcy=$(echo -e ${cyan})
@@ -181,21 +182,21 @@ function _configure_main_menu(){
     ##  Display Top level configure menu choices
     ##
     cat <<EOM
-    ________________________________________________________________________________
+    ${blp}________________________________________________________________________________${reset}
 
 
         ${bdwt}$pkg${reset} Runtime option configuration menu:
 
 
-            a)  Add file type to exclusion list
+            ${bd}${blp}a${reset})  Add file type to exclusion list
 
-            b)  Remove file type from exclusion list
+            ${bd}${blp}b${reset})  Remove file type from exclusion list
 
-            c)  Set large line count threshold
+            ${bd}${blp}c${reset})  Set large line count threshold
 
-            d)  quit
+            ${bd}${blp}d${reset})  quit
 
-    ________________________________________________________________________________
+    ${blp}________________________________________________________________________________${reset}
 
 EOM
     #
