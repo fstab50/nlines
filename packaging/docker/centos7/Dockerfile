@@ -74,6 +74,9 @@ RUN chown -R builder:builder /home/builder
 # environment variables
 ENV CONTAINER=rpmbuild OS=centos DIST=el7
 
+# run as logins as builder
+CMD ["su", "-", "builder", "-c", "/bin/bash"]
+
 ##
 
 # end rpm build Dockerfile
