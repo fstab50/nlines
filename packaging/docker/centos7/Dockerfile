@@ -29,7 +29,7 @@ RUN yum install -y gcc gcc-c++ \
                    make cmake \
                    git vim figlet \
                    pkgconfig \
-                   sudo \
+                   sudo wget \
                    automake autoconf \
                    yum-utils  && \
     yum clean all
