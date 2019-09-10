@@ -77,7 +77,8 @@ function help_menu(){
 
   ${title}DESCRIPTION${btext}
 
-        Count the total number of lines of text in code projects
+        Count the total number of lines of ascii text.  An important
+        addition to every developer's toolkit for every code project
 
   ${title}SYNOPSIS${btext}
 
@@ -112,15 +113,16 @@ function help_menu(){
         |__________________________________________________________|
 
   ${title}EXAMPLES${btext}
-              ${gbl}Full path access to file object targets${btext}
-                      $  $pkg  --sum  /home/user1/Documents
 
-              ${gbl}Relative Path access to text file objects${btext}
-                      $  cd  <target directory>
-                      $  $pkg  --sum .
+          ${gbl}Perform line count with full file paths to text objects:${btext}
+                $  $pkg  --sum  /home/user1/git/project23
 
-              ${gbl}Add file extension to the exclusion list${btext}
-                      $  $pkg  --configure
+          ${gbl}Count lines showing relative file paths to text objects:${btext}
+                $  cd  <target directory>
+                $  $pkg  --sum .
+
+          ${gbl}Add or remove file types to the global exclusion list${btext}
+                $  $pkg  --configure
    __________________________________________________________________
 
             ${btext}README:  ${url}https://github.com/fstab50/${pkg}${btext}
