@@ -743,6 +743,7 @@ def docker_init(src, builddir, osimage, param_dict, debug):
     cname = param_dict['DockerContainer']                    # container id
     host_mnt = VOLMNT                                        # host volume mount point
     container_mnt = CONTAINER_VOLMNT                         # container volume internal mnt pt
+    docker_user = 'builder'
     bash_cmd = '/bin/sleep 30'
     buildscript = 'docker-buildrpm.sh'
 
@@ -777,6 +778,7 @@ def docker_init(src, builddir, osimage, param_dict, debug):
                 image=imagename,
                 command=bash_cmd,
                 volumes={host_mnt: {'bind': container_mnt, 'mode': 'rw'}},
+                user=docker_user,
                 detach=True
             )
 
