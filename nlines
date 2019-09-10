@@ -73,7 +73,7 @@ function help_menu(){
 
     cat <<EOM
 
-                       ${title}nlines${btext} command help
+                         ${title}nlines${btext} command help
 
   ${title}DESCRIPTION${btext}
 
