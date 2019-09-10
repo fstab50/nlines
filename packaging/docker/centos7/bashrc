@@ -6,11 +6,13 @@
 #  Non-interactive bypass
 #-------------------------------------------------------------------------------
 
+[ -z "$PS1" ] && return
+
 # If not running interactively, don't do anything
-case $- in
-    *i*) ;;
-    *) return ;;
-esac
+#case $- in
+#    *i*) ;;
+#    *) return ;;
+#esac
 
 
 ENV_LIBRARY="$HOME/git/library-utilities/function-library"
