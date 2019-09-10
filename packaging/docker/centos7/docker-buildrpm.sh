@@ -20,7 +20,6 @@ pkg_root=$(echo $pkg | awk -F '.' '{print $1}')     # pkg without file extention
 pkg_path=$(cd $(dirname $0); pwd -P)                # location of pkg
 TMPDIR='/tmp'
 username="builder"
-home_dir="$(su - $username; echo $HOME)"
 home_dir='/home/builder'
 NOW=$(date +'%Y-%m-%d')
 BUILDDIR="$HOME/rpmbuild"
