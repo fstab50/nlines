@@ -305,14 +305,14 @@ if [ ! -d $BUILDDIR ]; then
 fi
 
 # place spec file
-cp "$home_dir/nlines.spec" "$BUILDDIR/SPECS/"
+cp $home_dir/nlines.spec $BUILDDIR/SPECS/
 std_message "cp specfile to build dir. Contents of target dir: $(ls -lh $BUILDDIR/SPECS)" "INFO" $LOG_FILE
 
 # create sources
-cp "$home_dir/nlines*.tar.gz" "$BUILDDIR/SOURCES/"
+cp $home_dir/nlines*.tar.gz $BUILDDIR/SOURCES/
 std_message "cp TARfile to build dir. Contents of target dir: $(ls -lh $BUILDDIR/SOURCES)" "INFO" $LOG_FILE
 
-cd "$home_dir/rpmbuild"
+cd $home_dir/rpmbuild
 std_message "Changed to rpmbuild working directory. (PWD: $PWD)" "INFO" $LOG_FILE
 
 # build rpm
