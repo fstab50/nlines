@@ -25,7 +25,7 @@ Count the number of lines of text in a code projects (or other text artifacts) i
 * [**Exclusions**](#exclusions)
 
 * [**Configuration**](#configuration)
-*
+
 * [**Screenshots**](#screenshots)
 
 * [**Author & Copyright**](#author--copyright)
