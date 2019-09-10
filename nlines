@@ -108,7 +108,7 @@ function help_menu(){
         ____________________________________________________________
         |                                                          |
         |    ${bd}${fh}o${rst}  |  Filesystem object counted (${fh}blue${rst})                |
-        |    ${bd}${hl}o${rst}  |  Line count above threshold (> $long_lines, ${org}orange${rst})     |
+        |    ${bd}${hl}o${rst}  |  Line count above threshold (> $long_lines, ${org}orange${rst})      |
         |   ${cs} |  Truncated file path (${bd}${a_cs}white${rst})                     |
         |__________________________________________________________|
 
