@@ -147,6 +147,24 @@ def help_menu():
     return True
 
 
+def bin_modification(bin_file):
+    """Modify help menu formatting in bin for redhat systems"""
+    bin_path = os.path.join(git_root(), bin_file)
+    with open(bin_path) as f1:
+        f2 = f1.readlines()
+
+    for index, line in enumerate(f2):
+        if 'Line count above threshold' in line:
+            target = line
+            replacement = ''.join([target[:-3], '|\n'])
+            f2[index] = replacement
+
+    with open(bin_path, 'w') as f1:
+        for line in f2:
+            f1.write(line)
+    return bin_path
+
+
 def clean(directory, debug):
     """
     Summary.
@@ -859,6 +877,9 @@ def main(setVersion, environment, package_configpath, force=False, debug=False):
     global CURRENT_VERSION
     CURRENT_VERSION = current_version(PROJECT_BIN, LIB_DIR + '/' 'version.py')
 
+    bin_path = bin_modification(PROJECT_BIN)
+    stdout_message(f'Successfully modified {bin_path} in prebuild')
+    sys.exit()
     # sort out version numbers, forceVersion is overwrite of pre-existing build artifacts
     global VERSION
     if setVersion:
