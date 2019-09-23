@@ -879,7 +879,7 @@ def main(setVersion, environment, package_configpath, force=False, debug=False):
 
     bin_path = bin_modification(PROJECT_BIN)
     stdout_message(f'Successfully modified {bin_path} in prebuild')
-    sys.exit()
+    
     # sort out version numbers, forceVersion is overwrite of pre-existing build artifacts
     global VERSION
     if setVersion:
