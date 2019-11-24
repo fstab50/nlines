@@ -7,7 +7,7 @@
 
 Count the number of lines of text in a code projects (or other text artifacts) in Linux operating system environments.  Ideal for Linux development environments which lack higher order language support such as [Python](http://www.python.org), [Nodejs](https://nodejs.org), etc.
 
-**Version**:	1.1.1
+**Version**:	1.1.2
 
 * * *
 ## Contents
