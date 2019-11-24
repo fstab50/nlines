@@ -100,7 +100,9 @@ function help_menu(){
 
         ${title}-h${btext}, ${title}--help${btext}:  Display this help menu.
 
-        ${title}-s${btext}, ${title}--sum${btext} <value>:  Sum the total number of lines of text.
+        ${title}-s${btext}, ${title}--sum${btext} <value>:  Sum the total number of lines of text in
+            directories or files specified by <value>.  Sum multiple
+            files or directories separated by a space.
 
         ${title}-V${btext}, ${title}--version${btext}:  Show ${pkg} version & license information.
 
