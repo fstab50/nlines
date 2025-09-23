@@ -58,7 +58,7 @@ setup-venv: $(VENV_DIR)
 
 $(VENV_DIR):  pre-build   ## Create and activiate python venv
 	$(PYTHON3_PATH) -m venv $(VENV_DIR); \
-	. $(VENV_DIR)/bin/activate && $(PIP_CALL) install -U setuptools pip && \
+	. $(VENV_DIR)/bin/activate && $(PIP_CALL) install -U pip==22.2.2 setuptools && \
 	$(PIP_CALL) install -r $(REQUIREMENT);
 
 
